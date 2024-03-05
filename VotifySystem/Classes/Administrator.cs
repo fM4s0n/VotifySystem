@@ -1,7 +1,7 @@
 ﻿namespace VotifySystem.Classes;
 
 /// <summary>
-/// Admisitrator class
+/// Administrator class
 /// May not vote
 /// </summary>
 internal class Administrator : User
