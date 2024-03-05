@@ -1,4 +1,10 @@
 ﻿namespace VotifySystem.Classes;
-internal class Candidate : Person
+
+/// <summary>
+/// Candidate Class
+/// </summary>
+public class Candidate : Person
 {
+    public string CandidateId { get; set; } = string.Empty;
+    public string Constituency {  get; set; } = string.Empty;
 }

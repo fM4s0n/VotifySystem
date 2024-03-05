@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VotifySystem.Logging;
-internal interface ILog
+namespace VotifySystem.Classes.Elections;
+internal class PreferentialElection
 {
 }

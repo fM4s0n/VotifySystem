@@ -1,0 +1,24 @@
+﻿using VotifySystem.Classes.Elections;
+
+namespace VotifySystem.BusinessLogic;
+
+/// <summary>
+/// 
+/// </summary>
+internal class ElectionService : IElectionService
+{
+    public List<Election> GetElectionsByCandidateId(string candidateId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<Election> GetElectionsByElectionCandidate(string candidateId, string electionId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SaveElection()
+    {
+        throw new NotImplementedException();
+    }
+}

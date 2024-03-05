@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VotifySystem.Logging;
-internal class ConsoleLogger
+namespace VotifySystem.Classes.Elections;
+internal class SingleTransferrableVoteElection : Election
 {
+
 }
