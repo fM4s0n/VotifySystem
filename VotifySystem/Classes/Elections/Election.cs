@@ -7,9 +7,9 @@ public abstract class Election
 {
     public string ElectionId { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
-    public DateTime StartDateTime { get; set; }
-    public DateTime EndDateTime { get; set; }
-    public List<Candidate> Candidates { get; set; } = [];
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public List<ElectionCandidate> Candidates { get; set; } = [];
     public ElectionVoteMechanism VoteMechanism { get; set; }
 }
 

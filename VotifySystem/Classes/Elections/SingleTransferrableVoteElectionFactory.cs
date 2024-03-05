@@ -5,13 +5,15 @@
 /// </summary>
 internal class SingleTransferrableVoteElectionFactory : IElectionFactory
 {
-    public Election CreateElection(string description, DateTime start, DateTime end)
+    public Election CreateElection(string description, DateTime startDate, DateTime endDate)
     {
         SingleTransferrableVoteElection election = new()
         {
             VoteMechanism = ElectionVoteMechanism.STV,
             ElectionId = Guid.NewGuid().ToString(),
             Description = description,
+            StartDate = startDate,
+            EndDate = endDate
         };
 
         return election;
