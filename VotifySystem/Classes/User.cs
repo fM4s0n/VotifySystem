@@ -3,12 +3,9 @@
 /// <summary>
 /// Parent class for all users
 /// </summary>
-internal abstract class User
+internal abstract class User : Person
 {
     public string UserId { get; set; } = string.Empty;
-    public string FirstName { get; set; } = string.Empty;
-    public string LastName { get; set; } = string.Empty;
-    public string FullName { get { return $"{FirstName} {LastName}"; } }
     public string Password { get; set; } = string.Empty;
     private VoteMethod _selectedVoteMethod;
     public VoteMethod SelectedVoteMethod
@@ -19,14 +16,13 @@ internal abstract class User
         }      
         set 
         {
-            if (this is Administrator && value != VoteMethod.NotAllowed)            
+            if ((this is Administrator || this is Candidate)&& value != VoteMethod.NotAllowed)            
                 throw new InvalidOperationException("Administrator may not have vote permissions");            
             else
                 _selectedVoteMethod = value;
         }
     }
 }
-
 
 /// <summary>
 /// enums for different methods of voting
