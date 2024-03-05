@@ -7,4 +7,12 @@ public abstract class User : Person
 {
     public string UserId { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
+    public UserLevel UserLevel {  get; set; }
+}
+
+public enum UserLevel
+{
+    Administrator,
+    Voter,
+    Candidate
 }

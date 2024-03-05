@@ -3,7 +3,7 @@
 /// <summary>
 /// Class for a voter
 /// </summary>
-internal class Voter : User
+public class Voter : User
 {
     public VoteMethod SelectedVoteMethod;
 
@@ -19,7 +19,7 @@ internal class Voter : User
 /// enums for different methods of voting
 /// A voter may only have 1 method selected at any time but may change.
 /// </summary>
-internal enum VoteMethod
+public enum VoteMethod
 {
     Online,
     Postal,

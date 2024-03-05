@@ -10,6 +10,5 @@ public class Administrator : User
     {
         FirstName = firstName;
         LastName = lastName;
-        SelectedVoteMethod = VoteMethod.NotAllowed;
     }
 }

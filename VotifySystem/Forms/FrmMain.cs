@@ -1,3 +1,5 @@
+using VotifySystem.Forms;
+
 namespace VotifySystem;
 
 public partial class FrmMain : Form
@@ -14,11 +16,14 @@ public partial class FrmMain : Form
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
     }
 
+    internal void SetMode(Usert)
+
     /// <summary>
-    /// Handle any unhandled excptions
+    /// Handle any unhandled exceptions
     /// </summary>
     private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
     {
         throw new NotImplementedException();
     }
+
 }
