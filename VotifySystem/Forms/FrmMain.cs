@@ -1,9 +1,12 @@
+using VotifySystem.Classes;
 using VotifySystem.Forms;
 
 namespace VotifySystem;
 
 public partial class FrmMain : Form
 {
+    private UserLevel _mode;
+
     public FrmMain()
     {
         InitializeComponent();
@@ -16,7 +19,10 @@ public partial class FrmMain : Form
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
     }
 
-    internal void SetMode(Usert)
+    internal void SetMode(UserLevel userLevel)
+    {
+        _mode = userLevel;
+    }
 
     /// <summary>
     /// Handle any unhandled exceptions
@@ -25,5 +31,4 @@ public partial class FrmMain : Form
     {
         throw new NotImplementedException();
     }
-
 }
