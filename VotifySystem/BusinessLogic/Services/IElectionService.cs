@@ -1,6 +1,6 @@
 ﻿using VotifySystem.Classes.Elections;
 
-namespace VotifySystem.BusinessLogic;
+namespace VotifySystem.BusinessLogic.Services;
 
 /// <summary>
 /// 

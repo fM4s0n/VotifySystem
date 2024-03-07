@@ -1,3 +1,4 @@
+using VotifySystem.BusinessLogic.Services;
 using VotifySystem.Classes;
 using VotifySystem.Forms;
 
@@ -5,11 +6,16 @@ namespace VotifySystem;
 
 public partial class FrmMain : Form
 {
+    private readonly IUserService _userService;
+
+
     private UserLevel _mode;
 
-    public FrmMain()
+    public FrmMain(IUserService userService)
     {
         InitializeComponent();
+
+        _userService = userService;
 
         Init();
     }
@@ -17,11 +23,18 @@ public partial class FrmMain : Form
     private void Init()
     {
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+        SetMode();
+
+        switch (_mode)
+        {
+
+        }
     }
 
-    internal void SetMode(UserLevel userLevel)
+    internal void SetMode()
     {
-        _mode = userLevel;
+        _mode = _userService.GetCurrentUser().UserLevel;
     }
 
     /// <summary>

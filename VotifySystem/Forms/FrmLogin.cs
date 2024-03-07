@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
+using VotifySystem.BusinessLogic.Services;
 
 namespace VotifySystem.Forms
 {
     public partial class FrmLogin : Form
     {
-        public FrmLogin()
+        IUserService _userService;
+
+        public FrmLogin(IUserService userService)
         {
             InitializeComponent();
+
+            _userService = userService;
         }
     }
 }
