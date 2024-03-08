@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using VotifySystem.BusinessLogic.Services;
 using VotifySystem.Forms;
 
 namespace VotifySystem.Controls;
+
+/// <summary>
+/// 
+/// </summary>
 public partial class CtrAdminHome : UserControl
 {
-    public CtrAdminHome()
+    readonly IUserService? _userService;
+
+    public CtrAdminHome(IUserService userService)
     {
         InitializeComponent();
+        _userService = userService;
     }
 
     /// <summary>
-    /// 
+    /// Show Create Election Form
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -26,5 +25,25 @@ public partial class CtrAdminHome : UserControl
     {
         FrmCreateElection form = new();
         form.Show();
+    }
+
+    /// <summary>
+    /// Show Manage Election Form
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void btnManageElection_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void btnLogOut_Click(object sender, EventArgs e)
+    {
+        _userService!.LogOut();
     }
 }

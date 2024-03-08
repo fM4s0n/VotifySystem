@@ -1,13 +1,13 @@
-﻿namespace VotifySystem.Forms;
+﻿namespace VotifySystem.Controls;
 
-partial class FrmCreateElection
+partial class CtrLogin
 {
-    /// <summary>
+    /// <summary> 
     /// Required designer variable.
     /// </summary>
     private System.ComponentModel.IContainer components = null;
 
-    /// <summary>
+    /// <summary> 
     /// Clean up any resources being used.
     /// </summary>
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,23 +20,22 @@ partial class FrmCreateElection
         base.Dispose(disposing);
     }
 
-    #region Windows Form Designer generated code
+    #region Component Designer generated code
 
-    /// <summary>
-    /// Required method for Designer support - do not modify
+    /// <summary> 
+    /// Required method for Designer support - do not modify 
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent()
     {
         SuspendLayout();
         // 
-        // FrmCreateElection
+        // CtrLogin
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(982, 553);
-        Name = "FrmCreateElection";
-        Text = "FrmCreateElection";
+        Name = "CtrLogin";
+        Size = new Size(1000, 600);
         ResumeLayout(false);
     }
 

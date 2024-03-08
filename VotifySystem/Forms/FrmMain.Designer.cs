@@ -28,18 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            pnlMain = new Panel();
             SuspendLayout();
+            // 
+            // panel1
+            // 
+            pnlMain.Location = new Point(12, 12);
+            pnlMain.Name = "panel1";
+            pnlMain.Size = new Size(890, 576);
+            pnlMain.TabIndex = 0;
             // 
             // FrmMain
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
+            Controls.Add(pnlMain);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FrmMain";
             Text = "Form1";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Panel pnlMain;
     }
 }

@@ -11,6 +11,7 @@ public abstract class User : Person
 
 public enum UserLevel
 {
+    None,
     Administrator,
     Voter
 }

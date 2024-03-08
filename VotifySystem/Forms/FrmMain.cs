@@ -1,5 +1,6 @@
 using VotifySystem.BusinessLogic.Services;
 using VotifySystem.Classes;
+using VotifySystem.Controls;
 using VotifySystem.Forms;
 
 namespace VotifySystem;
@@ -8,8 +9,11 @@ public partial class FrmMain : Form
 {
     private readonly IUserService _userService;
 
+    CtrAdminHome? ctrAdminHome;
+    CtrVoterHome? ctrVoterHome;
+    CtrLogin? ctrLogin;
 
-    private UserLevel _mode;
+    private UserLevel _mode = UserLevel.None;
 
     public FrmMain(IUserService userService)
     {
@@ -17,25 +21,56 @@ public partial class FrmMain : Form
 
         _userService = userService;
 
-        Init();
+        _userService.LogOutEvent += UserService_LogOutEvent;
+        AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+        SetMode();
     }
 
-    private void Init()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    /// <exception cref="NotImplementedException"></exception>
+    private void UserService_LogOutEvent(object sender, EventArgs e)
     {
-        AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
-
         SetMode();
+    }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public void SetMode()
+    {
+        _mode = _userService!.get
+
+        SetVisibleControl();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void SetVisibleControl()
+    {
         switch (_mode)
         {
+            case UserLevel.Administrator:
+                ctrAdminHome = new(_userService);
+                pnlMain.Controls.Add(ctrAdminHome);
+                break;
 
+            case UserLevel.Voter:
+                ctrVoterHome = new();
+                pnlMain.Controls.Add(ctrVoterHome);
+                break;
+
+            case UserLevel.None:
+                ctrLogin = new(_userService);
+                pnlMain.Controls.Add(ctrLogin);
+                break;
         }
     }
 
-    internal void SetMode()
-    {
-        _mode = _userService.GetCurrentUser().UserLevel;
-    }
 
     /// <summary>
     /// Handle any unhandled exceptions

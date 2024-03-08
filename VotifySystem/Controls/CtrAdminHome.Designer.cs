@@ -28,30 +28,73 @@ partial class CtrAdminHome
     /// </summary>
     private void InitializeComponent()
     {
-        BtnCreateElection = new Button();
+        btnCreateElection = new Button();
+        btnManageElection = new Button();
+        pictureBox1 = new PictureBox();
+        btnLogOut = new Button();
+        ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
         SuspendLayout();
         // 
-        // BtnCreateElection
+        // btnCreateElection
         // 
-        BtnCreateElection.Location = new Point(236, 143);
-        BtnCreateElection.Name = "BtnCreateElection";
-        BtnCreateElection.Size = new Size(75, 23);
-        BtnCreateElection.TabIndex = 1;
-        BtnCreateElection.Text = "Create New Election";
-        BtnCreateElection.UseVisualStyleBackColor = true;
-        BtnCreateElection.Click += BtnCreateElection_Click;
+        btnCreateElection.Location = new Point(116, 331);
+        btnCreateElection.Margin = new Padding(3, 4, 3, 4);
+        btnCreateElection.Name = "btnCreateElection";
+        btnCreateElection.Size = new Size(185, 31);
+        btnCreateElection.TabIndex = 1;
+        btnCreateElection.Text = "Create New Election";
+        btnCreateElection.UseVisualStyleBackColor = true;
+        btnCreateElection.Click += BtnCreateElection_Click;
+        // 
+        // btnManageElection
+        // 
+        btnManageElection.Location = new Point(391, 331);
+        btnManageElection.Margin = new Padding(3, 4, 3, 4);
+        btnManageElection.Name = "btnManageElection";
+        btnManageElection.Size = new Size(185, 31);
+        btnManageElection.TabIndex = 2;
+        btnManageElection.Text = "Manage Election";
+        btnManageElection.UseVisualStyleBackColor = true;
+        btnManageElection.Click += btnManageElection_Click;
+        // 
+        // pictureBox1
+        // 
+        pictureBox1.Location = new Point(261, 43);
+        pictureBox1.Name = "pictureBox1";
+        pictureBox1.Size = new Size(431, 196);
+        pictureBox1.TabIndex = 3;
+        pictureBox1.TabStop = false;
+        // 
+        // btnLogOut
+        // 
+        btnLogOut.Location = new Point(391, 499);
+        btnLogOut.Margin = new Padding(3, 4, 3, 4);
+        btnLogOut.Name = "btnLogOut";
+        btnLogOut.Size = new Size(185, 31);
+        btnLogOut.TabIndex = 4;
+        btnLogOut.Text = "Log Out";
+        btnLogOut.UseVisualStyleBackColor = true;
+        btnLogOut.Click += btnLogOut_Click;
         // 
         // CtrAdminHome
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        Controls.Add(BtnCreateElection);
+        Controls.Add(btnLogOut);
+        Controls.Add(pictureBox1);
+        Controls.Add(btnManageElection);
+        Controls.Add(btnCreateElection);
+        Margin = new Padding(3, 4, 3, 4);
         Name = "CtrAdminHome";
-        Size = new Size(547, 308);
+        Size = new Size(1000, 600);
+        ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
         ResumeLayout(false);
     }
 
     #endregion
 
-    private Button BtnCreateElection;
+    private Button btnCreateElection;
+    private Button btnManageElection;
+    private PictureBox pictureBox1;
+    private Button btnLogOut;
 }
