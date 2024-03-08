@@ -42,7 +42,7 @@ public partial class FrmMain : Form
     /// </summary>
     public void SetMode()
     {
-        _mode = _userService!.get
+        _mode = _userService!.GetCurrentUserLevel();
 
         SetVisibleControl();
     }
