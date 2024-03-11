@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.ComponentModel.Design;
-using VotifySystem.BusinessLogic.Services;
+using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem;
 

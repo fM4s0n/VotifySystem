@@ -1,7 +1,6 @@
-using VotifySystem.BusinessLogic.Services;
-using VotifySystem.Classes;
+using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.Classes;
 using VotifySystem.Controls;
-using VotifySystem.Forms;
 
 namespace VotifySystem;
 
@@ -10,8 +9,8 @@ public partial class FrmMain : Form
     private readonly IUserService _userService;
 
     CtrAdminHome? ctrAdminHome;
-    CtrVoterHome? ctrVoterHome;
-    CtrLogin? ctrLogin;
+    ctrVoterHome? ctrVoterHome;
+    ctrLogin? ctrLogin;
 
     private UserLevel _mode = UserLevel.None;
 
@@ -65,7 +64,6 @@ public partial class FrmMain : Form
                 break;
 
             case UserLevel.None:
-                ctrLogin = new(_userService);
                 pnlMain.Controls.Add(ctrLogin);
                 break;
         }
@@ -78,5 +76,33 @@ public partial class FrmMain : Form
     private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
     {
         throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void btnInPerson_Click(object sender, EventArgs e)
+    {
+        ctrLogin = new(_userService, LoginMode.InPerson)
+        {
+            Enabled = true,
+            Visible = true
+        };
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void btnOnline_Click(object sender, EventArgs e)
+    {
+        ctrLogin = new(_userService, LoginMode.Online)
+        {
+            Enabled = true,
+            Visible = true
+        };
     }
 }

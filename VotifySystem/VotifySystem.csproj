@@ -18,4 +18,8 @@
     <ProjectReference Include="..\VotifyDataAccess\VotifyDataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Online\Controls\" />
+  </ItemGroup>
+
 </Project>
