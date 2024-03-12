@@ -1,4 +1,4 @@
-﻿using VotifySystem.Classes;
+﻿using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 

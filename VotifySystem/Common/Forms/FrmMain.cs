@@ -1,5 +1,6 @@
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
+using VotifySystem.Common.Controls;
 using VotifySystem.Controls;
 
 namespace VotifySystem;
@@ -11,6 +12,7 @@ public partial class FrmMain : Form
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
     ctrLogin? ctrLogin;
+    ctrMainDefault? ctrMainDefault;
 
     private UserLevel _mode = UserLevel.None;
 
@@ -23,6 +25,10 @@ public partial class FrmMain : Form
         _userService.LogOutEvent += UserService_LogOutEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
         SetMode();
+
+        pnlMain.Controls.Add(ctrMainDefault);
+        ctrMainDefault = new();
+        ctrMainDefault.Show();
     }
 
     /// <summary>
@@ -90,6 +96,7 @@ public partial class FrmMain : Form
             Enabled = true,
             Visible = true
         };
+        ctrLogin.Visible = true;
     }
 
     /// <summary>
@@ -104,5 +111,6 @@ public partial class FrmMain : Form
             Enabled = true,
             Visible = true
         };
+        ctrLogin.Visible = true;
     }
 }
