@@ -8,7 +8,7 @@ namespace VotifySystem.Forms;
 /// </summary>
 public partial class frmCreateElection : Form
 {
-    IUserService _userService;
+    IUserService? _userService;
     ElectionVoteMechanism _currentVoteMechanism;
 
     public frmCreateElection(IUserService userService)
@@ -27,15 +27,7 @@ public partial class frmCreateElection : Form
     /// <param name="e"></param>
     private void btnCreate_Click(object sender, EventArgs e)
     {
-        if (_currentVoteMechanism == ElectionVoteMechanism.FPTP)
-        {
-            FirstPastThePostElection election = new FirstPastThePostElectionFactory().CreateElection(txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value);
-        }
-        else
-        {
-            SingleTransferrableVoteElectionFactory.
-        }
-
+        Election? election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService.GetCurrentUser());       
     }
 
     /// <summary>

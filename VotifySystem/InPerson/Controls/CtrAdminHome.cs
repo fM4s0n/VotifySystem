@@ -23,7 +23,7 @@ public partial class CtrAdminHome : UserControl
     /// <param name="e"></param>
     private void BtnCreateElection_Click(object sender, EventArgs e)
     {
-        frmCreateElection form = new();
+        frmCreateElection form = new(_userService);
         form.Show();
     }
 

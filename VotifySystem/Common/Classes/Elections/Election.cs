@@ -11,6 +11,7 @@ public abstract class Election
     public DateTime EndDate { get; set; }
     public List<ElectionCandidate> Candidates { get; set; } = [];
     public ElectionVoteMechanism VoteMechanism { get; set; }
+    public User? ElectionAdministrator { get; set; }
 }
 
 /// <summary>
