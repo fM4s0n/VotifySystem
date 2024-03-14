@@ -8,6 +8,7 @@ public class Voter : User
     public VoteMethod SelectedVoteMethod;
     string Address { get; set; } = string.Empty;
     string ConstituencyId { get; set; } = string.Empty;
+    DateTime DateOfBirth { get; set; } = DateTime.MinValue;
 
     public Voter(string firstName, string lastName, VoteMethod voteMethod, string address, string constituencyId)
     {
