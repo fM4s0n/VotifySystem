@@ -22,8 +22,9 @@ internal static class Program
         var host = CreateHostBuilder().Build();
         ServiceProvider = host.Services;
 
+        var userService = ServiceProvider.GetRequiredService<IUserService>();
 
-        frmMain.ShowForm();
+        frmMain.ShowForm(userService);
         //Application.Run(ServiceProvider.GetRequiredService<frmMain>());
     }
 
