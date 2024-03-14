@@ -35,7 +35,6 @@ public partial class frmMain : Form
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
         SetMode();
 
-        pnlMain.Controls.Add(ctrMainDefault);
         ctrMainDefault = new() { Parent = this };
         ctrMainDefault.Show();
     }
@@ -80,16 +79,16 @@ public partial class frmMain : Form
         {
             case UserLevel.Administrator:
                 ctrAdminHome = new(_userService);
-                pnlMain.Controls.Add(ctrAdminHome);
+                //pnlMain.Controls.Add(ctrAdminHome);
                 break;
 
             case UserLevel.Voter:
                 ctrVoterHome = new();
-                pnlMain.Controls.Add(ctrVoterHome);
+                //pnlMain.Controls.Add(ctrVoterHome);
                 break;
 
             case UserLevel.None:
-                pnlMain.Controls.Add(ctrLogin);
+                //pnlMain.Controls.Add(ctrLogin);
                 break;
         }
     }

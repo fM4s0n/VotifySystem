@@ -7,6 +7,11 @@ public partial class ctrLoginBase : UserControl
     private IUserService _userService;
     private LoginMode _loginMode;
 
+    public ctrLoginBase() 
+    { 
+        InitializeComponent();
+    }
+
     /// <summary>
     /// Constructor for Login Control
     /// </summary>
@@ -21,6 +26,7 @@ public partial class ctrLoginBase : UserControl
         if (_loginMode == LoginMode.InPerson)
         {
             ctrLoginInPerson.Visible = true;
+            //lblLoginCode.Visible = true;
         }
     }
 
