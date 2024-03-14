@@ -22,7 +22,9 @@ internal static class Program
         var host = CreateHostBuilder().Build();
         ServiceProvider = host.Services;
 
-        Application.Run(ServiceProvider.GetRequiredService<FrmMain>());
+
+        frmMain.ShowForm();
+        //Application.Run(ServiceProvider.GetRequiredService<frmMain>());
     }
 
     /// <summary>
@@ -35,6 +37,7 @@ internal static class Program
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
                 services.AddSingleton<IUserService, UserService>();
+                services.AddTransient<frmMain>();
             });
     }
 }

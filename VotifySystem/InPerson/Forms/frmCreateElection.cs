@@ -27,7 +27,7 @@ public partial class frmCreateElection : Form
     /// <param name="e"></param>
     private void btnCreate_Click(object sender, EventArgs e)
     {
-        Election? election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService.GetCurrentUser());       
+        Election? election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService!.GetCurrentUser()!);       
     }
 
     /// <summary>

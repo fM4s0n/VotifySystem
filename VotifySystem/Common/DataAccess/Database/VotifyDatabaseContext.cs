@@ -30,7 +30,7 @@ public class VotifyDatabaseContext : DbContext
     /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=CustomerDB.db;");
+        optionsBuilder.UseSqlite("Data Source=VotifyDB.db;");
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public class VotifyDatabaseContext : DbContext
         modelBuilder.Entity<Administrator>().ToTable(nameof(Administrator));
         modelBuilder.Entity<Candidate>().ToTable(nameof(Candidate));
         modelBuilder.Entity<Constituency>().ToTable(nameof(Constituency));
-        modelBuilder.Entity<ElectionCandidate>().ToTable(nameof(ElectionCandidates));
+        modelBuilder.Entity<ElectionCandidate>().ToTable(nameof(ElectionCandidate));
         modelBuilder.Entity<Voter>().ToTable(nameof(Voter));
     }
 }

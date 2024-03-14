@@ -1,6 +1,6 @@
 ﻿namespace VotifySystem
 {
-    partial class FrmMain
+    partial class frmMain
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,30 +29,43 @@
         private void InitializeComponent()
         {
             pnlMain = new Panel();
+            ctrMainDefault = new Common.Controls.ctrMainDefault();
+            pnlMain.SuspendLayout();
             SuspendLayout();
             // 
             // pnlMain
             // 
+            pnlMain.Controls.Add(ctrMainDefault);
             pnlMain.Dock = DockStyle.Fill;
             pnlMain.Location = new Point(0, 0);
-            pnlMain.Margin = new Padding(3, 2, 3, 2);
             pnlMain.Name = "pnlMain";
-            pnlMain.Size = new Size(800, 450);
+            pnlMain.Size = new Size(914, 600);
             pnlMain.TabIndex = 0;
             // 
-            // FrmMain
+            // ctrMainDefault
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            ctrMainDefault.Location = new Point(3, 4);
+            ctrMainDefault.Margin = new Padding(3, 4, 3, 4);
+            ctrMainDefault.Name = "ctrMainDefault1";
+            ctrMainDefault.Size = new Size(908, 596);
+            ctrMainDefault.TabIndex = 0;
+            // 
+            // frmMain
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(pnlMain);
-            Name = "FrmMain";
+            Margin = new Padding(3, 4, 3, 4);
+            Name = "frmMain";
             Text = "Form1";
+            pnlMain.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel pnlMain;
+        private Common.Controls.ctrMainDefault ctrMainDefault;
     }
 }

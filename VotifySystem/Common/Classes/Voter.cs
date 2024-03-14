@@ -6,18 +6,17 @@
 public class Voter : User
 {
     public VoteMethod SelectedVoteMethod;
+    string Address { get; set; } = string.Empty;
+    string ConstituencyId { get; set; } = string.Empty;
 
-    public Voter(string firstName, string lastName, VoteMethod voteMethod, string address, string constituency)
+    public Voter(string firstName, string lastName, VoteMethod voteMethod, string address, string constituencyId)
     {
         FirstName = firstName;
         LastName = lastName;
         SelectedVoteMethod = voteMethod;
         Address = address;
-        Constituency = constituency;
+        ConstituencyId = constituencyId;
     }     
-
-    string Address { get; set; } = string.Empty;
-    string Constituency {  get; set; } = string.Empty;
 }
 
 /// <summary>

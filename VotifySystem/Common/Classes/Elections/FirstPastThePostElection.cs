@@ -5,6 +5,6 @@
 /// </summary>
 internal class FirstPastThePostElection : Election
 {
-
+    public readonly ElectionVoteMechanism VoteMechanism = ElectionVoteMechanism.FPTP;
 }
     

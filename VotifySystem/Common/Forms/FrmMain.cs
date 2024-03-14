@@ -5,30 +5,49 @@ using VotifySystem.Controls;
 
 namespace VotifySystem;
 
-public partial class FrmMain : Form
+public partial class frmMain : Form
 {
     private readonly IUserService _userService;
 
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
     ctrLogin? ctrLogin;
-    ctrMainDefault? ctrMainDefault;
+    private static frmMain? _instance;
+    public static frmMain GetInstance() { return _instance!; }
 
     private UserLevel _mode = UserLevel.None;
 
-    public FrmMain(IUserService userService)
+    public frmMain(IUserService userService)
     {
         InitializeComponent();
 
         _userService = userService;
 
+        Init();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void Init()
+    {
         _userService.LogOutEvent += UserService_LogOutEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
         SetMode();
 
         pnlMain.Controls.Add(ctrMainDefault);
-        ctrMainDefault = new();
+        ctrMainDefault = new() { Parent = this };
         ctrMainDefault.Show();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userService"></param>
+    public static void ShowForm(IUserService userService)
+    {
+        _instance = new frmMain(userService);
+        Application.Run(_instance);
     }
 
     /// <summary>
@@ -112,5 +131,10 @@ public partial class FrmMain : Form
             Visible = true
         };
         ctrLogin.Visible = true;
+    }
+
+    public void ShowInPersonLogin()
+    {
+
     }
 }

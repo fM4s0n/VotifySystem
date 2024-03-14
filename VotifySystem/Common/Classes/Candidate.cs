@@ -7,7 +7,6 @@
 /// </summary>
 public class Candidate : Person
 {
-    public string CandidateId { get; set; } = string.Empty;
-    public string Constituency {  get; set; } = string.Empty;
-    public string Party {  get; set; } = string.Empty;
+    public string ConstituencyId { get; set; } = string.Empty;
+    public string Party { get; set; } = string.Empty;
 }
