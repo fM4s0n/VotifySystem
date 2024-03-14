@@ -2,7 +2,7 @@
 using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Controls;
-public partial class ctrLogin : UserControl
+public partial class ctrLoginBase : UserControl
 {
     private IUserService _userService;
     private LoginMode _loginMode;
@@ -11,7 +11,7 @@ public partial class ctrLogin : UserControl
     /// Constructor for Login Control
     /// </summary>
     /// <param name="userService">Singleton User Service</param>
-    public ctrLogin(IUserService userService, LoginMode loginMode)
+    public ctrLoginBase(IUserService userService, LoginMode loginMode)
     {
         InitializeComponent();
 
@@ -20,8 +20,7 @@ public partial class ctrLogin : UserControl
 
         if (_loginMode == LoginMode.InPerson)
         {
-            txtLoginCode.Visible = true;
-            lblLoginCode.Visible = true;
+            ctrLoginInPerson.Visible = true;
         }
     }
 

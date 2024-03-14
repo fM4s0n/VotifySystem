@@ -11,9 +11,9 @@ public partial class frmMain : Form
 
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
-    ctrLogin? ctrLogin;
-    private static frmMain? _instance;
-    public static frmMain GetInstance() { return _instance!; }
+    ctrLoginBase? ctrLogin;
+    private static frmMain _instance;
+    public static frmMain GetInstance() { return _instance; }
 
     private UserLevel _mode = UserLevel.None;
 
@@ -94,7 +94,6 @@ public partial class frmMain : Form
         }
     }
 
-
     /// <summary>
     /// Handle any unhandled exceptions
     /// </summary>
@@ -106,34 +105,22 @@ public partial class frmMain : Form
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void btnInPerson_Click(object sender, EventArgs e)
-    {
-        ctrLogin = new(_userService, LoginMode.InPerson)
-        {
-            Enabled = true,
-            Visible = true
-        };
-        ctrLogin.Visible = true;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void btnOnline_Click(object sender, EventArgs e)
+    public void ShowInPersonLogin()
     {
         ctrLogin = new(_userService, LoginMode.Online)
         {
             Enabled = true,
             Visible = true
         };
+
+        ctrMainDefault.Visible = false;
         ctrLogin.Visible = true;
     }
 
-    public void ShowInPersonLogin()
+    /// <summary>
+    /// 
+    /// </summary>
+    public void ShowOnlineLogin()
     {
 
     }

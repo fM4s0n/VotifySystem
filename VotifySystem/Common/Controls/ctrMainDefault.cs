@@ -17,7 +17,7 @@ public partial class ctrMainDefault : UserControl
     /// <param name="e"></param>
     private void btnInPerson_Click(object sender, EventArgs e)
     {
-        frmMain.ShowInPersonLogin();
+        frmMain.GetInstance().ShowInPersonLogin();
     }
 
     /// <summary>
