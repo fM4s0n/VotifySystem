@@ -12,14 +12,8 @@ public partial class ctrLoginBase : UserControl
         InitializeComponent();
     }
 
-    /// <summary>
-    /// Constructor for Login Control
-    /// </summary>
-    /// <param name="userService">Singleton User Service</param>
-    public ctrLoginBase(IUserService userService, LoginMode loginMode)
+    public void Init(IUserService userService, LoginMode loginMode)
     {
-        InitializeComponent();
-
         _userService = userService;
         _loginMode = loginMode;
 

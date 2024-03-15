@@ -11,7 +11,7 @@ public partial class frmMain : Form
 
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
-    ctrLoginBase? ctrLogin;
+
     private static frmMain _instance;
     public static frmMain GetInstance() { return _instance; }
 
@@ -106,14 +106,9 @@ public partial class frmMain : Form
     /// </summary>
     public void ShowInPersonLogin()
     {
-        ctrLogin = new(_userService, LoginMode.Online)
-        {
-            Enabled = true,
-            Visible = true
-        };
-
+        ctrLoginBase.Init(_userService, LoginMode.InPerson);
+        ctrLoginBase.Show();
         ctrMainDefault.Visible = false;
-        ctrLogin.Visible = true;
     }
 
     /// <summary>

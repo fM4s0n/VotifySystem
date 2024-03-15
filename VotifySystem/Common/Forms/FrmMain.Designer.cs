@@ -29,21 +29,33 @@
         private void InitializeComponent()
         {
             ctrMainDefault = new Common.Controls.ctrMainDefault();
+            ctrLoginBase = new Controls.ctrLoginBase();
             SuspendLayout();
             // 
-            // ctrMainDefault1
+            // ctrMainDefault
             // 
-            ctrMainDefault.Location = new Point(22, 12);
-            ctrMainDefault.Name = "ctrMainDefault1";
-            ctrMainDefault.Size = new Size(750, 425);
+            ctrMainDefault.Location = new Point(25, 16);
+            ctrMainDefault.Margin = new Padding(3, 5, 3, 5);
+            ctrMainDefault.Name = "ctrMainDefault";
+            ctrMainDefault.Size = new Size(857, 567);
             ctrMainDefault.TabIndex = 0;
+            // 
+            // ctrLoginBase
+            // 
+            ctrLoginBase.Location = new Point(25, 34);
+            ctrLoginBase.Name = "ctrLoginBase";
+            ctrLoginBase.Size = new Size(802, 496);
+            ctrLoginBase.TabIndex = 1;
+            ctrLoginBase.Visible = false;
             // 
             // frmMain
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
+            Controls.Add(ctrLoginBase);
             Controls.Add(ctrMainDefault);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "frmMain";
             Text = "Form1";
             ResumeLayout(false);
@@ -52,5 +64,6 @@
         #endregion
 
         private Common.Controls.ctrMainDefault ctrMainDefault;
+        private Controls.ctrLoginBase ctrLoginBase;
     }
 }
