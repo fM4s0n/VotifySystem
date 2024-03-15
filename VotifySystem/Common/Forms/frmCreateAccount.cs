@@ -1,20 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Common.Forms;
+
+/// <summary>
+/// Create Account form
+/// </summary>
 public partial class frmCreateAccount : Form
 {
     public frmCreateAccount()
     {
         InitializeComponent();
+
+        if (DesignMode == false)
+            return;
+
+        Init();
     }
+
+    private void Init()
+    {
+        foreach (var t in Enum.GetValues(typeof(VoteMethod)))
+        { 
+            string a = t.g
+        }
+    }    
 
     /// <summary>
     /// 
@@ -23,7 +32,13 @@ public partial class frmCreateAccount : Form
     /// <param name="e"></param>
     private void btnSubmit_Click(object sender, EventArgs e)
     {
-        ValidateUserInput();
+        if (ValidateUserInput())
+        {
+            Voter newVoter = new(txtFirstName.Text, txtLastName, cmbVoteMethod.SelectedValue, txtAddress, );
+
+
+            Close();
+        }
     }
 
     /// <summary>

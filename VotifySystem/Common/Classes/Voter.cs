@@ -1,4 +1,6 @@
-﻿namespace VotifySystem.Common.Classes;
+﻿using System.ComponentModel;
+
+namespace VotifySystem.Common.Classes;
 
 /// <summary>
 /// Class for a voter
@@ -26,8 +28,12 @@ public class Voter : User
 /// </summary>
 public enum VoteMethod
 {
+    [Description("Online")]
     Online,
+    [Description("Postal")]
     Postal,
-    InPerson,
-    NotAllowed
+    [Description("In Person")]
+    InPerson
 }
+
+public Dict
