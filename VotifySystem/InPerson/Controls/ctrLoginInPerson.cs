@@ -19,6 +19,17 @@ public partial class ctrLoginInPerson : UserControl
     /// <param name="e"></param>
     public void btnSubmitLoginCode_Click(object sender, EventArgs e)
     {
+        // Validate input
+        if (string.IsNullOrWhiteSpace(txtLoginCode.Text))
+        {
+            txtLoginCode.BackColor = Color.Red;
+            return;
+        }
+        else
+        {
+            txtLoginCode.BackColor = Color.White;
+        }
+
         string loginCode = txtLoginCode.Text.Trim();
 
         //check db
