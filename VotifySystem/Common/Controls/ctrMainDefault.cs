@@ -27,6 +27,6 @@ public partial class ctrMainDefault : UserControl
     /// <param name="e"></param>
     private void btnOnline_Click(object sender, EventArgs e)
     {
-        //frmMain.ShowOnlineLogin();
+        frmMain.GetInstance().ShowOnlineLogin();
     }
 }

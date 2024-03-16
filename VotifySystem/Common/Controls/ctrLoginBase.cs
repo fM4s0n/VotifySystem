@@ -4,14 +4,20 @@ using VotifySystem.Common.Classes;
 namespace VotifySystem.Controls;
 public partial class ctrLoginBase : UserControl
 {
-    private IUserService _userService;
-    private LoginMode _loginMode;
+    private IUserService? _userService;
+    private LoginMode _loginMode = LoginMode.InPerson;
 
     public ctrLoginBase() 
     { 
         InitializeComponent();
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userService"></param>
+    /// <param name="loginMode"></param>
     public void Init(IUserService userService, LoginMode loginMode)
     {
         _userService = userService;
@@ -30,7 +36,7 @@ public partial class ctrLoginBase : UserControl
     /// <param name="user"></param>
     private void LoginUser(User user)
     {
-        _userService.SetCurrentUser(user);
+        _userService!.SetCurrentUser(user);
     }
 
     /// <summary>

@@ -52,6 +52,27 @@ public partial class ctrLoginInPerson : UserControl
     /// <param name="e"></param>
     private void btnLogin_Click(object sender, EventArgs e)
     {
+        if (ValidateUserInput() == false)
+            return;
+    }
 
+    /// <summary>
+    /// Validate user input
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidateUserInput()
+    {
+        bool success = true;
+
+        foreach (TextBox tb in new List<TextBox> { txtLoginCode, txtPassword}) 
+        {
+            if (string.IsNullOrEmpty(tb.Text))
+            {
+                tb.BackColor = Color.Red;
+                success = false;
+            }
+        }
+
+        return success;
     }
 }

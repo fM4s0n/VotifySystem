@@ -34,7 +34,13 @@ partial class ctrLoginInPerson
         lblLoginCode = new Label();
         btnCreateAccount = new Button();
         btnLogin = new Button();
+        textBox1 = new TextBox();
+        txtPassword = new TextBox();
+        groupBox1 = new GroupBox();
+        lblPassword = new Label();
+        lblUsername = new Label();
         grpLoginOneTimeCode.SuspendLayout();
+        groupBox1.SuspendLayout();
         SuspendLayout();
         // 
         // grpLoginOneTimeCode
@@ -46,7 +52,7 @@ partial class ctrLoginInPerson
         grpLoginOneTimeCode.Margin = new Padding(3, 2, 3, 2);
         grpLoginOneTimeCode.Name = "grpLoginOneTimeCode";
         grpLoginOneTimeCode.Padding = new Padding(3, 2, 3, 2);
-        grpLoginOneTimeCode.Size = new Size(418, 100);
+        grpLoginOneTimeCode.Size = new Size(428, 100);
         grpLoginOneTimeCode.TabIndex = 8;
         grpLoginOneTimeCode.TabStop = false;
         grpLoginOneTimeCode.Text = "Log in to vote with one-time code here:";
@@ -83,7 +89,7 @@ partial class ctrLoginInPerson
         // 
         // btnCreateAccount
         // 
-        btnCreateAccount.Location = new Point(296, 140);
+        btnCreateAccount.Location = new Point(299, 246);
         btnCreateAccount.Margin = new Padding(3, 2, 3, 2);
         btnCreateAccount.Name = "btnCreateAccount";
         btnCreateAccount.Size = new Size(126, 22);
@@ -94,7 +100,7 @@ partial class ctrLoginInPerson
         // 
         // btnLogin
         // 
-        btnLogin.Location = new Point(3, 140);
+        btnLogin.Location = new Point(304, 97);
         btnLogin.Margin = new Padding(3, 2, 3, 2);
         btnLogin.Name = "btnLogin";
         btnLogin.Size = new Size(118, 22);
@@ -103,17 +109,65 @@ partial class ctrLoginInPerson
         btnLogin.UseVisualStyleBackColor = true;
         btnLogin.Click += btnLogin_Click;
         // 
+        // textBox1
+        // 
+        textBox1.Location = new Point(112, 43);
+        textBox1.Name = "textBox1";
+        textBox1.Size = new Size(310, 23);
+        textBox1.TabIndex = 9;
+        // 
+        // txtPassword
+        // 
+        txtPassword.Location = new Point(112, 72);
+        txtPassword.Name = "txtPassword";
+        txtPassword.Size = new Size(310, 23);
+        txtPassword.TabIndex = 10;
+        // 
+        // groupBox1
+        // 
+        groupBox1.Controls.Add(lblPassword);
+        groupBox1.Controls.Add(lblUsername);
+        groupBox1.Controls.Add(textBox1);
+        groupBox1.Controls.Add(txtPassword);
+        groupBox1.Controls.Add(btnLogin);
+        groupBox1.Location = new Point(3, 107);
+        groupBox1.Name = "groupBox1";
+        groupBox1.Size = new Size(428, 124);
+        groupBox1.TabIndex = 11;
+        groupBox1.TabStop = false;
+        groupBox1.Text = "Login with Username / Email";
+        // 
+        // lblPassword
+        // 
+        lblPassword.AutoSize = true;
+        lblPassword.Location = new Point(49, 80);
+        lblPassword.Name = "lblPassword";
+        lblPassword.Size = new Size(57, 15);
+        lblPassword.TabIndex = 12;
+        lblPassword.Text = "Password";
+        // 
+        // lblUsername
+        // 
+        lblUsername.AutoSize = true;
+        lblUsername.Location = new Point(6, 43);
+        lblUsername.Name = "lblUsername";
+        lblUsername.Size = new Size(100, 15);
+        lblUsername.TabIndex = 11;
+        lblUsername.Text = "Username / Email";
+        // 
         // ctrLoginInPerson
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(groupBox1);
         Controls.Add(grpLoginOneTimeCode);
         Controls.Add(btnCreateAccount);
-        Controls.Add(btnLogin);
         Name = "ctrLoginInPerson";
-        Size = new Size(427, 169);
+        Size = new Size(439, 279);
         grpLoginOneTimeCode.ResumeLayout(false);
         grpLoginOneTimeCode.PerformLayout();
+        groupBox1.ResumeLayout(false);
+        groupBox1.PerformLayout();
         ResumeLayout(false);
     }
 
@@ -125,4 +179,9 @@ partial class ctrLoginInPerson
     private Label lblLoginCode;
     private Button btnCreateAccount;
     private Button btnLogin;
+    private TextBox textBox1;
+    private TextBox txtPassword;
+    private GroupBox groupBox1;
+    private Label lblPassword;
+    private Label lblUsername;
 }

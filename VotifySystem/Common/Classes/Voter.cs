@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace VotifySystem.Common.Classes;
+﻿namespace VotifySystem.Common.Classes;
 
 /// <summary>
 /// Class for a voter
@@ -19,7 +17,14 @@ public class Voter : User
         SelectedVoteMethod = voteMethod;
         Address = address;
         ConstituencyId = constituencyId;
-    }     
+    }
+
+    public static readonly Dictionary<string, string> VoteMethodFriendlyNames = new()
+    {
+        {"Online", "Online" },
+        {"Postal", "Postal" },
+        {"InPerson", "In Person" }
+    };
 }
 
 /// <summary>
@@ -28,12 +33,7 @@ public class Voter : User
 /// </summary>
 public enum VoteMethod
 {
-    [Description("Online")]
     Online,
-    [Description("Postal")]
     Postal,
-    [Description("In Person")]
     InPerson
 }
-
-public Dict

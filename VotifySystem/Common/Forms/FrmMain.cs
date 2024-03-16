@@ -5,7 +5,7 @@ using VotifySystem.Controls;
 
 namespace VotifySystem;
 
-public partial class frmMain : Form
+internal partial class frmMain : Form
 {
     private readonly IUserService _userService;
 
@@ -17,7 +17,7 @@ public partial class frmMain : Form
 
     private UserLevel _mode = UserLevel.None;
 
-    public frmMain(IUserService userService)
+    internal frmMain(IUserService userService)
     {
         InitializeComponent();
 
@@ -43,7 +43,7 @@ public partial class frmMain : Form
     /// 
     /// </summary>
     /// <param name="userService"></param>
-    public static void ShowForm(IUserService userService)
+    internal static void ShowForm(IUserService userService)
     {
         _instance = new frmMain(userService);
         Application.Run(_instance);
@@ -63,7 +63,7 @@ public partial class frmMain : Form
     /// <summary>
     /// 
     /// </summary>
-    public void SetMode()
+    internal void SetMode()
     {
         _mode = _userService!.GetCurrentUserLevel();
 
@@ -104,7 +104,7 @@ public partial class frmMain : Form
     /// <summary>
     /// 
     /// </summary>
-    public void ShowInPersonLogin()
+    internal void ShowInPersonLogin()
     {
         ctrLoginBase.Init(_userService, LoginMode.InPerson);
         ctrLoginBase.Show();
@@ -114,8 +114,16 @@ public partial class frmMain : Form
     /// <summary>
     /// 
     /// </summary>
-    public void ShowOnlineLogin()
+    internal void ShowOnlineLogin()
     {
 
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    internal void ShowAdminLogin()
+    {
+        
     }
 }

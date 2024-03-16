@@ -34,9 +34,10 @@ partial class ctrMainDefault
         // 
         // btnOnline
         // 
-        btnOnline.Location = new Point(510, 268);
+        btnOnline.Location = new Point(446, 201);
+        btnOnline.Margin = new Padding(3, 2, 3, 2);
         btnOnline.Name = "btnOnline";
-        btnOnline.Size = new Size(94, 29);
+        btnOnline.Size = new Size(82, 22);
         btnOnline.TabIndex = 3;
         btnOnline.Text = "Online";
         btnOnline.UseVisualStyleBackColor = true;
@@ -44,9 +45,10 @@ partial class ctrMainDefault
         // 
         // btnInPerson
         // 
-        btnInPerson.Location = new Point(254, 268);
+        btnInPerson.Location = new Point(222, 201);
+        btnInPerson.Margin = new Padding(3, 2, 3, 2);
         btnInPerson.Name = "btnInPerson";
-        btnInPerson.Size = new Size(133, 29);
+        btnInPerson.Size = new Size(116, 22);
         btnInPerson.TabIndex = 2;
         btnInPerson.Text = "In person";
         btnInPerson.UseVisualStyleBackColor = true;
@@ -54,13 +56,12 @@ partial class ctrMainDefault
         // 
         // ctrMainDefault
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         Controls.Add(btnOnline);
         Controls.Add(btnInPerson);
-        Margin = new Padding(3, 4, 3, 4);
         Name = "ctrMainDefault";
-        Size = new Size(857, 567);
+        Size = new Size(750, 425);
         ResumeLayout(false);
     }
 
