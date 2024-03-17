@@ -10,4 +10,15 @@ public class Constituency
     public string ConstituencyId { get; set; } = string.Empty;
     public string ConstituencyName { get; set; } = string.Empty;
     public string ElectionId { get; set; } = string.Empty;
+
+    public Constituency()
+    {
+    }
+
+    public Constituency (string constituencyId, string constituencyName, string electionId)
+    {
+        ConstituencyId = constituencyId;
+        ConstituencyName = constituencyName;
+        ElectionId = electionId;
+    }
 }

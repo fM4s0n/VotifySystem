@@ -6,9 +6,9 @@
 public abstract class User : Person
 {
     //Username is email for Voter and an Id for admin
-    string Username = string.Empty;
+    public string Username = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public UserLevel UserLevel { get; set; }
+    public UserLevel UserLevel { get; set; } = UserLevel.None;
 }
 
 public enum UserLevel

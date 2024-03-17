@@ -5,18 +5,30 @@
 /// </summary>
 public class Voter : User
 {
-    public VoteMethod SelectedVoteMethod;
-    string Address { get; set; } = string.Empty;
-    string ConstituencyId { get; set; } = string.Empty;
-    DateTime DateOfBirth { get; set; } = DateTime.MinValue;
+    public VoteMethod VoteMethod;
+    public string Address { get; set; } = string.Empty;
+    public string ConstituencyId { get; set; } = string.Empty;
+    public DateTime DateOfBirth { get; set; } = DateTime.MinValue;
 
-    public Voter(string firstName, string lastName, VoteMethod voteMethod, string address, string constituencyId)
+    /// <summary>
+    /// Default Constructor for EF core
+    /// </summary>
+    public Voter()
+    {
+    }
+
+    public Voter(string firstName, string lastName, string username, string password, VoteMethod voteMethod, string address, string constituencyId, DateTime dateOfBirth)
     {
         FirstName = firstName;
         LastName = lastName;
-        SelectedVoteMethod = voteMethod;
+        Username = username;
+        Password = password;
+        VoteMethod = voteMethod;
         Address = address;
         ConstituencyId = constituencyId;
+        DateOfBirth = dateOfBirth;
+        Id = Guid.NewGuid().ToString();
+        UserLevel = UserLevel.Voter;
     }
 
     public static readonly Dictionary<string, string> VoteMethodFriendlyNames = new()

@@ -17,7 +17,7 @@ internal partial class frmMain : Form
 
     private UserLevel _mode = UserLevel.None;
 
-    internal frmMain(IUserService userService)
+    public frmMain(IUserService userService)
     {
         InitializeComponent();
 

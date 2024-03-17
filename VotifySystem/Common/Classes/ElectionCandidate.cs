@@ -8,4 +8,12 @@ public class ElectionCandidate
     public string CandidateId { get; set; } = string.Empty;
     public string ElectionId { get; set; } = string.Empty;
     public int VotesReceived { get; set; } = 0;
+
+    public ElectionCandidate() { }
+
+    public ElectionCandidate (string candidateId, string electionId)
+    {
+        CandidateId = candidateId;
+        ElectionId = electionId;
+    }
 }

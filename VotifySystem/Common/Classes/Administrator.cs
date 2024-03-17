@@ -6,6 +6,8 @@
 /// </summary>
 public class Administrator : User
 {
+    public Administrator() { }
+
     public Administrator(string firstName, string lastName) 
     {
         FirstName = firstName;

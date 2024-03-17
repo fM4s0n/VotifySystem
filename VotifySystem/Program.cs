@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.ComponentModel.Design;
+using System.Configuration;
+using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem;
@@ -38,7 +41,9 @@ internal static class Program
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
                 services.AddSingleton<IUserService, UserService>();
-                services.AddTransient<frmMain>();
+                services.AddSingleton<frmMain>();
+                services.AddDbContext<VotifyDatabaseContext>(options =>
+                    options.UseSqlite("Data Source=VotifyDB.db"));
             });
     }
 }

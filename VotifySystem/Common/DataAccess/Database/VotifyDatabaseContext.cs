@@ -28,10 +28,10 @@ public class VotifyDatabaseContext : DbContext
     /// 
     /// </summary>
     /// <param name="optionsBuilder"></param>
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite("Data Source=VotifyDB.db;");
-    }
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.UseSqlite("Data Source=VotifyDB.db;");
+    //}
 
     /// <summary>
     /// 
@@ -39,10 +39,10 @@ public class VotifyDatabaseContext : DbContext
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Administrator>().ToTable(nameof(Administrator));
-        modelBuilder.Entity<Candidate>().ToTable(nameof(Candidate));
-        modelBuilder.Entity<Constituency>().ToTable(nameof(Constituency));
-        modelBuilder.Entity<ElectionCandidate>().ToTable(nameof(ElectionCandidate));
-        modelBuilder.Entity<Voter>().ToTable(nameof(Voter));
+        modelBuilder.Entity<Administrator>().ToTable(nameof(Administrator)).HasKey(a => a.Id);
+        modelBuilder.Entity<Candidate>().ToTable(nameof(Candidate)).HasKey(c => c.Id);
+        modelBuilder.Entity<Constituency>().ToTable(nameof(Constituency)).HasKey(co => co.ConstituencyId);
+        modelBuilder.Entity<ElectionCandidate>().ToTable(nameof(ElectionCandidate)).HasNoKey();
+        modelBuilder.Entity<Voter>().ToTable(nameof(Voter)).HasKey(v => v.Id);
     }
 }
