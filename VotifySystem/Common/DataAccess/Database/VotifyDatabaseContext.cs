@@ -7,10 +7,7 @@ namespace VotifyDataAccess.Database;
 /// EFCore with SqLite
 /// https://entityframeworkcore.com/providers-sqlite
 /// </summary>
-/// <remarks>
-/// 
-/// </remarks>
-/// <param name="options"></param>
+/// <param name="options">DbContext Options</param>
 public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : DbContext(options)
 {
     public DbSet<Administrator> Administrators { get; set; }

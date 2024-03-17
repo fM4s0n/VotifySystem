@@ -44,6 +44,6 @@ public partial class CtrAdminHome : UserControl
     /// <param name="e"></param>
     private void btnLogOut_Click(object sender, EventArgs e)
     {
-        _userService!.LogOut();
+        _userService!.LogOutUser();
     }
 }

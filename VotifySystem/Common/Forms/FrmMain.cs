@@ -1,6 +1,9 @@
+using VotifyDataAccess.Database;
+using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Controls;
+using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Controls;
 
 namespace VotifySystem;
@@ -8,6 +11,7 @@ namespace VotifySystem;
 internal partial class frmMain : Form
 {
     private readonly IUserService _userService;
+    private readonly IDbService _dbService;
 
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
@@ -17,11 +21,12 @@ internal partial class frmMain : Form
 
     private UserLevel _mode = UserLevel.None;
 
-    public frmMain(IUserService userService)
+    public frmMain(IUserService userService, IDbService dbService)
     {
         InitializeComponent();
 
         _userService = userService;
+        _dbService = dbService;
 
         Init();
     }
@@ -33,6 +38,9 @@ internal partial class frmMain : Form
     {
         _userService.LogOutEvent += UserService_LogOutEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+
+        CheckForDefaultAdmin();
+
         SetMode();
 
         ctrMainDefault = new() { Parent = this };
@@ -42,10 +50,21 @@ internal partial class frmMain : Form
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userService"></param>
-    internal static void ShowForm(IUserService userService)
+    private void CheckForDefaultAdmin()
     {
-        _instance = new frmMain(userService);
+        if (_dbService.GetDatabaseContext().Administrators.Any(a => a.Username == "DefaultAdmin") == false)
+        {
+            _dbService.InsertEntity(UserHelper.CreateInitialAdministrator());
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userService"></param>
+    internal static void ShowForm(IUserService userService, IDbService dbService)
+    {
+        _instance = new frmMain(userService, dbService);
         Application.Run(_instance);
     }
 

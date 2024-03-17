@@ -5,6 +5,7 @@ using System.ComponentModel.Design;
 using System.Configuration;
 using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem;
 
@@ -26,9 +27,9 @@ internal static class Program
         ServiceProvider = host.Services;
 
         var userService = ServiceProvider.GetRequiredService<IUserService>();
+        var dbService = ServiceProvider.GetRequiredService<IDbService>();
 
-        frmMain.ShowForm(userService);
-        //Application.Run(ServiceProvider.GetRequiredService<frmMain>());
+        frmMain.ShowForm(userService, dbService);
     }
 
     /// <summary>
@@ -44,6 +45,11 @@ internal static class Program
                 services.AddSingleton<frmMain>();
                 services.AddDbContext<VotifyDatabaseContext>(options =>
                     options.UseSqlite("Data Source=VotifyDB.db"));
+                services.AddSingleton<IDbService>(provider =>
+                {
+                    var dbContext = provider.GetRequiredService<VotifyDatabaseContext>();
+                    return new DbService(dbContext);
+                });
             });
     }
 }

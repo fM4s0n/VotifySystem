@@ -11,6 +11,9 @@ public abstract class User : Person
     public UserLevel UserLevel { get; set; } = UserLevel.None;
 }
 
+/// <summary>
+/// User Level enum to determine what type of user they are.
+/// </summary>
 public enum UserLevel
 {
     None,

@@ -37,12 +37,12 @@ public class UserService : IUserService
     /// Set the current user
     /// </summary>
     /// <param name="user">User object of the user to be set</param>
-    public void SetCurrentUser(User user) => _currentUser = user;
+    public void LogInUser(User user) => _currentUser = user;
 
     /// <summary>
     /// 
     /// </summary>
-    public void LogOut() => OnLogout();
+    public void LogOutUser() => OnLogout();
 
     /// <summary>
     /// Logout Event

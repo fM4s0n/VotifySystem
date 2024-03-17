@@ -36,7 +36,7 @@ public partial class ctrLoginBase : UserControl
     /// <param name="user"></param>
     private void LoginUser(User user)
     {
-        _userService!.SetCurrentUser(user);
+        _userService!.LogInUser(user);
     }
 
     /// <summary>

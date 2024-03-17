@@ -7,10 +7,10 @@ public interface IUserService
     event UserService.LogoutEventHandler LogOutEvent;
 
     /// <summary>
-    /// 
+    /// Set the current user
     /// </summary>
-    /// <param name="user"></param>
-    void SetCurrentUser(User user);
+    /// <param name="user">User to be set</param>
+    void LogInUser(User user);
 
     /// <summary>
     /// Get the current user
@@ -19,8 +19,13 @@ public interface IUserService
     User? GetCurrentUser();
 
     /// <summary>
-    /// 
+    /// Log out the current user
     /// </summary>
-    void LogOut();
+    void LogOutUser();
+
+    /// <summary>
+    /// Gets the UserLevel of the current user
+    /// </summary>
+    /// <returns>UserLevel value of current user if there is one, UserLevel.None otherwise</returns>
     UserLevel GetCurrentUserLevel();
 }
