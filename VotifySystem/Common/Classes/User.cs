@@ -5,8 +5,8 @@
 /// </summary>
 public abstract class User : Person
 {
-    //Username is email for Voter and an Id for admin
-    public string Username = string.Empty;
+    // Username is email for Voter and an Id for admin
+    public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public UserLevel UserLevel { get; set; } = UserLevel.None;
 }

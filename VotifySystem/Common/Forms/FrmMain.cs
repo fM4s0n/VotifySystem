@@ -16,7 +16,7 @@ internal partial class frmMain : Form
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
 
-    private static frmMain _instance;
+    private static frmMain? _instance;
     public static frmMain GetInstance() { return _instance; }
 
     private UserLevel _mode = UserLevel.None;
@@ -48,18 +48,16 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// 
+    /// Check the default admin exists and create if not
     /// </summary>
     private void CheckForDefaultAdmin()
     {
-        if (_dbService.GetDatabaseContext().Administrators.Any(a => a.Username == "DefaultAdmin") == false)
-        {
-            _dbService.InsertEntity(UserHelper.CreateInitialAdministrator());
-        }
+        if (_dbService.GetDatabaseContext().Administrators.Any(a => a.Username == "DefaultAdmin") == false)        
+            _dbService.InsertEntity(UserHelper.CreateInitialAdministrator());        
     }
 
     /// <summary>
-    /// 
+    /// Custom show method
     /// </summary>
     /// <param name="userService"></param>
     internal static void ShowForm(IUserService userService, IDbService dbService)
@@ -69,23 +67,21 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// 
+    /// Reset the mode of the form as user has logged out
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    /// <exception cref="NotImplementedException"></exception>
     private void UserService_LogOutEvent(object sender, EventArgs e)
     {
         SetMode();
     }
 
     /// <summary>
-    /// 
+    /// Set the viewing mode of the form
     /// </summary>
     internal void SetMode()
     {
         _mode = _userService!.GetCurrentUserLevel();
-
         SetVisibleControl();
     }
 
@@ -97,20 +93,32 @@ internal partial class frmMain : Form
         switch (_mode)
         {
             case UserLevel.Administrator:
-                ctrAdminHome = new(_userService);
-                //pnlMain.Controls.Add(ctrAdminHome);
+                ctrAdminHome = new(_userService){ Visible = true };
+                ctrMainDefault.Visible = false;
+                ctrAdminHome.Show();
                 break;
 
             case UserLevel.Voter:
-                ctrVoterHome = new();
-                //pnlMain.Controls.Add(ctrVoterHome);
+                ctrVoterHome = new() { Visible = true };
+                ctrMainDefault.Visible = false;
                 break;
 
             case UserLevel.None:
-                //pnlMain.Controls.Add(ctrLogin);
+                ctrMainDefault.Visible = true;
                 break;
         }
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    //private void SetAllControlsNotVisible()
+    //{
+    //    foreach (UserControl ctr in new List<UserControl>() {ctrMainDefault, t })
+    //    {
+
+    //    }
+    //}
 
     /// <summary>
     /// Handle any unhandled exceptions
