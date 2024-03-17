@@ -22,10 +22,10 @@ public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> optio
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Administrator>().ToTable(nameof(Administrator)).HasKey(a => a.Id);
-        modelBuilder.Entity<Candidate>().ToTable(nameof(Candidate)).HasKey(c => c.Id);
-        modelBuilder.Entity<Constituency>().ToTable(nameof(Constituency)).HasKey(co => co.ConstituencyId);
-        modelBuilder.Entity<ElectionCandidate>().ToTable(nameof(ElectionCandidate)).HasNoKey();
-        modelBuilder.Entity<Voter>().ToTable(nameof(Voter)).HasKey(v => v.Id);
+        modelBuilder.Entity<Administrator>().ToTable("Administrator").HasKey(a => a.Id);
+        modelBuilder.Entity<Candidate>().ToTable("Candidate").HasKey(c => c.Id);
+        modelBuilder.Entity<Constituency>().ToTable("Constituency").HasKey(co => co.ConstituencyId);
+        modelBuilder.Entity<ElectionCandidate>().ToTable("ElectionCandidate").HasNoKey();
+        modelBuilder.Entity<Voter>().ToTable("Voter").HasKey(v => v.Id);
     }
 }
