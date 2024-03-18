@@ -1,4 +1,4 @@
-﻿using static VotifySystem.Common.BusinessLogic.Helpers.LocalisationHelper;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 
 namespace VotifySystem.Common.Classes;
 

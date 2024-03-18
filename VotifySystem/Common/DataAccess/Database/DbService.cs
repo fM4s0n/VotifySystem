@@ -34,31 +34,32 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
     }
 
     /// <summary>
-    /// 
+    /// Gets the current
     /// </summary>
-    /// <returns></returns>
-    public VotifyDatabaseContext GetDatabaseContext()
-    {
-        return _dbContext;
-    }
+    /// <returns>current instance of VotifyDatabaseContext</returns>
+    public VotifyDatabaseContext GetDatabaseContext() => _dbContext;
 
     /// <summary>
     /// Seed data to the Db if required
     /// </summary>
     public void SeedDataIfRequired()
     {
-        if (_dbContext.Administrators.Any( a => a.Username == "DefaultAdmin"))
-        {
+        if (_dbContext.Administrators.Any(a => a.Username == "DefaultAdmin") == false)        
             InsertEntity(CreateInitialAdministrator());
-        }
+
+        if (_dbContext.Parties.Any(p => p.Name == "Default Parties") == false)
+            InsertEntity(CreateDefaultParty());
     }
+
+    /// <summary>
+    /// Create the default party for seed data
+    /// </summary>
+    /// <returns>Default Party for seed data</returns>
+    private static Party CreateDefaultParty() => new ("Default Party", Country.UK);
 
     /// <summary>
     /// Create instance of the Default Administrator
     /// </summary>
-    /// <returns>New instance of Administrator</returns>
-    private static Administrator CreateInitialAdministrator()
-    {
-        return new Administrator("Default", "Admin", "DefaultAdmin", "Password");
-    }
+    /// <returns>Default administrator for seed data</returns>
+    private static Administrator CreateInitialAdministrator() => new ("Default", "Admin", "DefaultAdmin", "Password");
 }

@@ -5,9 +5,11 @@
 /// </summary>
 public class LocalisationHelper
 {
-    public enum Country
-    {
-        UK,
-        France
-    }
+
+}
+
+public enum Country
+{
+    UK,
+    France
 }

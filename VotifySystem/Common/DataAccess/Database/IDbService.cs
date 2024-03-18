@@ -19,9 +19,9 @@ internal interface IDbService
     void InsertEntity<T>(T entity) where T : class;
 
     /// <summary>
-    /// Returns current instance of VotifyDatabaseContext
+    /// gets the current instance of VotifyDatabaseContext
     /// </summary>
-    /// <returns></returns>
+    /// <returns>current instance of VotifyDatabaseContext</returns>
     VotifyDatabaseContext GetDatabaseContext();
 
     /// <summary>

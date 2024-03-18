@@ -10,11 +10,17 @@ public class Candidate : Person
     public string ConstituencyId { get; set; } = string.Empty;
     public string PartyId { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Default Constructor for EF Core
+    /// </summary>
     public Candidate() { }
 
-    public Candidate(string constituencyId, string party)
+    public Candidate(string firstName, string lastName, string constituencyId, string partyId)
     {
+        FirstName = firstName;
+        LastName = lastName;
         ConstituencyId = constituencyId;
-        PartyId = party;
+        PartyId = partyId;
+        Id = Guid.NewGuid().ToString();
     }
 }

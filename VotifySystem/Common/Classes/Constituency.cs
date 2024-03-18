@@ -11,13 +11,16 @@ public class Constituency
     public string ConstituencyName { get; set; } = string.Empty;
     public string ElectionId { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Default Constructor for EF Core
+    /// </summary>
     public Constituency()
     {
     }
 
-    public Constituency (string constituencyId, string constituencyName, string electionId)
+    public Constituency (string constituencyName, string electionId)
     {
-        ConstituencyId = constituencyId;
+        ConstituencyId = Guid.NewGuid ().ToString();
         ConstituencyName = constituencyName;
         ElectionId = electionId;
     }
