@@ -8,13 +8,13 @@
 public class Candidate : Person
 {
     public string ConstituencyId { get; set; } = string.Empty;
-    public string Party { get; set; } = string.Empty;
+    public string PartyId { get; set; } = string.Empty;
 
     public Candidate() { }
 
     public Candidate(string constituencyId, string party)
     {
         ConstituencyId = constituencyId;
-        Party = party;
+        PartyId = party;
     }
 }

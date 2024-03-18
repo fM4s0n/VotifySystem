@@ -24,6 +24,9 @@ internal partial class frmMain : Form
     {
         InitializeComponent();
 
+        if (DesignMode)
+            return;
+
         _userService = userService;
         _dbService = dbService;
 
@@ -31,28 +34,18 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// 
+    /// Custom init
     /// </summary>
     private void Init()
     {
         _userService.LogOutEvent += UserService_LogOutEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
-        CheckForDefaultAdmin();
-
+        _dbService.SeedDataIfRequired();
         SetMode();
 
         ctrMainDefault = new() { Parent = this };
         ctrMainDefault.Show();
-    }
-
-    /// <summary>
-    /// Check the default admin exists and create if not
-    /// </summary>
-    private void CheckForDefaultAdmin()
-    {
-        if (_dbService.GetDatabaseContext().Administrators.Any(a => a.Username == "DefaultAdmin") == false)
-            _dbService.InsertEntity(UserHelper.CreateInitialAdministrator());
     }
 
     /// <summary>

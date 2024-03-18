@@ -15,6 +15,7 @@ public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> optio
     public DbSet<Constituency> Constituencies { get; set; }
     public DbSet<ElectionCandidate> ElectionCandidates { get; set; }
     public DbSet<Voter> Voters { get; set; }
+    public DbSet<Party> Parties { get; set; }
 
     /// <summary>
     /// 
@@ -27,5 +28,6 @@ public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> optio
         modelBuilder.Entity<Constituency>().ToTable("Constituency").HasKey(co => co.ConstituencyId);
         modelBuilder.Entity<ElectionCandidate>().ToTable("ElectionCandidate").HasNoKey();
         modelBuilder.Entity<Voter>().ToTable("Voter").HasKey(v => v.Id);
+        modelBuilder.Entity<Party>().ToTable("Party").HasKey(p => p.PartyId);
     }
 }

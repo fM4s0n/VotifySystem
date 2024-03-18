@@ -3,9 +3,9 @@
 /// <summary>
 /// Helper class for internationalisation / localisation
 /// </summary>
-internal class LocalisationHelper
+public class LocalisationHelper
 {
-    internal enum Country
+    public enum Country
     {
         UK,
         France
