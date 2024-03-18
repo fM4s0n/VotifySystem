@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.ComponentModel.Design;
-using System.Configuration;
 using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.DataAccess.Database;

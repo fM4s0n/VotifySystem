@@ -1,4 +1,6 @@
-﻿using VotifySystem.Common.Classes;
+﻿using Microsoft.AspNetCore.Identity;
+
+using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 
@@ -48,4 +50,29 @@ public class UserService : IUserService
     /// Logout Event
     /// </summary>
     public virtual void OnLogout() => LogOutEvent?.Invoke(this, EventArgs.Empty);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
+    public static string HashPassword(User user, string password)
+    {
+        PasswordHasher<User> passwordHasher = new();
+        return passwordHasher.HashPassword(user, password);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hashedPassword"></param>
+    /// <param name="unhashedPassword"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
+    public static PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user)
+    {
+        PasswordHasher<User> passwordHasher = new();
+        return passwordHasher.VerifyHashedPassword(user, hashedPassword, unhashedPassword);
+    }
 }

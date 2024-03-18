@@ -34,7 +34,7 @@ partial class ctrMainDefault
         // 
         // btnOnline
         // 
-        btnOnline.Location = new Point(446, 201);
+        btnOnline.Location = new Point(384, 201);
         btnOnline.Margin = new Padding(3, 2, 3, 2);
         btnOnline.Name = "btnOnline";
         btnOnline.Size = new Size(82, 22);
