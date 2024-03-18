@@ -1,4 +1,3 @@
-using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
@@ -52,8 +51,8 @@ internal partial class frmMain : Form
     /// </summary>
     private void CheckForDefaultAdmin()
     {
-        if (_dbService.GetDatabaseContext().Administrators.Any(a => a.Username == "DefaultAdmin") == false)        
-            _dbService.InsertEntity(UserHelper.CreateInitialAdministrator());        
+        if (_dbService.GetDatabaseContext().Administrators.Any(a => a.Username == "DefaultAdmin") == false)
+            _dbService.InsertEntity(UserHelper.CreateInitialAdministrator());
     }
 
     /// <summary>

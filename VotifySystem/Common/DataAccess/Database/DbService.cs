@@ -7,7 +7,7 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// </summary>
 internal class DbService(VotifyDatabaseContext dbContext) : IDbService
 {
-    VotifyDatabaseContext _dbContext = dbContext;
+    private VotifyDatabaseContext _dbContext = dbContext;
 
     /// <summary>
     /// Generic insert statement to insert a new entity into the Db
