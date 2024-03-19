@@ -71,7 +71,7 @@ internal partial class frmMain : Form
     /// <summary>
     /// Set the viewing mode of the form
     /// </summary>
-    internal void SetMode()
+    private void SetMode()
     {
         _mode = _userService!.GetCurrentUserLevel();
         SetVisibleControl();
@@ -136,13 +136,5 @@ internal partial class frmMain : Form
     internal void ShowOnlineLogin()
     {
 
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    internal void ShowAdminLogin()
-    {
-        
     }
 }

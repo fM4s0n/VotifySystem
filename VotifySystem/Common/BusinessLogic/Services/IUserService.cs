@@ -28,4 +28,5 @@ public interface IUserService
     /// </summary>
     /// <returns>UserLevel value of current user if there is one, UserLevel.None otherwise</returns>
     UserLevel GetCurrentUserLevel();
+    string HashPassword(User user, string password);
 }

@@ -1,4 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
+using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using static VotifySystem.Common.BusinessLogic.Helpers.LocalisationHelper;
 
@@ -9,14 +10,16 @@ namespace VotifySystem.Common.Forms;
 /// </summary>
 public partial class frmCreateAccount : Form
 {
-    private List<string> _constituencies;
+    IUserService _userService;
 
-    public frmCreateAccount()
+    public frmCreateAccount(IUserService userService)
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
+
+        _userService = userService;
 
         Init();
     }
@@ -42,8 +45,17 @@ public partial class frmCreateAccount : Form
     {
         if (ValidateUserInput())
         {
-            //Voter newVoter = new(txtFirstName.Text, txtLastName, cmbVoteMethod.SelectedValue, txtAddress, );
+            string constituencyId = string.Empty;
+            VoteMethod voteMethod = cmbVoteMethod.SelectedValue switch
+            {
+                "Online" => VoteMethod.Online,
+                "Postal" => VoteMethod.Postal,
+                _ => VoteMethod.InPerson
+            };            
 
+            Voter newVoter = new(txtFirstName.Text, txtLastName.Text, txtEmail.Text, voteMethod, txtAddress.Text, constituencyId, dtpDoB.Value);
+
+            _userService.HashPassword(newVoter, txtPassword.Text);
 
             Close();
         }

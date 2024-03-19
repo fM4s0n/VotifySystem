@@ -44,16 +44,6 @@ public partial class ctrLoginBase : UserControl
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void btnCreateAccount_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnLogin_Click(object sender, EventArgs e)
     {
 
