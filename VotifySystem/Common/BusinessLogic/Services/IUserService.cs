@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.Classes;
+﻿using Microsoft.AspNetCore.Identity;
+using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 
@@ -28,5 +29,8 @@ public interface IUserService
     /// </summary>
     /// <returns>UserLevel value of current user if there is one, UserLevel.None otherwise</returns>
     UserLevel GetCurrentUserLevel();
+
     string HashPassword(User user, string password);
+
+    PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user);
 }

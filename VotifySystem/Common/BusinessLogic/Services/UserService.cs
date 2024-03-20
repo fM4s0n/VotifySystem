@@ -52,11 +52,11 @@ public class UserService : IUserService
     public virtual void OnLogout() => LogOutEvent?.Invoke(this, EventArgs.Empty);
 
     /// <summary>
-    /// 
+    /// Hash password 
     /// </summary>
     /// <param name="user"></param>
     /// <param name="password"></param>
-    /// <returns></returns>
+    /// <returns>string of hashed plaintext password</returns>
     public string HashPassword(User user, string password)
     {
         PasswordHasher<User> passwordHasher = new();
@@ -64,12 +64,12 @@ public class UserService : IUserService
     }
 
     /// <summary>
-    /// 
+    /// Verify the user password is correct
     /// </summary>
     /// <param name="hashedPassword"></param>
     /// <param name="unhashedPassword"></param>
     /// <param name="user"></param>
-    /// <returns></returns>
+    /// <returns>Failed or successfull verification of password input </returns>
     public PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user)
     {
         PasswordHasher<User> passwordHasher = new();

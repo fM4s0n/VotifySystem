@@ -17,14 +17,13 @@ public class Voter : User
     {
     }
 
-    public Voter(string firstName, string lastName, string username, VoteMethod voteMethod, string address, string constituencyId, DateTime dateOfBirth)
+    public Voter(string firstName, string lastName, string username, VoteMethod voteMethod, string address, DateTime dateOfBirth)
     {
         FirstName = firstName;
         LastName = lastName;
         Username = username;
         VoteMethod = voteMethod;
         Address = address;
-        ConstituencyId = constituencyId;
         DateOfBirth = dateOfBirth;
         Id = Guid.NewGuid().ToString();
         UserLevel = UserLevel.Voter;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VotifySystem.Common.Classes;
+using VotifySystem.Common.Classes.Elections;
 
 namespace VotifyDataAccess.Database;
 
@@ -16,6 +17,7 @@ public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> optio
     public DbSet<ElectionCandidate> ElectionCandidates { get; set; }
     public DbSet<Voter> Voters { get; set; }
     public DbSet<Party> Parties { get; set; }
+    public DbSet<ElectionVoter> ElectionVoters { get; set; }
 
     /// <summary>
     /// 
@@ -29,5 +31,6 @@ public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> optio
         modelBuilder.Entity<ElectionCandidate>().ToTable("ElectionCandidate").HasNoKey();
         modelBuilder.Entity<Voter>().ToTable("Voter").HasKey(v => v.Id);
         modelBuilder.Entity<Party>().ToTable("Party").HasKey(p => p.PartyId);
+        modelBuilder.Entity<ElectionVoter>().ToTable("ElectionVoter").HasNoKey();
     }
 }

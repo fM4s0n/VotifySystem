@@ -1,18 +1,19 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
-using static VotifySystem.Common.BusinessLogic.Helpers.LocalisationHelper;
+using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.Common.Forms;
 
 /// <summary>
 /// Create Account form for voter to create an account
 /// </summary>
-public partial class frmCreateAccount : Form
+internal partial class frmCreateAccount : Form
 {
     IUserService _userService;
+    IDbService _dbService;
 
-    public frmCreateAccount(IUserService userService)
+    internal frmCreateAccount(IUserService userService, IDbService dbService)
     {
         InitializeComponent();
 
@@ -20,6 +21,7 @@ public partial class frmCreateAccount : Form
             return;
 
         _userService = userService;
+        _dbService = dbService;
 
         Init();
     }
@@ -45,7 +47,6 @@ public partial class frmCreateAccount : Form
     {
         if (ValidateUserInput())
         {
-            string constituencyId = string.Empty;
             VoteMethod voteMethod = cmbVoteMethod.SelectedValue switch
             {
                 "Online" => VoteMethod.Online,
@@ -53,9 +54,10 @@ public partial class frmCreateAccount : Form
                 _ => VoteMethod.InPerson
             };            
 
-            Voter newVoter = new(txtFirstName.Text, txtLastName.Text, txtEmail.Text, voteMethod, txtAddress.Text, constituencyId, dtpDoB.Value);
+            Voter newVoter = new(txtFirstName.Text, txtLastName.Text, txtEmail.Text, voteMethod, txtAddress.Text, dtpDoB.Value);
+            newVoter.Password = _userService.HashPassword(newVoter, txtPassword.Text);
 
-            _userService.HashPassword(newVoter, txtPassword.Text);
+            _dbService.InsertEntity(newVoter);
 
             Close();
         }
@@ -67,7 +69,7 @@ public partial class frmCreateAccount : Form
     /// <returns>True if valid, false if not</returns>
     private bool ValidateUserInput()
     {
-        foreach (TextBox inputBox in new List<TextBox> { txtFirstName, txtLastName, txtAddress, txtPostCode })
+        foreach (TextBox inputBox in new List<TextBox> { txtFirstName, txtLastName, txtAddress })
         {
             bool success = true;
             if (string.IsNullOrEmpty(inputBox.Text))

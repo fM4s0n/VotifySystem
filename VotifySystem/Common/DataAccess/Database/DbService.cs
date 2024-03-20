@@ -18,8 +18,15 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
     /// <param name="entity">The entity to be inserted</param>
     public void InsertEntity<T>(T entity) where T : class
     {
-        _dbContext.Set<T>().Add(entity);
-        _dbContext.SaveChanges();
+        try 
+        {             
+            _dbContext.Set<T>().Add(entity);
+            _dbContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }   
     }
 
     /// <summary>
@@ -29,8 +36,15 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
     /// <param name="entity"></param>
     public void DeleteRecord<T>(T entity) where T : class
     {
-        _dbContext.Set<T>().Remove(entity);
-        _dbContext.SaveChanges();
+        try
+        {
+            _dbContext.Set<T>().Remove(entity);
+            _dbContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     /// <summary>
@@ -44,11 +58,19 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
     /// </summary>
     public void SeedDataIfRequired()
     {
-        if (_dbContext.Administrators.Any(a => a.Username == "DefaultAdmin") == false)        
-            InsertEntity(CreateInitialAdministrator());
+        try
+        {
+            if (_dbContext.Administrators.Any(a => a.Username == "DefaultAdmin") == false)
+                InsertEntity(CreateInitialAdministrator());
 
-        if (_dbContext.Parties.Any(p => p.Name == "Default Parties") == false)
-            InsertEntity(CreateDefaultParty());
+
+            if (_dbContext.Parties.Any(p => p.Name == "Default Parties") == false)
+                InsertEntity(CreateDefaultParty());
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error seeding data - {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     /// <summary>
