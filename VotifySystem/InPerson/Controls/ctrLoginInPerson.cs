@@ -139,4 +139,11 @@ public partial class ctrLoginInPerson : UserControl
 
         return success;
     }
+
+    public void ResetControl()
+    {
+        txtUsername.Text = string.Empty;
+        txtPassword.Text = string.Empty;
+        txtLoginCode.Text = string.Empty;
+    }
 }

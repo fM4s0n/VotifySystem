@@ -13,6 +13,8 @@ public partial class ctrLoginBase : UserControl
     public ctrLoginBase() 
     { 
         InitializeComponent();
+
+        _userService.LogInEvent += UserService_LogInEvent;
     }
 
     /// <summary>
@@ -34,32 +36,14 @@ public partial class ctrLoginBase : UserControl
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    /// <param name="user"></param>
-    private void LoginUser(User user)
+    /// <param name="sender">Event senser</param>
+    /// <param name="e">EventArgs</param>
+    private void UserService_LogInEvent(object sender, EventArgs e)
     {
-        _userService!.LogInUser(user);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void btnLogin_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void btnSubmitLoginCode_Click(object sender, EventArgs e)
-    {
-        // check db or something
+        ctrLoginInPerson.ResetControl();
+        ctrLoginInPerson.Visible = false;
     }
 }
 

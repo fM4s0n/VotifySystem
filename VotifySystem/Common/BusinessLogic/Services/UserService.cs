@@ -11,11 +11,13 @@ public class UserService : IUserService
 {
     private User? _currentUser = null;
 
-    // Define a public delegate for the logout event
+    // Define the public delegates for login and logout events
     public delegate void LogoutEventHandler(object sender, EventArgs e);
+    public delegate void LoginEventHandler(object sender, EventArgs e);
 
-    // Use the public delegate as the event type
-    public event LogoutEventHandler LogOutEvent;
+    // Define the public events for login and logout events
+    public event LogoutEventHandler? LogOutEvent;
+    public event LoginEventHandler? LogInEvent;
 
     /// <summary>
     /// Get the current user
@@ -39,17 +41,30 @@ public class UserService : IUserService
     /// Set the current user
     /// </summary>
     /// <param name="user">User object of the user to be set</param>
-    public void LogInUser(User user) => _currentUser = user;
+    public void LogInUser(User user) 
+    { 
+        _currentUser = user; 
+        OnLogin();
+    }
 
     /// <summary>
-    /// 
+    /// Logout event
     /// </summary>
-    public void LogOutUser() => OnLogout();
+    public void LogOutUser()
+    {
+        _currentUser = null;
+        OnLogout();
+    }
+
+    /// <summary>
+    /// Login Event
+    /// </summary>
+    public void OnLogin() => LogInEvent?.Invoke(this, EventArgs.Empty);
 
     /// <summary>
     /// Logout Event
     /// </summary>
-    public virtual void OnLogout() => LogOutEvent?.Invoke(this, EventArgs.Empty);
+    public void OnLogout() => LogOutEvent?.Invoke(this, EventArgs.Empty);
 
     /// <summary>
     /// Hash password 

@@ -6,6 +6,7 @@ namespace VotifySystem.Common.BusinessLogic.Services;
 public interface IUserService
 {
     event UserService.LogoutEventHandler LogOutEvent;
+    event UserService.LoginEventHandler LogInEvent;
 
     /// <summary>
     /// Set the current user

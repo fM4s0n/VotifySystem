@@ -1,4 +1,3 @@
-using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Controls;
@@ -7,6 +6,10 @@ using VotifySystem.Controls;
 
 namespace VotifySystem;
 
+/// <summary>
+/// Main form of the application
+/// this is the main entry point of the application
+/// </summary>
 internal partial class frmMain : Form
 {
     private IUserService? _userService;
@@ -39,6 +42,7 @@ internal partial class frmMain : Form
     private void Init()
     {
         _userService!.LogOutEvent += UserService_LogOutEvent;
+        _userService!.LogInEvent += UserService_LogInEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
         _dbService!.SeedDataIfRequired();
@@ -59,11 +63,17 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// Reset the mode of the form as user has logged out
+    /// Handle the logout event by setting the mode to None
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void UserService_LogOutEvent(object sender, EventArgs e)
+    {
+        SetMode();
+    }
+
+    /// <summary>
+    /// Handle the login event by setting the mode of the form
+    /// </summary>
+    private void UserService_LogInEvent(object sender, EventArgs e)
     {
         SetMode();
     }
@@ -78,14 +88,14 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// 
+    /// Set the visible control based user level
     /// </summary>
     private void SetVisibleControl()
     {
         switch (_mode)
         {
             case UserLevel.Administrator:
-                ctrAdminHome = new(_userService){ Visible = true };
+                ctrAdminHome = new(_userService!){ Visible = true };
                 ctrMainDefault.Visible = false;
                 ctrAdminHome.Show();
                 break;
@@ -102,30 +112,22 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// 
-    /// </summary>
-    //private void SetAllControlsNotVisible()
-    //{
-    //    foreach (UserControl ctr in new List<UserControl>() {ctrMainDefault, t })
-    //    {
-
-    //    }
-    //}
-
-    /// <summary>
     /// Handle any unhandled exceptions
     /// </summary>
     private void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
     {
-        throw new NotImplementedException();
+        if (e.ExceptionObject is Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     /// <summary>
-    /// 
+    /// Show in person login control
     /// </summary>
     internal void ShowInPersonLogin()
     {
-        ctrLoginBase.Init(_userService, _dbService, LoginMode.InPerson);
+        ctrLoginBase.Init(_userService!, _dbService!, LoginMode.InPerson);
         ctrLoginBase.Show();
         ctrMainDefault.Visible = false;
     }
