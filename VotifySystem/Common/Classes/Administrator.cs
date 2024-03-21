@@ -11,12 +11,11 @@ public class Administrator : User
     /// </summary>
     public Administrator() { }
 
-    public Administrator(string firstName, string lastName, string username, string password) 
+    public Administrator(string firstName, string lastName, string username) 
     {
         FirstName = firstName;
         LastName = lastName;
         Username = username;
-        Password = password;
         UserLevel = UserLevel.Administrator;
         Id = Guid.NewGuid().ToString();
     }

@@ -46,6 +46,7 @@ partial class frmCreateAccount
         lblEmail = new Label();
         txtPassword = new TextBox();
         lblPassword = new Label();
+        btnCancel = new Button();
         SuspendLayout();
         // 
         // lblFirstName
@@ -207,11 +208,23 @@ partial class frmCreateAccount
         lblPassword.TabIndex = 20;
         lblPassword.Text = "Password";
         // 
+        // btnCancel
+        // 
+        btnCancel.Location = new Point(12, 723);
+        btnCancel.Margin = new Padding(3, 4, 3, 4);
+        btnCancel.Name = "btnCancel";
+        btnCancel.Size = new Size(237, 31);
+        btnCancel.TabIndex = 22;
+        btnCancel.Text = "Cancel";
+        btnCancel.UseVisualStyleBackColor = true;
+        btnCancel.Click += btnCancel_Click;
+        // 
         // frmCreateAccount
         // 
         AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(589, 796);
+        Controls.Add(btnCancel);
         Controls.Add(txtPassword);
         Controls.Add(lblPassword);
         Controls.Add(txtEmail);
@@ -257,4 +270,5 @@ partial class frmCreateAccount
     private Label lblEmail;
     private TextBox txtPassword;
     private Label lblPassword;
+    private Button btnCancel;
 }

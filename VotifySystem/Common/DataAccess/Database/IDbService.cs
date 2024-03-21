@@ -13,6 +13,7 @@ public interface IDbService
 
     /// <summary>
     /// Generic insert statement to insert a new entity into the Db
+    /// Includes call to SaveChanges
     /// </summary>
     /// <typeparam name="T">Type of the entity</typeparam>
     /// <param name="entity">The entity to be inserted</param>

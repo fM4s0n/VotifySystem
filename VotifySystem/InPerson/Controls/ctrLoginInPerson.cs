@@ -1,11 +1,13 @@
-﻿using VotifySystem.Common.BusinessLogic.Services;
+﻿using Microsoft.AspNetCore.Identity;
+using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.Classes;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Forms;
 
 namespace VotifySystem.Common.Controls.Login;
 
 /// <summary>
-/// 
+/// Login control for in person voting
 /// </summary>
 public partial class ctrLoginInPerson : UserControl
 {
@@ -68,19 +70,52 @@ public partial class ctrLoginInPerson : UserControl
     /// <param name="e"></param>
     private void btnCreateAccount_Click(object sender, EventArgs e)
     {
-        frmCreateAccount frmCreateAccount = new(_userService, _dbService);
+        frmCreateAccount frmCreateAccount = new(_userService!, _dbService!);
         frmCreateAccount.ShowDialog();
     }
 
     /// <summary>
-    /// 
+    /// Click event for login button
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="sender">btnLogin</param>
+    /// <param name="e">EventArgs</param>
     private void btnLogin_Click(object sender, EventArgs e)
     {
         if (ValidateUserInput() == false)
+        {
+            MessageBox.Show("Please check highlighted fields and try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);        
+            return;           
+        }
+
+        User attemptedUser = _dbService!.GetDatabaseContext().Users.First(u => u.Username == txtUsername.Text);
+
+        if (attemptedUser == null)
+        {
+            MessageBox.Show("Login details not found, please check detials and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
+        }
+
+        if (VerifyUser(attemptedUser) == false)
+        {
+            MessageBox.Show("Login details not found, please check detials and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return; 
+        }
+
+        // User is valid, so log in the user
+        _userService!.LogInUser(attemptedUser);
+    }
+
+    /// <summary>
+    /// Verify User password entry
+    /// </summary>
+    /// <param name="attemptedUser">User matching the username entered</param>
+    /// <returns>True if Result is not Failed</returns>
+    private bool VerifyUser(User attemptedUser)
+    {
+        string plainPassword = txtPassword.Text = txtPassword.Text.Trim();
+        string hashedPassword = _userService!.HashPassword(attemptedUser, plainPassword);
+
+        return _userService!.VerifyPassword(hashedPassword, plainPassword, attemptedUser) != PasswordVerificationResult.Failed;
     }
 
     /// <summary>
@@ -91,8 +126,10 @@ public partial class ctrLoginInPerson : UserControl
     {
         bool success = true;
 
-        foreach (TextBox tb in new List<TextBox> { txtLoginCode, txtPassword}) 
+        foreach (TextBox tb in new List<TextBox> { txtUsername, txtPassword}) 
         {
+            tb.Text = tb.Text.Trim();
+
             if (string.IsNullOrEmpty(tb.Text))
             {
                 tb.BackColor = Color.Red;

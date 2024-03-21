@@ -34,7 +34,7 @@ partial class ctrLoginInPerson
         lblLoginCode = new Label();
         btnCreateAccount = new Button();
         btnLogin = new Button();
-        textBox1 = new TextBox();
+        txtUsername = new TextBox();
         txtPassword = new TextBox();
         groupBox1 = new GroupBox();
         lblPassword = new Label();
@@ -60,7 +60,7 @@ partial class ctrLoginInPerson
         btnSubmitLoginCode.Location = new Point(359, 112);
         btnSubmitLoginCode.Name = "btnSubmitLoginCode";
         btnSubmitLoginCode.Size = new Size(123, 29);
-        btnSubmitLoginCode.TabIndex = 4;
+        btnSubmitLoginCode.TabIndex = 2;
         btnSubmitLoginCode.Text = "Submit";
         btnSubmitLoginCode.UseVisualStyleBackColor = true;
         btnSubmitLoginCode.Click += btnSubmitLoginCode_Click;
@@ -70,7 +70,7 @@ partial class ctrLoginInPerson
         txtLoginCode.Location = new Point(128, 71);
         txtLoginCode.Name = "txtLoginCode";
         txtLoginCode.Size = new Size(354, 27);
-        txtLoginCode.TabIndex = 2;
+        txtLoginCode.TabIndex = 1;
         // 
         // lblLoginCode
         // 
@@ -86,7 +86,7 @@ partial class ctrLoginInPerson
         btnCreateAccount.Location = new Point(362, 328);
         btnCreateAccount.Name = "btnCreateAccount";
         btnCreateAccount.Size = new Size(123, 29);
-        btnCreateAccount.TabIndex = 7;
+        btnCreateAccount.TabIndex = 6;
         btnCreateAccount.Text = "Create Account";
         btnCreateAccount.UseVisualStyleBackColor = true;
         btnCreateAccount.Click += btnCreateAccount_Click;
@@ -96,18 +96,18 @@ partial class ctrLoginInPerson
         btnLogin.Location = new Point(359, 129);
         btnLogin.Name = "btnLogin";
         btnLogin.Size = new Size(123, 29);
-        btnLogin.TabIndex = 6;
+        btnLogin.TabIndex = 5;
         btnLogin.Text = "Login";
         btnLogin.UseVisualStyleBackColor = true;
         btnLogin.Click += btnLogin_Click;
         // 
-        // textBox1
+        // txtUsername
         // 
-        textBox1.Location = new Point(128, 57);
-        textBox1.Margin = new Padding(3, 4, 3, 4);
-        textBox1.Name = "textBox1";
-        textBox1.Size = new Size(354, 27);
-        textBox1.TabIndex = 9;
+        txtUsername.Location = new Point(128, 57);
+        txtUsername.Margin = new Padding(3, 4, 3, 4);
+        txtUsername.Name = "txtUsername";
+        txtUsername.Size = new Size(354, 27);
+        txtUsername.TabIndex = 3;
         // 
         // txtPassword
         // 
@@ -115,13 +115,13 @@ partial class ctrLoginInPerson
         txtPassword.Margin = new Padding(3, 4, 3, 4);
         txtPassword.Name = "txtPassword";
         txtPassword.Size = new Size(354, 27);
-        txtPassword.TabIndex = 10;
+        txtPassword.TabIndex = 4;
         // 
         // groupBox1
         // 
         groupBox1.Controls.Add(lblPassword);
         groupBox1.Controls.Add(lblUsername);
-        groupBox1.Controls.Add(textBox1);
+        groupBox1.Controls.Add(txtUsername);
         groupBox1.Controls.Add(txtPassword);
         groupBox1.Controls.Add(btnLogin);
         groupBox1.Location = new Point(3, 156);
@@ -145,7 +145,7 @@ partial class ctrLoginInPerson
         // lblUsername
         // 
         lblUsername.AutoSize = true;
-        lblUsername.Location = new Point(7, 57);
+        lblUsername.Location = new Point(-1, 60);
         lblUsername.Name = "lblUsername";
         lblUsername.Size = new Size(126, 20);
         lblUsername.TabIndex = 11;
@@ -176,7 +176,7 @@ partial class ctrLoginInPerson
     private Label lblLoginCode;
     private Button btnCreateAccount;
     private Button btnLogin;
-    private TextBox textBox1;
+    private TextBox txtUsername;
     private TextBox txtPassword;
     private GroupBox groupBox1;
     private Label lblPassword;

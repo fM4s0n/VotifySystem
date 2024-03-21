@@ -47,7 +47,8 @@ internal static class Program
                 services.AddSingleton<IDbService>(provider =>
                 {
                     var dbContext = provider.GetRequiredService<VotifyDatabaseContext>();
-                    return new DbService(dbContext);
+                    var userService = ServiceProvider.GetRequiredService<IUserService>();
+                    return new DbService(dbContext, userService);
                 });
             });
     }

@@ -1,5 +1,6 @@
 ﻿using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Helpers;
+using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Common.DataAccess.Database;
@@ -7,12 +8,20 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// <summary>
 /// Database Service
 /// </summary>
-internal class DbService(VotifyDatabaseContext dbContext) : IDbService
+internal class DbService : IDbService
 {
-    private VotifyDatabaseContext _dbContext = dbContext;
+    private VotifyDatabaseContext _dbContext;
+    private static IUserService? _userService;
+
+    public DbService(VotifyDatabaseContext dbContext, IUserService userService)
+    {
+        _dbContext = dbContext;
+        _userService = userService;
+    }
 
     /// <summary>
     /// Generic insert statement to insert a new entity into the Db
+    /// - Includes call to SaveChanges
     /// </summary>
     /// <typeparam name="T">Type of the entity</typeparam>
     /// <param name="entity">The entity to be inserted</param>
@@ -30,10 +39,10 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
     }
 
     /// <summary>
-    /// 
+    /// Delete a record from the Db
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="entity"></param>
+    /// <typeparam name="T">Type of the object to be deleted</typeparam>
+    /// <param name="entity">Object to be deleted</param>
     public void DeleteRecord<T>(T entity) where T : class
     {
         try
@@ -63,24 +72,47 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
             if (_dbContext.Users.Any(a => a.Username == "DefaultAdmin") == false)
                 InsertEntity(CreateInitialAdministrator());
 
+            if (_dbContext.Users.Any(v => v.Username == "DefaultVoter") == false)
+                InsertEntity(CreateInitialVoter());
+
             if (_dbContext.Parties.Any(p => p.Name == "Default Parties") == false)
                 InsertEntity(CreateDefaultParty());
         }
         catch (Exception ex)
         {
             MessageBox.Show($"Error seeding data - {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
+    }
+
+    /// <summary>
+    /// Create the default voter for seed data
+    /// </summary>
+    /// <returns>Instace of the default voter</returns>
+    private static Voter CreateInitialVoter()
+    {
+        DateTime dob = new(year: 1980, 1, 1);
+        Voter defaultVoter = new("Default", "Voter", "DefaultVoter", VoteMethod.InPerson, "Deafult address",dob, Country.UK);
+        defaultVoter.Password = _userService!.HashPassword(defaultVoter, "Password");
+        
+        return defaultVoter;
+    }
+
+    /// <summary>
+    /// Create instance of the Default Administrator
+    /// </summary>
+    /// <returns>Default administrator for seed data</returns>
+    private static Administrator CreateInitialAdministrator()
+    { 
+        Administrator defaultAdmin = new("Default", "Admin", "DefaultAdmin"); 
+        defaultAdmin.Password = _userService!.HashPassword(defaultAdmin, "Password");
+
+        return defaultAdmin;
     }
 
     /// <summary>
     /// Create the default party for seed data
     /// </summary>
     /// <returns>Default Party for seed data</returns>
-    private static Party CreateDefaultParty() => new ("Default Party", Country.UK);
-
-    /// <summary>
-    /// Create instance of the Default Administrator
-    /// </summary>
-    /// <returns>Default administrator for seed data</returns>
-    private static Administrator CreateInitialAdministrator() => new ("Default", "Admin", "DefaultAdmin", "Password");
+    private static Party CreateDefaultParty() => new("Default Party", Country.UK);
 }

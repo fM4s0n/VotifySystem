@@ -1,4 +1,6 @@
-﻿namespace VotifySystem.Common.Classes;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
+
+namespace VotifySystem.Common.Classes;
 
 /// <summary>
 /// Class for a voter
@@ -9,6 +11,8 @@ public class Voter : User
     public string Address { get; set; } = string.Empty;
     public DateTime DateOfBirth { get; set; } = DateTime.MinValue;
 
+    public Country Country { get; set; } = Country.UK;
+
     /// <summary>
     /// Default Constructor for EF core
     /// </summary>
@@ -16,7 +20,7 @@ public class Voter : User
     {
     }
 
-    public Voter(string firstName, string lastName, string username, VoteMethod voteMethod, string address, DateTime dateOfBirth)
+    public Voter(string firstName, string lastName, string username, VoteMethod voteMethod, string address, DateTime dateOfBirth, Country country)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -26,6 +30,7 @@ public class Voter : User
         DateOfBirth = dateOfBirth;
         Id = Guid.NewGuid().ToString();
         UserLevel = UserLevel.Voter;
+        Country = country;
     }
 
     public static readonly Dictionary<string, string> VoteMethodFriendlyNames = new()
