@@ -11,4 +11,5 @@ public class ElectionVoter
     public string ElectionId { get; set; } = string.Empty;
     public string VoterId { get; set; } = string.Empty;
     public bool HasVoted { get; set; } = false;
+    public ElectionVoter() { }
 }

@@ -3,8 +3,12 @@
 /// <summary>
 /// 
 /// </summary>
-internal class FirstPastThePostElection : Election
+public class FirstPastThePostElection : Election
 {
     public readonly ElectionVoteMechanism VoteMechanism = ElectionVoteMechanism.FPTP;
+
+    public FirstPastThePostElection()
+    {
+    }
 }
     

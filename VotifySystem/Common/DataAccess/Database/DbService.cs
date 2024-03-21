@@ -60,9 +60,8 @@ internal class DbService(VotifyDatabaseContext dbContext) : IDbService
     {
         try
         {
-            if (_dbContext.Administrators.Any(a => a.Username == "DefaultAdmin") == false)
+            if (_dbContext.Users.Any(a => a.Username == "DefaultAdmin") == false)
                 InsertEntity(CreateInitialAdministrator());
-
 
             if (_dbContext.Parties.Any(p => p.Name == "Default Parties") == false)
                 InsertEntity(CreateDefaultParty());

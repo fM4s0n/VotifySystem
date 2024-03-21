@@ -75,4 +75,10 @@ public class UserService : IUserService
         PasswordHasher<User> passwordHasher = new();
         return passwordHasher.VerifyHashedPassword(user, hashedPassword, unhashedPassword);
     }
+
+    /// <summary>
+    /// Generates a random 6 digit login code
+    /// </summary>
+    /// <returns></returns>
+    public string GenerateLoginCode() => Guid.NewGuid().ToString()[..6];    
 }

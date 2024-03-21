@@ -9,28 +9,41 @@ namespace VotifyDataAccess.Database;
 /// https://entityframeworkcore.com/providers-sqlite
 /// </summary>
 /// <param name="options">DbContext Options</param>
-public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : DbContext(options)
+public class VotifyDatabaseContext : DbContext
 {
-    public DbSet<Administrator> Administrators { get; set; }
+    public VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : base(options)
+    { 
+    }
+
+    public DbSet<User> Users { get; set; }
     public DbSet<Candidate> Candidates { get; set; }
     public DbSet<Constituency> Constituencies { get; set; }
     public DbSet<ElectionCandidate> ElectionCandidates { get; set; }
-    public DbSet<Voter> Voters { get; set; }
     public DbSet<Party> Parties { get; set; }
     public DbSet<ElectionVoter> ElectionVoters { get; set; }
+    public DbSet<Election> Elections { get; set; }
+    public DbSet<LoginCode> LoginCodes { get; set; }
 
     /// <summary>
-    /// 
+    /// Required for EFCore to create the database
     /// </summary>
-    /// <param name="modelBuilder"></param>
+    /// <param name="modelBuilder">Model builder passed in by EF Core</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Administrator>().ToTable("Administrator").HasKey(a => a.Id);
-        modelBuilder.Entity<Candidate>().ToTable("Candidate").HasKey(c => c.Id);
-        modelBuilder.Entity<Constituency>().ToTable("Constituency").HasKey(co => co.ConstituencyId);
-        modelBuilder.Entity<ElectionCandidate>().ToTable("ElectionCandidate").HasNoKey();
-        modelBuilder.Entity<Voter>().ToTable("Voter").HasKey(v => v.Id);
-        modelBuilder.Entity<Party>().ToTable("Party").HasKey(p => p.PartyId);
-        modelBuilder.Entity<ElectionVoter>().ToTable("ElectionVoter").HasNoKey();
+        modelBuilder.Entity<Administrator>().ToTable("Administrator");
+        modelBuilder.Entity<Voter>().ToTable("Voter");
+        modelBuilder.Entity<Candidate>().ToTable("Candidate");
+        modelBuilder.Entity<Constituency>().ToTable("Constituency");
+        modelBuilder.Entity<ElectionCandidate>().ToTable("ElectionCandidate").HasKey(ec => new { ec.ElectionId, ec.CandidateId });
+        modelBuilder.Entity<Party>().ToTable("Party");
+        modelBuilder.Entity<ElectionVoter>().ToTable("ElectionVoter").HasKey(ev => new { ev.ElectionId, ev.VoterId });
+        modelBuilder.Entity<Election>()
+            .ToTable("Election")
+            .HasDiscriminator<string>("election_type")
+            .HasValue<FirstPastThePostElection>("FPTP_Election")
+            .HasValue<SingleTransferrableVoteElection>("STV_Election");
+        modelBuilder.Entity<LoginCode>().ToTable("LoginCode").HasNoKey();
+
+        base.OnModelCreating(modelBuilder);
     }
 }

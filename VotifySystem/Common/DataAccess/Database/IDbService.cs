@@ -2,7 +2,7 @@
 
 namespace VotifySystem.Common.DataAccess.Database;
 
-internal interface IDbService
+public interface IDbService
 {
     /// <summary>
     /// 

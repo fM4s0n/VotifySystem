@@ -1,10 +1,13 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
+using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.Controls;
 public partial class ctrLoginBase : UserControl
 {
     private IUserService? _userService;
+    private IDbService? _dbService;
+
     private LoginMode _loginMode = LoginMode.InPerson;
 
     public ctrLoginBase() 
@@ -12,21 +15,21 @@ public partial class ctrLoginBase : UserControl
         InitializeComponent();
     }
 
-
     /// <summary>
     /// 
     /// </summary>
     /// <param name="userService"></param>
     /// <param name="loginMode"></param>
-    public void Init(IUserService userService, LoginMode loginMode)
+    public void Init(IUserService userService, IDbService dbService,LoginMode loginMode)
     {
         _userService = userService;
+        _dbService = dbService;
         _loginMode = loginMode;
 
         if (_loginMode == LoginMode.InPerson)
         {
+            ctrLoginInPerson.Init(userService, dbService);
             ctrLoginInPerson.Visible = true;
-            //lblLoginCode.Visible = true;
         }
     }
 

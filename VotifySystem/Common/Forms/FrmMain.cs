@@ -9,13 +9,13 @@ namespace VotifySystem;
 
 internal partial class frmMain : Form
 {
-    private readonly IUserService _userService;
-    private readonly IDbService _dbService;
+    private IUserService? _userService;
+    private IDbService? _dbService;
 
     CtrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
 
-    private static frmMain? _instance;
+    private static frmMain _instance;
     public static frmMain GetInstance() { return _instance; }
 
     private UserLevel _mode = UserLevel.None;
@@ -38,10 +38,10 @@ internal partial class frmMain : Form
     /// </summary>
     private void Init()
     {
-        _userService.LogOutEvent += UserService_LogOutEvent;
+        _userService!.LogOutEvent += UserService_LogOutEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
-        _dbService.SeedDataIfRequired();
+        _dbService!.SeedDataIfRequired();
         SetMode();
 
         ctrMainDefault = new() { Parent = this };
@@ -125,7 +125,7 @@ internal partial class frmMain : Form
     /// </summary>
     internal void ShowInPersonLogin()
     {
-        ctrLoginBase.Init(_userService, LoginMode.InPerson);
+        ctrLoginBase.Init(_userService, _dbService, LoginMode.InPerson);
         ctrLoginBase.Show();
         ctrMainDefault.Visible = false;
     }

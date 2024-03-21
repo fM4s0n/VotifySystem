@@ -1,4 +1,6 @@
-﻿using VotifySystem.Common.Forms;
+﻿using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.DataAccess.Database;
+using VotifySystem.Common.Forms;
 
 namespace VotifySystem.Common.Controls.Login;
 
@@ -7,9 +9,23 @@ namespace VotifySystem.Common.Controls.Login;
 /// </summary>
 public partial class ctrLoginInPerson : UserControl
 {
+    private IUserService? _userService;
+    private IDbService? _dbService;
+
     public ctrLoginInPerson()
     {
         InitializeComponent();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userService"></param>
+    /// <param name="dbService"></param>
+    public void Init(IUserService userService, IDbService dbService)
+    {
+        _userService = userService;
+        _dbService = dbService;
     }
 
     /// <summary>
@@ -52,7 +68,7 @@ public partial class ctrLoginInPerson : UserControl
     /// <param name="e"></param>
     private void btnCreateAccount_Click(object sender, EventArgs e)
     {
-        frmCreateAccount frmCreateAccount = new();
+        frmCreateAccount frmCreateAccount = new(_userService, _dbService);
         frmCreateAccount.ShowDialog();
     }
 

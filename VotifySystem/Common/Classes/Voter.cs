@@ -5,9 +5,8 @@
 /// </summary>
 public class Voter : User
 {
-    public VoteMethod VoteMethod;
+    public VoteMethod VoteMethod = VoteMethod.InPerson;
     public string Address { get; set; } = string.Empty;
-    public string ConstituencyId { get; set; } = string.Empty;
     public DateTime DateOfBirth { get; set; } = DateTime.MinValue;
 
     /// <summary>

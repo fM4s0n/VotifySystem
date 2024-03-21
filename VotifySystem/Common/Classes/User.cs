@@ -9,6 +9,8 @@ public abstract class User : Person
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public UserLevel UserLevel { get; set; } = UserLevel.None;
+
+    public User() { }
 }
 
 /// <summary>

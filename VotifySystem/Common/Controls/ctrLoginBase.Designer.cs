@@ -31,21 +31,21 @@ partial class ctrLoginBase
         ctrLoginInPerson = new Common.Controls.Login.ctrLoginInPerson();
         SuspendLayout();
         // 
-        // ctrLoginInPerson1
+        // ctrLoginInPerson
         // 
-        ctrLoginInPerson.Location = new Point(228, 119);
-        ctrLoginInPerson.Name = "ctrLoginInPerson1";
-        ctrLoginInPerson.Size = new Size(427, 171);
+        ctrLoginInPerson.Location = new Point(235, 84);
+        ctrLoginInPerson.Margin = new Padding(3, 5, 3, 5);
+        ctrLoginInPerson.Name = "ctrLoginInPerson";
+        ctrLoginInPerson.Size = new Size(506, 414);
         ctrLoginInPerson.TabIndex = 0;
         // 
         // ctrLoginBase
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         Controls.Add(ctrLoginInPerson);
-        Margin = new Padding(3, 2, 3, 2);
         Name = "ctrLoginBase";
-        Size = new Size(875, 450);
+        Size = new Size(1000, 600);
         ResumeLayout(false);
     }
 

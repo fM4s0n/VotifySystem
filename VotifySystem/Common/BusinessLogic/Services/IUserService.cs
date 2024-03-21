@@ -30,7 +30,26 @@ public interface IUserService
     /// <returns>UserLevel value of current user if there is one, UserLevel.None otherwise</returns>
     UserLevel GetCurrentUserLevel();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     string HashPassword(User user, string password);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="hashedPassword"></param>
+    /// <param name="unhashedPassword"></param>
+    /// <param name="user"></param>
+    /// <returns></returns>
     PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string GenerateLoginCode();
 }
