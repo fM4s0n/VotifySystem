@@ -12,7 +12,8 @@ public partial class frmCreateElection : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    ElectionVoteMechanism _currentVoteMechanism;
+    private ElectionVoteMechanism _currentVoteMechanism;
+    private List<ElectionCandidate> electionCandidates;
 
     public frmCreateElection(IUserService userService, IDbService dbService)
     {
@@ -37,6 +38,8 @@ public partial class frmCreateElection : Form
 
         foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
             cmbVoteMechanism.Items.Add(voteMechanism.ToString());
+
+        foreach ()
     }
 
     /// <summary>
@@ -46,6 +49,8 @@ public partial class frmCreateElection : Form
     private void btnCreate_Click(object sender, EventArgs e)
     {
         Election election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService!.GetCurrentUser()!);
+
+        _dbService!.InsertEntity(election);
     }
 
     /// <summary>
@@ -85,10 +90,19 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// 
+    /// Adds a constituency to the election
     /// </summary>
     private void btnAddConstituency_Click(object sender, EventArgs e)
     {
-        txt
+        txtConstituencyName.Text = txtConstituencyName.Text.Trim();
+
+        if (string.IsNullOrEmpty(txtConstituencyName.Text))
+        {
+            MessageBox.Show("Please enter a constituency name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        lvConstituencies.Items.Add(txtConstituencyName.Text);
+        txtConstituencyName.Text = string.Empty;
     }
 }

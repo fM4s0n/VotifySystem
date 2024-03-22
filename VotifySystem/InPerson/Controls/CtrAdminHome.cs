@@ -1,4 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Forms;
 
 namespace VotifySystem.Controls;
@@ -8,12 +9,18 @@ namespace VotifySystem.Controls;
 /// </summary>
 public partial class CtrAdminHome : UserControl
 {
-    readonly IUserService? _userService;
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
 
-    public CtrAdminHome(IUserService userService)
+    public CtrAdminHome(IUserService userService, IDbService dbService)
     {
         InitializeComponent();
+
+        if (DesignMode)
+            return;
+
         _userService = userService;
+        _dbService = dbService;
     }
 
     /// <summary>
@@ -23,7 +30,7 @@ public partial class CtrAdminHome : UserControl
     /// <param name="e"></param>
     private void BtnCreateElection_Click(object sender, EventArgs e)
     {
-        frmCreateElection form = new(_userService!);
+        frmCreateElection form = new(_userService!, _dbService!);
         form.Show();
     }
 

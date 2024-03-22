@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Classes;
+﻿namespace VotifySystem.Common.Classes.Elections;
 
 /// <summary>
 /// Associative class to solve many to many relationship of Election and Candidate classes
@@ -14,7 +14,7 @@ public class ElectionCandidate
     /// </summary>
     public ElectionCandidate() { }
 
-    public ElectionCandidate (string candidateId, string electionId)
+    public ElectionCandidate(string candidateId, string electionId)
     {
         CandidateId = candidateId;
         ElectionId = electionId;
