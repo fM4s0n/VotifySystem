@@ -1,55 +1,94 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes.Elections;
+using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.Forms;
 
 /// <summary>
-/// 
-/// </summary>
+/// Form for an admin to create an election
+/// </summary>>
 public partial class frmCreateElection : Form
 {
-    IUserService? _userService;
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
+
     ElectionVoteMechanism _currentVoteMechanism;
 
-    public frmCreateElection(IUserService userService)
+    public frmCreateElection(IUserService userService, IDbService dbService)
     {
         InitializeComponent();
+
+        if (DesignMode)
+            return;
+
         _userService = userService;
+        _dbService = dbService;
+
+        Init();
+    }
+
+    /// <summary>
+    /// Custom init
+    /// </summary>
+    private void Init()
+    {
+        dtpElectionStart.Value = DateTime.Now;
+        dtpElectionEnd.Value = DateTime.Now.AddMonths(1);
 
         foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
             cmbVoteMechanism.Items.Add(voteMechanism.ToString());
     }
 
     /// <summary>
-    /// 
+    /// Click event for the create button
+    /// Validates all fields and creates the election
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnCreate_Click(object sender, EventArgs e)
     {
-        Election? election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService!.GetCurrentUser()!);       
+        Election election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService!.GetCurrentUser()!);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnCancel_Click(object sender, EventArgs e)
     {
-
+        Close();
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void cmbVoteMechanism_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (Enum.TryParse(typeof(ElectionVoteMechanism), cmbVoteMechanism.SelectedItem.ToString(), out object result))
+        if (Enum.TryParse(typeof(ElectionVoteMechanism), cmbVoteMechanism.SelectedItem!.ToString(), out object result))
         {
             _currentVoteMechanism = (ElectionVoteMechanism)result;
         }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ValidateAllFields()
+    {
+        if (string.IsNullOrEmpty(txtElectionName.Text))
+        {
+
+        }
+
+        if (dtpElectionStart.Value > dtpElectionEnd.Value)
+        {
+            MessageBox.Show("The start date must be before the end date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void btnAddConstituency_Click(object sender, EventArgs e)
+    {
+        txt
     }
 }
