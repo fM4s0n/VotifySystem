@@ -1,4 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
 
@@ -13,7 +14,8 @@ public partial class frmCreateElection : Form
     private readonly IDbService? _dbService;
 
     private ElectionVoteMechanism _currentVoteMechanism;
-    private List<ElectionCandidate> electionCandidates;
+    private List<Candidate> _candidates;
+    private List<Party> _parties;
 
     public frmCreateElection(IUserService userService, IDbService dbService)
     {
@@ -36,10 +38,21 @@ public partial class frmCreateElection : Form
         dtpElectionStart.Value = DateTime.Now;
         dtpElectionEnd.Value = DateTime.Now.AddMonths(1);
 
+        _parties = _dbService!.GetDatabaseContext().Parties.ToList();
+
+        if (_parties.Count == 0)
+        {
+            MessageBox.Show("There are no parties in the system. Please add a party before creating an election", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Close();
+        }
+
+        _candidates = [];
+
         foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
             cmbVoteMechanism.Items.Add(voteMechanism.ToString());
 
-        foreach ()
+        foreach (Party party in _parties)
+            cmbParty.Items.Add(party.Name);
     }
 
     /// <summary>
@@ -48,6 +61,9 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void btnCreate_Click(object sender, EventArgs e)
     {
+        if (ValidateElection() == false)
+            return;
+
         Election election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService!.GetCurrentUser()!);
 
         _dbService!.InsertEntity(election);
@@ -73,20 +89,93 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// 
+    /// Validates all fields on the form
     /// </summary>
-    private void ValidateAllFields()
+    /// <returns>True if every field is valid, false if not</returns>
+    private bool ValidateElection()
     {
-        if (string.IsNullOrEmpty(txtElectionName.Text))
-        {
+        if (ValidateElectionTitle() &&
+            ValidateComboBoxes() &&
+            ValidateListViews() &&
+            ValidateDates())
+            return true;
 
+        return false;
+    }
+
+    /// <summary>
+    /// Validate the dates are in the future and the start date is before the end date
+    /// </summary>
+    /// <returns>true if all checks pass false if not</returns>
+    private bool ValidateDates()
+    {
+        if (dtpElectionStart.Value < DateTime.Now)
+        {
+            MessageBox.Show("The start date must be in the future", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }
 
-        if (dtpElectionStart.Value > dtpElectionEnd.Value)
+        if (dtpElectionStart.Value >= dtpElectionEnd.Value)
         {
             MessageBox.Show("The start date must be before the end date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            return false;
         }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidateElectionTitle()
+    {
+        if (string.IsNullOrWhiteSpace(txtElectionName.Text))
+        {
+            txtElectionName.BackColor = Color.Red;
+            return false;
+        }
+
+        txtElectionName.BackColor = Color.White;
+        return true;
+    }
+
+    /// <summary>
+    /// Validates all comboboxes on the form have a value
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidateComboBoxes()
+    {
+        bool success = true;
+        foreach (ComboBox comboBox in new List<ComboBox> { cmbCountry, cmbVoteMechanism })
+        {
+            if (comboBox.SelectedIndex == -1)
+            {
+                comboBox.BackColor = Color.Red;
+                success = false;
+            }
+        }
+
+        return success;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private bool ValidateListViews()
+    {
+        bool success = true;
+        foreach (ListView listView in new List<ListView> { lvConstituencies, lvCandidates })
+        {
+            if (listView.Items.Count == 0)
+            {
+                listView.BackColor = Color.Red;
+                success = false;
+            }
+        }
+
+        return success;
     }
 
     /// <summary>
@@ -96,13 +185,67 @@ public partial class frmCreateElection : Form
     {
         txtConstituencyName.Text = txtConstituencyName.Text.Trim();
 
-        if (string.IsNullOrEmpty(txtConstituencyName.Text))
+        if (string.IsNullOrWhiteSpace(txtConstituencyName.Text))
         {
             MessageBox.Show("Please enter a constituency name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            txtConstituencyName.BackColor = Color.Red;
             return;
+        }
+        else
+        {
+            txtConstituencyName.BackColor = Color.White;
         }
 
         lvConstituencies.Items.Add(txtConstituencyName.Text);
         txtConstituencyName.Text = string.Empty;
+    }
+
+    /// <summary>
+    /// Adds a candidate to the election as long they are valid and not already in the list
+    /// </summary>
+    private void cmbAddCandidate_Click(object sender, EventArgs e)
+    {
+        if (ValidateCandidateName() == false || 
+            ValidateCandidateParty() == false)
+        {
+
+        }
+
+
+         ValidateCandidateParty();
+    }
+
+    private bool ValidateCandidateName() 
+    {
+        if (string.IsNullOrWhiteSpace(txtCandidateName.Text))
+        {
+            MessageBox.Show("Please enter a candidate name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            txtCandidateName.BackColor = Color.Red;
+            return false;
+        }
+        else
+        {
+            txtCandidateName.BackColor = Color.White;
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// Validates the candidate party combobox
+    /// </summary>
+    /// <returns>True if a value is seleected false if not</returns>
+    private bool ValidateCandidateParty()
+    {
+        if (cmbParty.SelectedIndex == -1)
+        {
+            MessageBox.Show("Please select a party", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            cmbParty.BackColor = Color.Red;
+            return false;
+        }
+        else
+        {
+            cmbParty.BackColor = Color.White;
+            return true;
+        }
     }
 }

@@ -9,6 +9,8 @@ public class Candidate : Person
 {
     public string ConstituencyId { get; set; } = string.Empty;
     public string PartyId { get; set; } = string.Empty;
+    public string ElectionId { get; set; } = string.Empty;
+    public int VotesReceived { get; private set; } = 0;
 
     /// <summary>
     /// Default Constructor for EF Core
@@ -22,5 +24,14 @@ public class Candidate : Person
         ConstituencyId = constituencyId;
         PartyId = partyId;
         Id = Guid.NewGuid().ToString();
+    }
+
+    /// <summary>
+    /// Add or remove votes for an electionCandidate
+    /// </summary>
+    /// <param name="votesReceived">Votes to add. Can be positive or negative if required</param>
+    public void AddVotes(int votesReceived)
+    {
+        VotesReceived += votesReceived;
     }
 }
