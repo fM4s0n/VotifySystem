@@ -35,8 +35,8 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void Init()
     {
-        dtpElectionStart.Value = DateTime.Now;
-        dtpElectionEnd.Value = DateTime.Now.AddMonths(1);
+        dtpElectionStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0);
+        dtpElectionEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, DateTime.Now.Day, 21, 0, 0);
 
         _parties = _dbService!.GetDatabaseContext().Parties.ToList();
 
