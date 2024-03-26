@@ -1,18 +1,19 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Forms;
+using VotifySystem.InPerson.Forms;
 
 namespace VotifySystem.Controls;
 
 /// <summary>
-/// 
+/// Home page for admin user
 /// </summary>
-public partial class CtrAdminHome : UserControl
+public partial class ctrAdminHome : UserControl
 {
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    public CtrAdminHome(IUserService userService, IDbService dbService)
+    public ctrAdminHome(IUserService userService, IDbService dbService)
     {
         InitializeComponent();
 
@@ -26,8 +27,6 @@ public partial class CtrAdminHome : UserControl
     /// <summary>
     /// Show Create Election Form
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void BtnCreateElection_Click(object sender, EventArgs e)
     {
         frmCreateElection form = new(_userService!, _dbService!);
@@ -37,8 +36,6 @@ public partial class CtrAdminHome : UserControl
     /// <summary>
     /// Show Manage Election Form
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnManageElection_Click(object sender, EventArgs e)
     {
 
@@ -47,10 +44,17 @@ public partial class CtrAdminHome : UserControl
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnLogOut_Click(object sender, EventArgs e)
     {
         _userService!.LogOutUser();
+    }
+
+    /// <summary>
+    /// Click event for Manage Parties button
+    /// Launmch Manage Parties form
+    /// </summary>
+    private void btnManageParties_Click(object sender, EventArgs e)
+    {
+        frmManageParties form = new(_userService!, _dbService!);
     }
 }

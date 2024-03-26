@@ -15,7 +15,7 @@ internal partial class frmMain : Form
     private IUserService? _userService;
     private IDbService? _dbService;
 
-    CtrAdminHome? ctrAdminHome;
+    ctrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
 
     private static frmMain _instance;

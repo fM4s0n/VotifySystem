@@ -157,7 +157,7 @@ partial class frmCreateElection
         // 
         // dtpElectionEnd
         // 
-        dtpElectionEnd.CustomFormat = "MM/dd/yyyy hh:mm:ss";
+        dtpElectionEnd.CustomFormat = "dd/MM/yyyy hh:mm:ss";
         dtpElectionEnd.Format = DateTimePickerFormat.Custom;
         dtpElectionEnd.Location = new Point(120, 52);
         dtpElectionEnd.Margin = new Padding(3, 2, 3, 2);
@@ -167,8 +167,8 @@ partial class frmCreateElection
         // 
         // dtpElectionStart
         // 
-        dtpElectionStart.CustomFormat = "MM/dd/yyyy hh:mm:ss";
         dtpElectionStart.Format = DateTimePickerFormat.Custom;
+        dtpElectionStart.CustomFormat = "dd/MM/yyyy hh:mm:ss";
         dtpElectionStart.Location = new Point(120, 20);
         dtpElectionStart.Margin = new Padding(3, 2, 3, 2);
         dtpElectionStart.Name = "dtpElectionStart";
