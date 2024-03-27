@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.BusinessLogic.Services;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
+using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.InPerson.Forms;
@@ -20,10 +21,24 @@ public partial class frmManageParties : Form
 
         _userService = userService;
         _dbService = dbService;
+
+        Init();
     }
 
-    private void frmManageParties_Load(object sender, EventArgs e)
+    /// <summary>
+    /// Custom init
+    /// </summary>
+    private void Init()
     {
-        iL
+        foreach (Country c in Enum.GetValues(typeof(Country))) 
+            cmbCountry.Items.Add(c);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void btnRemoveParty_Click(object sender, EventArgs e)
+    {
+
     }
 }

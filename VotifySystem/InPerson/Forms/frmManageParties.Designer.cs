@@ -33,7 +33,7 @@ partial class frmManageParties
         btnAddParty = new Button();
         textBox1 = new TextBox();
         lblManageParties = new Label();
-        comboBox1 = new ComboBox();
+        cmbCountry = new ComboBox();
         lblSelectCountry = new Label();
         btnRemoveParty = new Button();
         btnViewParties = new Button();
@@ -87,13 +87,13 @@ partial class frmManageParties
         lblManageParties.TabIndex = 0;
         lblManageParties.Text = "Manage Parties";
         // 
-        // comboBox1
+        // cmbCountry
         // 
-        comboBox1.FormattingEnabled = true;
-        comboBox1.Location = new Point(12, 103);
-        comboBox1.Name = "comboBox1";
-        comboBox1.Size = new Size(370, 23);
-        comboBox1.TabIndex = 2;
+        cmbCountry.FormattingEnabled = true;
+        cmbCountry.Location = new Point(12, 103);
+        cmbCountry.Name = "cmbCountry";
+        cmbCountry.Size = new Size(370, 23);
+        cmbCountry.TabIndex = 2;
         // 
         // lblSelectCountry
         // 
@@ -113,6 +113,7 @@ partial class frmManageParties
         btnRemoveParty.Text = "Remove Selected Party";
         btnRemoveParty.UseVisualStyleBackColor = true;
         btnRemoveParty.Visible = false;
+        btnRemoveParty.Click += btnRemoveParty_Click;
         // 
         // btnViewParties
         // 
@@ -131,13 +132,12 @@ partial class frmManageParties
         Controls.Add(btnViewParties);
         Controls.Add(btnRemoveParty);
         Controls.Add(lblSelectCountry);
-        Controls.Add(comboBox1);
+        Controls.Add(cmbCountry);
         Controls.Add(lblManageParties);
         Controls.Add(grpAddParty);
         Controls.Add(listView1);
         Name = "frmManageParties";
         Text = "frmCreateParty";
-        Load += frmManageParties_Load;
         grpAddParty.ResumeLayout(false);
         grpAddParty.PerformLayout();
         ResumeLayout(false);
@@ -151,7 +151,7 @@ partial class frmManageParties
     private Label lblManageParties;
     private Button btnAddParty;
     private TextBox textBox1;
-    private ComboBox comboBox1;
+    private ComboBox cmbCountry;
     private Label lblSelectCountry;
     private Button btnRemoveParty;
     private Button btnViewParties;
