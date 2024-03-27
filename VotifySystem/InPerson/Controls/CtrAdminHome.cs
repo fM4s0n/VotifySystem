@@ -58,4 +58,9 @@ public partial class ctrAdminHome : UserControl
         frmManageParties form = new(_userService!, _dbService!);
         form.ShowDialog();
     }
+
+    private void ctrAdminHome_Load(object sender, EventArgs e)
+    {
+
+    }
 }

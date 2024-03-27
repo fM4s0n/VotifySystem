@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.BusinessLogic.Services;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
+using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
@@ -14,8 +15,9 @@ public partial class frmCreateElection : Form
     private readonly IDbService? _dbService;
 
     private ElectionVoteMechanism _currentVoteMechanism;
-    private List<Candidate> _candidates;
-    private List<Party> _parties;
+    private List<Candidate> _candidates = [];
+    private List<Constituency> _constituencies = [];
+    private List<Party> _parties = [];
 
     public frmCreateElection(IUserService userService, IDbService dbService)
     {
@@ -35,6 +37,7 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void Init()
     {
+        // pre-set dates
         dtpElectionStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0);
         dtpElectionEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, DateTime.Now.Day, 21, 0, 0);
 
@@ -46,13 +49,16 @@ public partial class frmCreateElection : Form
             Close();
         }
 
-        _candidates = [];
-
         foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
             cmbVoteMechanism.Items.Add(voteMechanism.ToString());
 
         foreach (Party party in _parties)
             cmbParty.Items.Add(party.Name);
+
+        lvCandidates.View = View.Details;
+        lvCandidates.Columns.Add("Name");
+        lvCandidates.Columns.Add("Party");
+        lvCandidates.Columns.Add("Constituency");
     }
 
     /// <summary>
@@ -205,27 +211,37 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void cmbAddCandidate_Click(object sender, EventArgs e)
     {
-        if (ValidateCandidateName() == false || 
+        if (ValidateCandidateName() == false ||
             ValidateCandidateParty() == false)
         {
-
+            //TODO
         }
 
+        string constituencyId;
+        string partyId;
 
-         ValidateCandidateParty();
+        Candidate candidateToAdd = new Candidate(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
+
+        ListViewItem item = new(candidateToAdd.FullName);
+        item.SubItems.Add(candidateToAdd.PartyId);
+        item.SubItems.Add(constituencyId);
+        
+        lvCandidates.Items.Add(item);
+
+        _dbService!.InsertEntity(candidateToAdd);
     }
 
-    private bool ValidateCandidateName() 
+    private bool ValidateCandidateName()
     {
-        if (string.IsNullOrWhiteSpace(txtCandidateName.Text))
+        if (string.IsNullOrWhiteSpace(txtCandidateFirstName.Text))
         {
             MessageBox.Show("Please enter a candidate name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            txtCandidateName.BackColor = Color.Red;
+            txtCandidateFirstName.BackColor = Color.Red;
             return false;
         }
         else
         {
-            txtCandidateName.BackColor = Color.White;
+            txtCandidateFirstName.BackColor = Color.White;
             return true;
         }
     }
@@ -247,5 +263,52 @@ public partial class frmCreateElection : Form
             cmbParty.BackColor = Color.White;
             return true;
         }
+    }
+
+    /// <summary>
+    /// Loads parties based on the selected country
+    /// </summary>
+    private void cmbCountry_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (cmbCountry.SelectedIndex != -1 && cmbCountry.SelectedItem is Country selectedCountry)
+        {
+            _parties = _parties.Where(p => p.Country == selectedCountry).ToList();
+        }
+
+        // Disable the comboBox so the country cant be changed as we now load in the parties based on country
+        // User must reset the form and start again if they wish to change the country
+        cmbCountry.Enabled = false;
+    }
+
+    /// <summary>
+    /// Reset the form by clearing all the controls
+    /// </summary>
+    private void btnReset_Click(object sender, EventArgs e)
+    {
+        ClearAllControls();
+    }
+
+    /// <summary>
+    /// Clear every control on the form
+    /// </summary>
+    private void ClearAllControls()
+    {
+        //TODO
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void btnRemoveCandidate_Click(object sender, EventArgs e)
+    {
+        Candidate candidateToDelete = _candidates.FirstOrDefault(c => c.)
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void btnRemoveConstituency_Click(object sender, EventArgs e)
+    {
+
     }
 }

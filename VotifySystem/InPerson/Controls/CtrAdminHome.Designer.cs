@@ -52,7 +52,7 @@ partial class ctrAdminHome
         btnManageElection.Name = "btnManageElection";
         btnManageElection.Size = new Size(162, 23);
         btnManageElection.TabIndex = 2;
-        btnManageElection.Text = "Manage Election";
+        btnManageElection.Text = "Manage Elections";
         btnManageElection.UseVisualStyleBackColor = true;
         btnManageElection.Click += btnManageElection_Click;
         // 
@@ -96,6 +96,7 @@ partial class ctrAdminHome
         Controls.Add(btnCreateElection);
         Name = "ctrAdminHome";
         Size = new Size(875, 450);
+        Load += ctrAdminHome_Load;
         ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
         ResumeLayout(false);
     }

@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "Collection initialization is not simplified for readability purposes")]
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Click event methods can use camelCase as they are named driectly after controls named in camelCase")]
