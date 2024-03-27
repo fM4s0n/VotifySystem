@@ -12,8 +12,8 @@ namespace VotifySystem;
 /// </summary>
 internal partial class frmMain : Form
 {
-    private IUserService? _userService;
-    private IDbService? _dbService;
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
 
     ctrAdminHome? ctrAdminHome;
     ctrVoterHome? ctrVoterHome;
@@ -95,7 +95,7 @@ internal partial class frmMain : Form
         switch (_mode)
         {
             case UserLevel.Administrator:
-                ctrAdminHome = new(_userService!){ Visible = true };
+                ctrAdminHome = new(_userService!, _dbService!){ Visible = true };
                 ctrMainDefault.Visible = false;
                 ctrAdminHome.Show();
                 break;

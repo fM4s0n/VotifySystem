@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VotifySystem.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,8 @@ namespace VotifySystem.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     ConstituencyId = table.Column<string>(type: "TEXT", nullable: false),
                     PartyId = table.Column<string>(type: "TEXT", nullable: false),
+                    ElectionId = table.Column<string>(type: "TEXT", nullable: false),
+                    VotesReceived = table.Column<int>(type: "INTEGER", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -137,7 +139,8 @@ namespace VotifySystem.Migrations
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     Address = table.Column<string>(type: "TEXT", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Country = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,25 +150,6 @@ namespace VotifySystem.Migrations
                         column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ElectionCandidate",
-                columns: table => new
-                {
-                    CandidateId = table.Column<string>(type: "TEXT", nullable: false),
-                    ElectionId = table.Column<string>(type: "TEXT", nullable: false),
-                    VotesReceived = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ElectionCandidate", x => new { x.ElectionId, x.CandidateId });
-                    table.ForeignKey(
-                        name: "FK_ElectionCandidate_Election_ElectionId",
-                        column: x => x.ElectionId,
-                        principalTable: "Election",
-                        principalColumn: "ElectionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -188,7 +172,7 @@ namespace VotifySystem.Migrations
                 name: "Constituency");
 
             migrationBuilder.DropTable(
-                name: "ElectionCandidate");
+                name: "Election");
 
             migrationBuilder.DropTable(
                 name: "ElectionVoter");
@@ -201,9 +185,6 @@ namespace VotifySystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Voter");
-
-            migrationBuilder.DropTable(
-                name: "Election");
 
             migrationBuilder.DropTable(
                 name: "Users");

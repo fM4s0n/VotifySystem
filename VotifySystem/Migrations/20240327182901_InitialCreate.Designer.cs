@@ -11,8 +11,8 @@ using VotifyDataAccess.Database;
 namespace VotifySystem.Migrations
 {
     [DbContext(typeof(VotifyDatabaseContext))]
-    [Migration("20240321084941_Initial")]
-    partial class Initial
+    [Migration("20240327182901_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,10 @@ namespace VotifySystem.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ElectionId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -40,6 +44,9 @@ namespace VotifySystem.Migrations
                     b.Property<string>("PartyId")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("VotesReceived")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -62,22 +69,6 @@ namespace VotifySystem.Migrations
                     b.HasKey("ConstituencyId");
 
                     b.ToTable("Constituency", (string)null);
-                });
-
-            modelBuilder.Entity("VotifySystem.Common.Classes.ElectionCandidate", b =>
-                {
-                    b.Property<string>("ElectionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CandidateId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("VotesReceived")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ElectionId", "CandidateId");
-
-                    b.ToTable("ElectionCandidate", (string)null);
                 });
 
             modelBuilder.Entity("VotifySystem.Common.Classes.Elections.Election", b =>
@@ -223,19 +214,13 @@ namespace VotifySystem.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Country")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("TEXT");
 
                     b.ToTable("Voter", (string)null);
-                });
-
-            modelBuilder.Entity("VotifySystem.Common.Classes.ElectionCandidate", b =>
-                {
-                    b.HasOne("VotifySystem.Common.Classes.Elections.Election", null)
-                        .WithMany("Candidates")
-                        .HasForeignKey("ElectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("VotifySystem.Common.Classes.Elections.Election", b =>
@@ -263,11 +248,6 @@ namespace VotifySystem.Migrations
                         .HasForeignKey("VotifySystem.Common.Classes.Voter", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("VotifySystem.Common.Classes.Elections.Election", b =>
-                {
-                    b.Navigation("Candidates");
                 });
 #pragma warning restore 612, 618
         }
