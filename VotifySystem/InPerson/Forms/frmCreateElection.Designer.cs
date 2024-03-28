@@ -54,17 +54,17 @@ partial class frmCreateElection
         cmbCountry = new ComboBox();
         lblCountry = new Label();
         grpCandidates = new GroupBox();
+        txtCandidateLastName = new TextBox();
+        lblCandidateLastName = new Label();
         btnRemoveCandidate = new Button();
-        cmbAddCandidate = new Button();
-        cmbParty = new ComboBox();
+        btnAddCandidate = new Button();
+        cmbCamdidateParty = new ComboBox();
         lblParty = new Label();
         cmbCandidateConstituency = new ComboBox();
         lblCandidateConstituency = new Label();
         txtCandidateFirstName = new TextBox();
         lblCandidateFirstName = new Label();
         btnReset = new Button();
-        txtCandidateLastName = new TextBox();
-        lblCandidateLastName = new Label();
         grpElectionDates.SuspendLayout();
         grpConstituencies.SuspendLayout();
         grpCandidates.SuspendLayout();
@@ -303,8 +303,8 @@ partial class frmCreateElection
         grpCandidates.Controls.Add(txtCandidateLastName);
         grpCandidates.Controls.Add(lblCandidateLastName);
         grpCandidates.Controls.Add(btnRemoveCandidate);
-        grpCandidates.Controls.Add(cmbAddCandidate);
-        grpCandidates.Controls.Add(cmbParty);
+        grpCandidates.Controls.Add(btnAddCandidate);
+        grpCandidates.Controls.Add(cmbCamdidateParty);
         grpCandidates.Controls.Add(lblParty);
         grpCandidates.Controls.Add(cmbCandidateConstituency);
         grpCandidates.Controls.Add(lblCandidateConstituency);
@@ -319,6 +319,22 @@ partial class frmCreateElection
         grpCandidates.TabStop = false;
         grpCandidates.Text = "Add Candidates";
         // 
+        // txtCandidateLastName
+        // 
+        txtCandidateLastName.Location = new Point(6, 87);
+        txtCandidateLastName.Name = "txtCandidateLastName";
+        txtCandidateLastName.Size = new Size(465, 23);
+        txtCandidateLastName.TabIndex = 15;
+        // 
+        // lblCandidateLastName
+        // 
+        lblCandidateLastName.AutoSize = true;
+        lblCandidateLastName.Location = new Point(6, 69);
+        lblCandidateLastName.Name = "lblCandidateLastName";
+        lblCandidateLastName.Size = new Size(123, 15);
+        lblCandidateLastName.TabIndex = 14;
+        lblCandidateLastName.Text = "Candidate Last Name:";
+        // 
         // btnRemoveCandidate
         // 
         btnRemoveCandidate.Location = new Point(306, 612);
@@ -329,23 +345,24 @@ partial class frmCreateElection
         btnRemoveCandidate.UseVisualStyleBackColor = true;
         btnRemoveCandidate.Click += btnRemoveCandidate_Click;
         // 
-        // cmbAddCandidate
+        // btnAddCandidate
         // 
-        cmbAddCandidate.Location = new Point(345, 236);
-        cmbAddCandidate.Name = "cmbAddCandidate";
-        cmbAddCandidate.Size = new Size(126, 23);
-        cmbAddCandidate.TabIndex = 12;
-        cmbAddCandidate.Text = "Add Candidate";
-        cmbAddCandidate.UseVisualStyleBackColor = true;
-        cmbAddCandidate.Click += cmbAddCandidate_Click;
+        btnAddCandidate.BackColor = SystemColors.Control;
+        btnAddCandidate.Location = new Point(351, 236);
+        btnAddCandidate.Name = "btnAddCandidate";
+        btnAddCandidate.Size = new Size(120, 23);
+        btnAddCandidate.TabIndex = 12;
+        btnAddCandidate.Text = "Add Candidate";
+        btnAddCandidate.UseVisualStyleBackColor = false;
+        btnAddCandidate.Click += cmbAddCandidate_Click;
         // 
-        // cmbParty
+        // cmbCamdidateParty
         // 
-        cmbParty.FormattingEnabled = true;
-        cmbParty.Location = new Point(5, 207);
-        cmbParty.Name = "cmbParty";
-        cmbParty.Size = new Size(465, 23);
-        cmbParty.TabIndex = 9;
+        cmbCamdidateParty.FormattingEnabled = true;
+        cmbCamdidateParty.Location = new Point(5, 207);
+        cmbCamdidateParty.Name = "cmbCamdidateParty";
+        cmbCamdidateParty.Size = new Size(465, 23);
+        cmbCamdidateParty.TabIndex = 9;
         // 
         // lblParty
         // 
@@ -398,22 +415,6 @@ partial class frmCreateElection
         btnReset.Text = "Reset form";
         btnReset.UseVisualStyleBackColor = true;
         btnReset.Click += btnReset_Click;
-        // 
-        // txtCandidateLastName
-        // 
-        txtCandidateLastName.Location = new Point(6, 87);
-        txtCandidateLastName.Name = "txtCandidateLastName";
-        txtCandidateLastName.Size = new Size(465, 23);
-        txtCandidateLastName.TabIndex = 15;
-        // 
-        // lblCandidateLastName
-        // 
-        lblCandidateLastName.AutoSize = true;
-        lblCandidateLastName.Location = new Point(6, 69);
-        lblCandidateLastName.Name = "lblCandidateLastName";
-        lblCandidateLastName.Size = new Size(123, 15);
-        lblCandidateLastName.TabIndex = 14;
-        lblCandidateLastName.Text = "Candidate Last Name:";
         // 
         // frmCreateElection
         // 
@@ -476,8 +477,8 @@ partial class frmCreateElection
     private ComboBox cmbCandidateConstituency;
     private Label lblCandidateConstituency;
     private Label lblParty;
-    private ComboBox cmbParty;
-    private Button cmbAddCandidate;
+    private ComboBox cmbCamdidateParty;
+    private Button btnAddCandidate;
     private Button btnReset;
     private Button btnRemoveConstituency;
     private Button btnRemoveCandidate;

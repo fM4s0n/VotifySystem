@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using System.Xml.Linq;
+using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
@@ -14,7 +15,8 @@ public partial class frmCreateElection : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    private ElectionVoteMechanism _currentVoteMechanism;
+    private Election _newElection;
+    private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
     private List<Candidate> _candidates = [];
     private List<Constituency> _constituencies = [];
     private List<Party> _parties = [];
@@ -37,9 +39,7 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void Init()
     {
-        // pre-set dates
-        dtpElectionStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0);
-        dtpElectionEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, DateTime.Now.Day, 21, 0, 0);
+        ResetDatePickers();
 
         _parties = _dbService!.GetDatabaseContext().Parties.ToList();
 
@@ -53,12 +53,21 @@ public partial class frmCreateElection : Form
             cmbVoteMechanism.Items.Add(voteMechanism.ToString());
 
         foreach (Party party in _parties)
-            cmbParty.Items.Add(party.Name);
+            cmbCamdidateParty.Items.Add(party.Name);
 
         lvCandidates.View = View.Details;
         lvCandidates.Columns.Add("Name");
         lvCandidates.Columns.Add("Party");
         lvCandidates.Columns.Add("Constituency");
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ResetDatePickers()
+    {
+        dtpElectionStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0);
+        dtpElectionEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, DateTime.Now.Day, 21, 0, 0);
     }
 
     /// <summary>
@@ -70,9 +79,8 @@ public partial class frmCreateElection : Form
         if (ValidateElection() == false)
             return;
 
-        Election election = ElectionFactory.CreateElection(_currentVoteMechanism, txtElectionName.Text, dtpElectionStart.Value, dtpElectionEnd.Value, _userService!.GetCurrentUser()!);
-
-        _dbService!.InsertEntity(election);
+        _newElection = ElectionFactory.CreateElection(_currentVoteMechanism);
+        _dbService!.InsertEntity(_newElection);
     }
 
     /// <summary>
@@ -202,7 +210,13 @@ public partial class frmCreateElection : Form
             txtConstituencyName.BackColor = Color.White;
         }
 
+        Constituency constituencyToAdd = new(txtConstituencyName.Text, _newElection.ElectionId);
+        ListViewItem lvi = new(constituencyToAdd.ConstituencyName);
+        lvi.SubItems.Add(constituencyToAdd.ConstituencyId);
+        lvi.SubItems.Add(constituencyToAdd.ElectionId);
+
         lvConstituencies.Items.Add(txtConstituencyName.Text);
+
         txtConstituencyName.Text = string.Empty;
     }
 
@@ -213,18 +227,16 @@ public partial class frmCreateElection : Form
     {
         if (ValidateCandidateName() == false ||
             ValidateCandidateParty() == false)
-        {
-            //TODO
-        }
+            return;
 
         string constituencyId;
         string partyId;
 
-        Candidate candidateToAdd = new Candidate(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
+        Candidate candidateToAdd = new (txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
 
         ListViewItem item = new(candidateToAdd.FullName);
-        item.SubItems.Add(candidateToAdd.PartyId);
-        item.SubItems.Add(constituencyId);
+        item.SubItems.Add(candidateToAdd.PartyId).Tag = "PartyId";
+        item.SubItems.Add(constituencyId).Tag = "constituencyId"; // TO DO FIX THIS SO ITS EASY TO ACCESS PROPERTIES OF EACH ITEM
         
         lvCandidates.Items.Add(item);
 
@@ -252,15 +264,15 @@ public partial class frmCreateElection : Form
     /// <returns>True if a value is seleected false if not</returns>
     private bool ValidateCandidateParty()
     {
-        if (cmbParty.SelectedIndex == -1)
+        if (cmbCamdidateParty.SelectedIndex == -1)
         {
             MessageBox.Show("Please select a party", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            cmbParty.BackColor = Color.Red;
+            cmbCamdidateParty.BackColor = Color.Red;
             return false;
         }
         else
         {
-            cmbParty.BackColor = Color.White;
+            cmbCamdidateParty.BackColor = Color.White;
             return true;
         }
     }
@@ -286,6 +298,7 @@ public partial class frmCreateElection : Form
     private void btnReset_Click(object sender, EventArgs e)
     {
         ClearAllControls();
+        ResetGlobals();
     }
 
     /// <summary>
@@ -293,7 +306,27 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void ClearAllControls()
     {
-        //TODO
+        foreach (TextBox tb in new List<TextBox> { txtCandidateFirstName, txtCandidateLastName, txtConstituencyName, txtElectionName})
+            tb.Clear();
+
+        foreach (ComboBox cb in new List<ComboBox> { cmbCamdidateParty, cmbCandidateConstituency, cmbCountry, cmbVoteMechanism })
+            cb.SelectedIndex = -1;
+
+        ResetDatePickers();
+
+        lvCandidates.Items.Clear();
+        lvConstituencies.Items.Clear();
+    }
+
+    /// <summary>
+    /// Reset gloabal variables 
+    /// </summary>
+    private void ResetGlobals()
+    {
+        _parties.Clear();
+        _candidates.Clear();
+        _constituencies.Clear();
+        _currentVoteMechanism = ElectionVoteMechanism.FPTP;
     }
 
     /// <summary>
@@ -301,14 +334,15 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void btnRemoveCandidate_Click(object sender, EventArgs e)
     {
-        Candidate candidateToDelete = _candidates.FirstOrDefault(c => c.)
+        //Candidate candidateToDelete = _candidates.FirstOrDefault(c => c.)
     }
 
     /// <summary>
-    /// 
+    /// Remove selected constituency
     /// </summary>
     private void btnRemoveConstituency_Click(object sender, EventArgs e)
     {
-
+        string test = lvConstituencies.SelectedItems[0].SubItems["constituencyId"].Text;
+        Constituency constituencyToDelete = _constituencies.FirstOrDefault(c => c.ConstituencyId == lvConstituencies.SelectedItems[0].SubItems[1].Text);
     }
 }

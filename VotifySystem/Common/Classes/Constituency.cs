@@ -14,9 +14,7 @@ public class Constituency
     /// <summary>
     /// Default Constructor for EF Core
     /// </summary>
-    public Constituency()
-    {
-    }
+    public Constituency() { }
 
     public Constituency (string constituencyName, string electionId)
     {
