@@ -22,7 +22,7 @@ public static class ElectionFactory
         };
     }
 
-    public static Election CreateElection(ElectionVoteMechanism voteMechanism, string description, DateTime startDate, DateTime endDate, User user)
+    public static Election CreateElection(ElectionVoteMechanism voteMechanism, string description, DateTime startDate, DateTime endDate, string userId)
     {
         return voteMechanism switch
         {
@@ -32,7 +32,7 @@ public static class ElectionFactory
                 Description = description,
                 StartDate = startDate,
                 EndDate = endDate,
-                ElectionAdministrator = user
+                ElectionAdministratorId = userId
             },
             ElectionVoteMechanism.STV => new SingleTransferrableVoteElection
             {
@@ -40,7 +40,7 @@ public static class ElectionFactory
                 Description = description,
                 StartDate = startDate,
                 EndDate = endDate,
-                ElectionAdministrator = user
+                ElectionAdministratorId = userId
             }
         };           
     }
