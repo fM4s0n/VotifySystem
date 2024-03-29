@@ -10,16 +10,21 @@ namespace VotifySystem.Controls;
 /// </summary>
 public partial class ctrAdminHome : UserControl
 {
-    private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
+    private IUserService? _userService;
+    private IDbService? _dbService;
 
-    public ctrAdminHome(IUserService userService, IDbService dbService)
-    {
+    public ctrAdminHome() 
+    { 
         InitializeComponent();
+    }
 
-        if (DesignMode)
-            return;
-
+    /// <summary>
+    /// Init the control with the required services
+    /// </summary>
+    /// <param name="userService"></param>
+    /// <param name="dbService"></param>
+    public void Init(IUserService userService, IDbService dbService)
+    {
         _userService = userService;
         _dbService = dbService;
     }

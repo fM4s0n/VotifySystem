@@ -28,13 +28,32 @@ public partial class ctrLoginInPerson : UserControl
     {
         _userService = userService;
         _dbService = dbService;
+
+        //_userService.LogInEvent += UserService_LogInEvent;
     }
 
     /// <summary>
-    /// 
+    /// Event handler for when a user logs in
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="sender">UserService</param>
+    /// <param name="e">EventArgs</param>
+    //private void UserService_LogInEvent(object sender, EventArgs e)
+    //{
+    //    UserLevel userLevel = _userService!.GetCurrentUserLevel();
+
+    //    if (userLevel == UserLevel.Voter)
+    //    {
+    //        //show ctrVoterHome
+    //    }
+    //    else if (userLevel == UserLevel.Administrator)
+    //    {
+    //        //TODO show ctrAdminHome
+    //    }
+    //}
+
+    /// <summary>
+    /// Login using a login code method
+    /// </summary>
     public void btnSubmitLoginCode_Click(object sender, EventArgs e)
     {
         // Validate input
@@ -55,7 +74,7 @@ public partial class ctrLoginInPerson : UserControl
 
         if (success)
         {
-
+            //TODO
         }
         else
         {
@@ -64,10 +83,8 @@ public partial class ctrLoginInPerson : UserControl
     }
 
     /// <summary>
-    /// 
+    /// Show the create account form
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnCreateAccount_Click(object sender, EventArgs e)
     {
         frmCreateAccount frmCreateAccount = new(_userService!, _dbService!);
@@ -140,6 +157,9 @@ public partial class ctrLoginInPerson : UserControl
         return success;
     }
 
+    /// <summary>
+    /// rest the control's textboxes
+    /// </summary>
     public void ResetControl()
     {
         txtUsername.Text = string.Empty;

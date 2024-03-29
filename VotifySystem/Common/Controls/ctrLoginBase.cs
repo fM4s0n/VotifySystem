@@ -13,8 +13,6 @@ public partial class ctrLoginBase : UserControl
     public ctrLoginBase() 
     { 
         InitializeComponent();
-
-        _userService.LogInEvent += UserService_LogInEvent;
     }
 
     /// <summary>
@@ -27,6 +25,8 @@ public partial class ctrLoginBase : UserControl
         _userService = userService;
         _dbService = dbService;
         _loginMode = loginMode;
+
+        _userService.LogInEvent += UserService_LogInEvent;
 
         if (_loginMode == LoginMode.InPerson)
         {

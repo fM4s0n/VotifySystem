@@ -15,9 +15,6 @@ internal partial class frmMain : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    ctrAdminHome? ctrAdminHome;
-    ctrVoterHome? ctrVoterHome;
-
     private static frmMain _instance;
     public static frmMain GetInstance() { return _instance; }
 
@@ -95,13 +92,15 @@ internal partial class frmMain : Form
         switch (_mode)
         {
             case UserLevel.Administrator:
-                ctrAdminHome = new(_userService!, _dbService!){ Visible = true };
                 ctrMainDefault.Visible = false;
+                ctrLoginBase.Visible = false;
+                ctrAdminHome.Init(_userService!, _dbService!);
+                ctrAdminHome.Visible = true;
                 ctrAdminHome.Show();
                 break;
 
             case UserLevel.Voter:
-                ctrVoterHome = new() { Visible = true };
+                //ctrVoterHome = new() { Visible = true };
                 ctrMainDefault.Visible = false;
                 break;
 

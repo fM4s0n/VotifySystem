@@ -437,6 +437,7 @@ partial class frmCreateElection
         Margin = new Padding(3, 2, 3, 2);
         Name = "frmCreateElection";
         Text = "FrmCreateElection";
+        StartPosition = FormStartPosition.CenterScreen;
         grpElectionDates.ResumeLayout(false);
         grpElectionDates.PerformLayout();
         grpConstituencies.ResumeLayout(false);

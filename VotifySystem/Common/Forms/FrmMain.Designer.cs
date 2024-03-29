@@ -30,34 +30,45 @@
         {
             ctrMainDefault = new Common.Controls.ctrMainDefault();
             ctrLoginBase = new Controls.ctrLoginBase();
+            ctrAdminHome = new Controls.ctrAdminHome();
             SuspendLayout();
             // 
             // ctrMainDefault
             // 
-            ctrMainDefault.Location = new Point(25, 16);
-            ctrMainDefault.Margin = new Padding(3, 5, 3, 5);
+            ctrMainDefault.Location = new Point(22, 12);
+            ctrMainDefault.Margin = new Padding(3, 4, 3, 4);
             ctrMainDefault.Name = "ctrMainDefault";
-            ctrMainDefault.Size = new Size(857, 567);
+            ctrMainDefault.Size = new Size(750, 425);
             ctrMainDefault.TabIndex = 0;
             // 
             // ctrLoginBase
             // 
-            ctrLoginBase.Location = new Point(25, 34);
+            ctrLoginBase.Location = new Point(22, 26);
+            ctrLoginBase.Margin = new Padding(3, 2, 3, 2);
             ctrLoginBase.Name = "ctrLoginBase";
-            ctrLoginBase.Size = new Size(802, 496);
+            ctrLoginBase.Size = new Size(702, 372);
             ctrLoginBase.TabIndex = 1;
             ctrLoginBase.Visible = false;
             // 
+            // ctrAdminHome
+            // 
+            ctrAdminHome.Location = new Point(12, 12);
+            ctrAdminHome.Name = "ctrAdminHome";
+            ctrAdminHome.Size = new Size(875, 450);
+            ctrAdminHome.TabIndex = 2;
+            ctrAdminHome.Visible = false;
+            // 
             // frmMain
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 600);
+            ClientSize = new Size(967, 560);
+            Controls.Add(ctrAdminHome);
             Controls.Add(ctrLoginBase);
             Controls.Add(ctrMainDefault);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "frmMain";
             Text = "Form1";
+            StartPosition = FormStartPosition.CenterScreen;
             ResumeLayout(false);
         }
 
@@ -65,5 +76,6 @@
 
         private Common.Controls.ctrMainDefault ctrMainDefault;
         private Controls.ctrLoginBase ctrLoginBase;
+        private Controls.ctrAdminHome ctrAdminHome;
     }
 }

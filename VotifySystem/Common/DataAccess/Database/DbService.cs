@@ -88,11 +88,11 @@ internal class DbService : IDbService
     /// <summary>
     /// Create the default voter for seed data
     /// </summary>
-    /// <returns>Instace of the default voter</returns>
+    /// <returns>Instance of the default voter</returns>
     private static Voter CreateInitialVoter()
     {
         DateTime dob = new(year: 1980, 1, 1);
-        Voter defaultVoter = new("Default", "Voter", "DefaultVoter", VoteMethod.InPerson, "Deafult address",dob, Country.UK);
+        Voter defaultVoter = new("Default", "Voter", "DefaultVoter", VoteMethod.InPerson, "Default address",dob, Country.UK);
         defaultVoter.Password = _userService!.HashPassword(defaultVoter, "Password");
         
         return defaultVoter;

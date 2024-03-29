@@ -28,11 +28,14 @@ public partial class frmCreateElection : Form
         if (DesignMode)
             return;
 
+        //Listen to form.show event
+        this.Load += (sender, e) => { Init(); };
+
         _userService = userService;
         _dbService = dbService;
-
-        Init();
     }
+
+    //Override show metho
 
     /// <summary>
     /// Custom init
