@@ -46,13 +46,13 @@ partial class frmManageParties
         // 
         // lvParties
         // 
+        lvParties.GridLines = true;
         lvParties.Location = new Point(6, 22);
         lvParties.MultiSelect = false;
         lvParties.Name = "lvParties";
         lvParties.Size = new Size(358, 343);
         lvParties.TabIndex = 0;
         lvParties.UseCompatibleStateImageBehavior = false;
-        lvParties.Visible = false;
         // 
         // grpAddParty
         // 
@@ -168,6 +168,7 @@ partial class frmManageParties
         Controls.Add(grpAddParty);
         Name = "frmManageParties";
         Text = "frmCreateParty";
+        StartPosition = FormStartPosition.CenterScreen;
         grpAddParty.ResumeLayout(false);
         grpAddParty.PerformLayout();
         grpSelectCountry.ResumeLayout(false);

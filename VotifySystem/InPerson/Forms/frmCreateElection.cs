@@ -58,6 +58,7 @@ public partial class frmCreateElection : Form
             cmbCountry.Items.Add(country);
 
         InitLvCandidates();
+        InitLvConstituencies();
     }
 
     /// <summary>
@@ -69,6 +70,12 @@ public partial class frmCreateElection : Form
         lvCandidates.Columns.Add("Name", lvCandidates.Width / 3, HorizontalAlignment.Left);
         lvCandidates.Columns.Add("Party", lvCandidates.Width / 3, HorizontalAlignment.Left);
         lvCandidates.Columns.Add("Constituency", lvCandidates.Width / 3, HorizontalAlignment.Left);      
+    }
+
+    private void InitLvConstituencies()
+    {
+        lvConstituencies.View = View.Details;
+        lvConstituencies.Columns.Add("Constituency Name", lvConstituencies.Width);
     }
 
     /// <summary>
@@ -177,9 +184,9 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// 
+    /// Validates the election title text box
     /// </summary>
-    /// <returns></returns>
+    /// <returns>true if it is not nullOrWhiteSpace, false if it is</returns>
     private bool ValidateElectionTitle()
     {
         if (string.IsNullOrWhiteSpace(txtElectionName.Text))
@@ -277,27 +284,77 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void cmbAddCandidate_Click(object sender, EventArgs e)
     {
-        if (ValidateCandidateName() == false ||
-            ValidateCandidateParty() == false ||
-            ValidateCandidateConstituency() == false)
+        if (IsValidCandidate() == false)
             return;
 
-        string constituencyId = _constituencies.First(c => c.ConstituencyId == cmbCandidateConstituency.SelectedValue).ConstituencyId;
-        string partyId = cmbCandidateParty.SelectedValue!.ToString()!;
+        string constituencyId = GetSelectedConstituencyId();
+        string partyId = GetSelectedPartyId();
 
-        Candidate candidateToAdd = new(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
+        Candidate candidateToAdd = CreateCandidate(constituencyId, partyId);
 
-        ListViewItem item = new(candidateToAdd.FullName);
-        item.SubItems.Add(candidateToAdd.PartyId).Tag = "PartyId"; // index 0
-        item.SubItems.Add(constituencyId).Tag = "ConstituencyId"; // index 1
-
-        lvCandidates.Items.Add(item);
+        AddCandidateToListView(candidateToAdd);
 
         _dbService!.InsertEntity(candidateToAdd);
 
         // TODO: Add error message if candidate already exists
 
         // TODO: add column to lvConstituencies to show the number of candidates in each constituency
+    }
+
+    /// <summary>
+    /// Validates candidate to be added to the election
+    /// </summary>
+    /// <returns>True if name, party and constituency are all valid, false if not</returns>
+    private bool IsValidCandidate()
+    {
+        return ValidateCandidateName() && ValidateCandidateParty() && ValidateCandidateConstituency();
+    }
+
+    /// <summary>
+    /// Gets the selected constituencyId from cmbCandidateConstituency
+    /// </summary>
+    /// <returns>string of constituencyId of the selected constituency</returns>
+    private string GetSelectedConstituencyId()
+    {
+        return _constituencies.First(c => c.ConstituencyId == cmbCandidateConstituency.SelectedValue).ConstituencyId;
+    }
+
+    /// <summary>
+    /// gets the selected partyId from cmbCandidateParty
+    /// </summary>
+    /// <returns>string of partyId of selected party</returns>
+    private string GetSelectedPartyId()
+    {
+        return cmbCandidateParty.SelectedValue!.ToString()!;
+    }
+
+    /// <summary>
+    /// Creates a new candidate object
+    /// </summary>
+    /// <param name="constituencyId">constituencyId</param>
+    /// <param name="partyId">PartyId</param>
+    /// <returns>New Candidate object</returns>
+    private Candidate CreateCandidate(string constituencyId, string partyId)
+    {
+        return new Candidate(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
+    }
+
+    /// <summary>
+    /// Adds a candidate to the lvCandidates ListView
+    /// </summary>
+    /// <param name="candidate">candidate to be added</param>
+    private void AddCandidateToListView(Candidate candidate)
+    {
+        string partyName = _allParties.First(p => p.PartyId == candidate.PartyId).Name;
+        string constituencyName = _constituencies.First(c => c.ConstituencyId == candidate.ConstituencyId).ConstituencyName;
+
+        ListViewItem item = new(candidate.FullName);
+        item.SubItems.Add(partyName); // index 0
+        item.SubItems[0].Tag = candidate.PartyId;
+        item.SubItems.Add(constituencyName); // index 1
+        item.SubItems[1].Tag = candidate.ConstituencyId;
+
+        lvCandidates.Items.Add(item);
     }
 
     /// <summary>

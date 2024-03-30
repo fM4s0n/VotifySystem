@@ -43,7 +43,6 @@ partial class frmCreateElection
         dtpElectionStart = new DateTimePicker();
         lblAddConstituencies = new Label();
         lvConstituencies = new ListView();
-        ConstituencyName = new ColumnHeader();
         cmbVoteMechanism = new ComboBox();
         lblVoteMechanism = new Label();
         label1 = new Label();
@@ -106,6 +105,7 @@ partial class frmCreateElection
         lvCandidates.Size = new Size(460, 354);
         lvCandidates.TabIndex = 2;
         lvCandidates.UseCompatibleStateImageBehavior = false;
+        lvCandidates.GridLines = true;
         // 
         // lblCandidates
         // 
@@ -197,7 +197,6 @@ partial class frmCreateElection
         // 
         // lvConstituencies
         // 
-        lvConstituencies.Columns.AddRange(new ColumnHeader[] { ConstituencyName });
         lvConstituencies.Enabled = false;
         lvConstituencies.Location = new Point(5, 119);
         lvConstituencies.Margin = new Padding(3, 2, 3, 2);
@@ -206,10 +205,7 @@ partial class frmCreateElection
         lvConstituencies.Size = new Size(470, 401);
         lvConstituencies.TabIndex = 8;
         lvConstituencies.UseCompatibleStateImageBehavior = false;
-        // 
-        // ConstituencyName
-        // 
-        ConstituencyName.Text = "Constituency Name";
+        lvConstituencies.GridLines = true;
         // 
         // cmbVoteMechanism
         // 
@@ -530,5 +526,4 @@ partial class frmCreateElection
     private Label lblCandidateLastName;
     private GroupBox grpElectionDetails;
     private Button btnInitialiseElection;
-    private ColumnHeader ConstituencyName;
 }

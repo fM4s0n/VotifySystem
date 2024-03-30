@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
@@ -37,6 +36,8 @@ public partial class frmManageParties : Form
     {
         foreach (Country c in Enum.GetValues(typeof(Country)))
             cmbCountry.Items.Add(c);
+
+        lvParties.Columns.Add("Party", lvParties.Width);
     }
 
     /// <summary>
@@ -107,12 +108,16 @@ public partial class frmManageParties : Form
 
         txtPartyName.Enabled = true;
         btnAddParty.Enabled = true;
+        lvParties.Enabled = true;
+        txtPartyName.Enabled = true;
+        btnAddParty.Enabled = true;
+        btnRemoveParty.Enabled = true;
 
         RefreshParties();
     }
 
     /// <summary>
-    /// refersh the party list and the ListView
+    /// Refresh the party list and the ListView
     /// </summary>
     private void RefreshParties()
     {
