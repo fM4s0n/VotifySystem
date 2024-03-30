@@ -43,6 +43,7 @@ partial class frmCreateElection
         dtpElectionStart = new DateTimePicker();
         lblAddConstituencies = new Label();
         lvConstituencies = new ListView();
+        ConstituencyName = new ColumnHeader();
         cmbVoteMechanism = new ComboBox();
         lblVoteMechanism = new Label();
         label1 = new Label();
@@ -65,9 +66,12 @@ partial class frmCreateElection
         txtCandidateFirstName = new TextBox();
         lblCandidateFirstName = new Label();
         btnReset = new Button();
+        grpElectionDetails = new GroupBox();
+        btnInitialiseElection = new Button();
         grpElectionDates.SuspendLayout();
         grpConstituencies.SuspendLayout();
         grpCandidates.SuspendLayout();
+        grpElectionDetails.SuspendLayout();
         SuspendLayout();
         // 
         // btnCreate
@@ -94,6 +98,7 @@ partial class frmCreateElection
         // 
         // lvCandidates
         // 
+        lvCandidates.Enabled = false;
         lvCandidates.Location = new Point(11, 253);
         lvCandidates.Margin = new Padding(3, 2, 3, 2);
         lvCandidates.MultiSelect = false;
@@ -114,7 +119,7 @@ partial class frmCreateElection
         // lblElectionTitle
         // 
         lblElectionTitle.AutoSize = true;
-        lblElectionTitle.Location = new Point(64, 89);
+        lblElectionTitle.Location = new Point(6, 20);
         lblElectionTitle.Name = "lblElectionTitle";
         lblElectionTitle.Size = new Size(77, 15);
         lblElectionTitle.TabIndex = 4;
@@ -122,11 +127,11 @@ partial class frmCreateElection
         // 
         // txtElectionName
         // 
-        txtElectionName.Location = new Point(64, 106);
+        txtElectionName.Location = new Point(6, 37);
         txtElectionName.Margin = new Padding(3, 2, 3, 2);
         txtElectionName.Name = "txtElectionName";
         txtElectionName.Size = new Size(470, 23);
-        txtElectionName.TabIndex = 5;
+        txtElectionName.TabIndex = 1;
         // 
         // grpElectionDates
         // 
@@ -134,11 +139,11 @@ partial class frmCreateElection
         grpElectionDates.Controls.Add(lblElectionStart);
         grpElectionDates.Controls.Add(dtpElectionEnd);
         grpElectionDates.Controls.Add(dtpElectionStart);
-        grpElectionDates.Location = new Point(564, 84);
+        grpElectionDates.Location = new Point(564, 62);
         grpElectionDates.Margin = new Padding(3, 2, 3, 2);
         grpElectionDates.Name = "grpElectionDates";
         grpElectionDates.Padding = new Padding(3, 2, 3, 2);
-        grpElectionDates.Size = new Size(482, 79);
+        grpElectionDates.Size = new Size(482, 92);
         grpElectionDates.TabIndex = 6;
         grpElectionDates.TabStop = false;
         grpElectionDates.Text = "Election Date:";
@@ -163,23 +168,23 @@ partial class frmCreateElection
         // 
         // dtpElectionEnd
         // 
-        dtpElectionEnd.CustomFormat = "dd/MM/yyyy hh:mm:ss";
+        dtpElectionEnd.CustomFormat = "dd/MM/yyyy HH:mm:ss";
         dtpElectionEnd.Format = DateTimePickerFormat.Custom;
         dtpElectionEnd.Location = new Point(120, 52);
         dtpElectionEnd.Margin = new Padding(3, 2, 3, 2);
         dtpElectionEnd.Name = "dtpElectionEnd";
         dtpElectionEnd.Size = new Size(350, 23);
-        dtpElectionEnd.TabIndex = 1;
+        dtpElectionEnd.TabIndex = 6;
         // 
         // dtpElectionStart
         // 
-        dtpElectionStart.CustomFormat = "dd/MM/yyyy hh:mm:ss";
+        dtpElectionStart.CustomFormat = "dd/MM/yyyy HH:mm:ss";
         dtpElectionStart.Format = DateTimePickerFormat.Custom;
         dtpElectionStart.Location = new Point(120, 20);
         dtpElectionStart.Margin = new Padding(3, 2, 3, 2);
         dtpElectionStart.Name = "dtpElectionStart";
         dtpElectionStart.Size = new Size(350, 23);
-        dtpElectionStart.TabIndex = 0;
+        dtpElectionStart.TabIndex = 5;
         // 
         // lblAddConstituencies
         // 
@@ -192,6 +197,8 @@ partial class frmCreateElection
         // 
         // lvConstituencies
         // 
+        lvConstituencies.Columns.AddRange(new ColumnHeader[] { ConstituencyName });
+        lvConstituencies.Enabled = false;
         lvConstituencies.Location = new Point(5, 119);
         lvConstituencies.Margin = new Padding(3, 2, 3, 2);
         lvConstituencies.MultiSelect = false;
@@ -200,20 +207,24 @@ partial class frmCreateElection
         lvConstituencies.TabIndex = 8;
         lvConstituencies.UseCompatibleStateImageBehavior = false;
         // 
+        // ConstituencyName
+        // 
+        ConstituencyName.Text = "Constituency Name";
+        // 
         // cmbVoteMechanism
         // 
         cmbVoteMechanism.FormattingEnabled = true;
-        cmbVoteMechanism.Location = new Point(64, 204);
+        cmbVoteMechanism.Location = new Point(6, 134);
         cmbVoteMechanism.Margin = new Padding(3, 2, 3, 2);
         cmbVoteMechanism.Name = "cmbVoteMechanism";
         cmbVoteMechanism.Size = new Size(470, 23);
-        cmbVoteMechanism.TabIndex = 9;
+        cmbVoteMechanism.TabIndex = 3;
         cmbVoteMechanism.SelectedIndexChanged += cmbVoteMechanism_SelectedIndexChanged;
         // 
         // lblVoteMechanism
         // 
         lblVoteMechanism.AutoSize = true;
-        lblVoteMechanism.Location = new Point(64, 187);
+        lblVoteMechanism.Location = new Point(6, 117);
         lblVoteMechanism.Name = "lblVoteMechanism";
         lblVoteMechanism.Size = new Size(143, 15);
         lblVoteMechanism.TabIndex = 10;
@@ -246,6 +257,7 @@ partial class frmCreateElection
         // 
         // btnRemoveConstituency
         // 
+        btnRemoveConstituency.Enabled = false;
         btnRemoveConstituency.Location = new Point(295, 525);
         btnRemoveConstituency.Name = "btnRemoveConstituency";
         btnRemoveConstituency.Size = new Size(180, 23);
@@ -256,6 +268,7 @@ partial class frmCreateElection
         // 
         // btnAddConstituency
         // 
+        btnAddConstituency.Enabled = false;
         btnAddConstituency.Location = new Point(344, 72);
         btnAddConstituency.Name = "btnAddConstituency";
         btnAddConstituency.Size = new Size(131, 23);
@@ -275,24 +288,25 @@ partial class frmCreateElection
         // 
         // txtConstituencyName
         // 
+        txtConstituencyName.Enabled = false;
         txtConstituencyName.Location = new Point(6, 43);
         txtConstituencyName.Name = "txtConstituencyName";
         txtConstituencyName.Size = new Size(469, 23);
-        txtConstituencyName.TabIndex = 9;
+        txtConstituencyName.TabIndex = 4;
         // 
         // cmbCountry
         // 
         cmbCountry.FormattingEnabled = true;
-        cmbCountry.Location = new Point(64, 157);
+        cmbCountry.Location = new Point(6, 87);
         cmbCountry.Name = "cmbCountry";
         cmbCountry.Size = new Size(470, 23);
-        cmbCountry.TabIndex = 13;
+        cmbCountry.TabIndex = 2;
         cmbCountry.SelectedIndexChanged += cmbCountry_SelectedIndexChanged;
         // 
         // lblCountry
         // 
         lblCountry.AutoSize = true;
-        lblCountry.Location = new Point(64, 139);
+        lblCountry.Location = new Point(6, 69);
         lblCountry.Name = "lblCountry";
         lblCountry.Size = new Size(50, 15);
         lblCountry.TabIndex = 14;
@@ -312,19 +326,20 @@ partial class frmCreateElection
         grpCandidates.Controls.Add(lblCandidateFirstName);
         grpCandidates.Controls.Add(lblCandidates);
         grpCandidates.Controls.Add(lvCandidates);
-        grpCandidates.Location = new Point(564, 168);
+        grpCandidates.Location = new Point(564, 159);
         grpCandidates.Name = "grpCandidates";
-        grpCandidates.Size = new Size(482, 641);
+        grpCandidates.Size = new Size(482, 650);
         grpCandidates.TabIndex = 15;
         grpCandidates.TabStop = false;
         grpCandidates.Text = "Add Candidates";
         // 
         // txtCandidateLastName
         // 
+        txtCandidateLastName.Enabled = false;
         txtCandidateLastName.Location = new Point(6, 87);
         txtCandidateLastName.Name = "txtCandidateLastName";
         txtCandidateLastName.Size = new Size(465, 23);
-        txtCandidateLastName.TabIndex = 15;
+        txtCandidateLastName.TabIndex = 8;
         // 
         // lblCandidateLastName
         // 
@@ -337,6 +352,7 @@ partial class frmCreateElection
         // 
         // btnRemoveCandidate
         // 
+        btnRemoveCandidate.Enabled = false;
         btnRemoveCandidate.Location = new Point(306, 612);
         btnRemoveCandidate.Name = "btnRemoveCandidate";
         btnRemoveCandidate.Size = new Size(170, 23);
@@ -348,21 +364,23 @@ partial class frmCreateElection
         // btnAddCandidate
         // 
         btnAddCandidate.BackColor = SystemColors.Control;
+        btnAddCandidate.Enabled = false;
         btnAddCandidate.Location = new Point(351, 214);
         btnAddCandidate.Name = "btnAddCandidate";
         btnAddCandidate.Size = new Size(120, 23);
-        btnAddCandidate.TabIndex = 12;
+        btnAddCandidate.TabIndex = 11;
         btnAddCandidate.Text = "Add Candidate";
         btnAddCandidate.UseVisualStyleBackColor = false;
         btnAddCandidate.Click += cmbAddCandidate_Click;
         // 
         // cmbCandidateParty
         // 
+        cmbCandidateParty.Enabled = false;
         cmbCandidateParty.FormattingEnabled = true;
         cmbCandidateParty.Location = new Point(6, 185);
         cmbCandidateParty.Name = "cmbCandidateParty";
         cmbCandidateParty.Size = new Size(465, 23);
-        cmbCandidateParty.TabIndex = 9;
+        cmbCandidateParty.TabIndex = 10;
         // 
         // lblParty
         // 
@@ -375,11 +393,12 @@ partial class frmCreateElection
         // 
         // cmbCandidateConstituency
         // 
+        cmbCandidateConstituency.Enabled = false;
         cmbCandidateConstituency.FormattingEnabled = true;
         cmbCandidateConstituency.Location = new Point(5, 137);
         cmbCandidateConstituency.Name = "cmbCandidateConstituency";
         cmbCandidateConstituency.Size = new Size(470, 23);
-        cmbCandidateConstituency.TabIndex = 7;
+        cmbCandidateConstituency.TabIndex = 9;
         // 
         // lblCandidateConstituency
         // 
@@ -392,10 +411,11 @@ partial class frmCreateElection
         // 
         // txtCandidateFirstName
         // 
+        txtCandidateFirstName.Enabled = false;
         txtCandidateFirstName.Location = new Point(6, 37);
         txtCandidateFirstName.Name = "txtCandidateFirstName";
         txtCandidateFirstName.Size = new Size(465, 23);
-        txtCandidateFirstName.TabIndex = 5;
+        txtCandidateFirstName.TabIndex = 7;
         // 
         // lblCandidateFirstName
         // 
@@ -416,34 +436,57 @@ partial class frmCreateElection
         btnReset.UseVisualStyleBackColor = true;
         btnReset.Click += btnReset_Click;
         // 
+        // grpElectionDetails
+        // 
+        grpElectionDetails.Controls.Add(btnInitialiseElection);
+        grpElectionDetails.Controls.Add(cmbVoteMechanism);
+        grpElectionDetails.Controls.Add(lblVoteMechanism);
+        grpElectionDetails.Controls.Add(cmbCountry);
+        grpElectionDetails.Controls.Add(lblCountry);
+        grpElectionDetails.Controls.Add(txtElectionName);
+        grpElectionDetails.Controls.Add(lblElectionTitle);
+        grpElectionDetails.Location = new Point(59, 62);
+        grpElectionDetails.Name = "grpElectionDetails";
+        grpElectionDetails.Size = new Size(482, 190);
+        grpElectionDetails.TabIndex = 17;
+        grpElectionDetails.TabStop = false;
+        grpElectionDetails.Text = "Election Details";
+        // 
+        // btnInitialiseElection
+        // 
+        btnInitialiseElection.Location = new Point(344, 164);
+        btnInitialiseElection.Name = "btnInitialiseElection";
+        btnInitialiseElection.Size = new Size(132, 23);
+        btnInitialiseElection.TabIndex = 15;
+        btnInitialiseElection.Text = "Initialise Election";
+        btnInitialiseElection.UseVisualStyleBackColor = true;
+        btnInitialiseElection.Click += btnInitialiseElection_Click;
+        // 
         // frmCreateElection
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(1080, 865);
+        Controls.Add(grpElectionDetails);
         Controls.Add(btnReset);
         Controls.Add(grpCandidates);
-        Controls.Add(lblCountry);
-        Controls.Add(cmbCountry);
         Controls.Add(grpConstituencies);
         Controls.Add(label1);
-        Controls.Add(lblVoteMechanism);
-        Controls.Add(cmbVoteMechanism);
         Controls.Add(grpElectionDates);
-        Controls.Add(txtElectionName);
-        Controls.Add(lblElectionTitle);
         Controls.Add(btnCancel);
         Controls.Add(btnCreate);
         Margin = new Padding(3, 2, 3, 2);
         Name = "frmCreateElection";
-        Text = "FrmCreateElection";
         StartPosition = FormStartPosition.CenterScreen;
+        Text = "FrmCreateElection";
         grpElectionDates.ResumeLayout(false);
         grpElectionDates.PerformLayout();
         grpConstituencies.ResumeLayout(false);
         grpConstituencies.PerformLayout();
         grpCandidates.ResumeLayout(false);
         grpCandidates.PerformLayout();
+        grpElectionDetails.ResumeLayout(false);
+        grpElectionDetails.PerformLayout();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -485,4 +528,7 @@ partial class frmCreateElection
     private Button btnRemoveCandidate;
     private TextBox txtCandidateLastName;
     private Label lblCandidateLastName;
+    private GroupBox grpElectionDetails;
+    private Button btnInitialiseElection;
+    private ColumnHeader ConstituencyName;
 }

@@ -11,7 +11,7 @@ using VotifyDataAccess.Database;
 namespace VotifySystem.Migrations
 {
     [DbContext(typeof(VotifyDatabaseContext))]
-    [Migration("20240329183257_InitialCreate")]
+    [Migration("20240330105344_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

@@ -10,13 +10,13 @@ namespace VotifySystem;
 /// Main form of the application
 /// this is the main entry point of the application
 /// </summary>
-internal partial class frmMain : Form
+public partial class frmMain : Form
 {
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    private static frmMain _instance;
-    public static frmMain GetInstance() { return _instance; }
+    private static frmMain? _instance;
+    public static frmMain GetInstance() { return _instance!; }
 
     private UserLevel _mode = UserLevel.None;
 
@@ -132,7 +132,7 @@ internal partial class frmMain : Form
     }
 
     /// <summary>
-    /// 
+    /// Show the online login control
     /// </summary>
     internal void ShowOnlineLogin()
     {

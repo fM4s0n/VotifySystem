@@ -19,7 +19,7 @@ public partial class frmCreateElection : Form
     private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
     private List<Candidate> _candidates = [];
     private List<Constituency> _constituencies = [];
-    private List<Party> _parties = [];
+    private List<Party> _allParties = [];
 
     public frmCreateElection(IUserService userService, IDbService dbService)
     {
@@ -35,14 +35,15 @@ public partial class frmCreateElection : Form
         _dbService = dbService;
     }
 
-    //Override show metho
 
     /// <summary>
     /// Custom init
     /// </summary>
     private void Init()
-    {     
-        if (_parties.Count == 0)
+    {
+        _allParties = _dbService!.GetDatabaseContext().Parties.ToList();
+
+        if (_allParties.Count == 0)
         {
             MessageBox.Show("There are no parties in the system. Please add a party before creating an election", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
@@ -50,15 +51,24 @@ public partial class frmCreateElection : Form
 
         ResetDatePickers();
 
-        InitCandidateComboBoxes();
-
         foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
             cmbVoteMechanism.Items.Add(voteMechanism.ToString());
 
+        foreach (Country country in Enum.GetValues(typeof(Country)))
+            cmbCountry.Items.Add(country);
+
+        InitLvCandidates();
+    }
+
+    /// <summary>
+    /// Inits the lvCandidates ListView
+    /// </summary>
+    private void InitLvCandidates()
+    {
         lvCandidates.View = View.Details;
-        lvCandidates.Columns.Add("Name");
-        lvCandidates.Columns.Add("Party");
-        lvCandidates.Columns.Add("Constituency");
+        lvCandidates.Columns.Add("Name", lvCandidates.Width / 3, HorizontalAlignment.Left);
+        lvCandidates.Columns.Add("Party", lvCandidates.Width / 3, HorizontalAlignment.Left);
+        lvCandidates.Columns.Add("Constituency", lvCandidates.Width / 3, HorizontalAlignment.Left);      
     }
 
     /// <summary>
@@ -66,15 +76,11 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void InitCandidateComboBoxes()
     {
-        cmbCandidateParty.Items.Clear();
-        cmbCandidateParty.DisplayMember = "Text";
-        cmbCandidateParty.ValueMember = "Value";
-        foreach (Party party in _parties)        
-            cmbCandidateParty.Items.Add(new { Text = party.Name, Value = party.PartyId });        
+        cmbCandidateParty.DisplayMember = "Name";
+        cmbCandidateParty.ValueMember = "PartyId";
+        cmbCandidateParty.DataSource = _allParties.Where(p => p.Country == (Country)cmbCountry.SelectedItem).ToList();
 
-        cmbCandidateConstituency.Items.Clear();
-        cmbCandidateConstituency.DisplayMember = "Text";
-        cmbCandidateConstituency.ValueMember = "Value";
+        RefreshCmbCandidateConstituency();
     }
 
     /// <summary>
@@ -116,7 +122,7 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// 
+    /// Close the form
     /// </summary>
     private void btnCancel_Click(object sender, EventArgs e)
     {
@@ -132,9 +138,6 @@ public partial class frmCreateElection : Form
         {
             _currentVoteMechanism = (ElectionVoteMechanism)result;
         }
-
-        _newElection = ElectionFactory.CreateElection(_currentVoteMechanism);
-        cmbVoteMechanism.Enabled = false;
     }
 
     /// <summary>
@@ -190,7 +193,7 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// Validates all comboboxes on the form have a value
+    /// Validates all ComboBoxes on the form have a value
     /// </summary>
     /// <returns></returns>
     private bool ValidateComboBoxes()
@@ -209,9 +212,9 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// 
+    /// Validates that the listViews have items in them
     /// </summary>
-    /// <returns></returns>
+    /// <returns>True if all ListViews have at least 1 item in them, false if not</returns>
     private bool ValidateListViews()
     {
         bool success = true;
@@ -255,16 +258,18 @@ public partial class frmCreateElection : Form
     /// </summary>
     /// <param name="constituency">Constituency to be added</param>
     private void AddConstituency(Constituency constituency)
-    {        
+    {
         _constituencies.Add(constituency);
 
         ListViewItem lvi = new(constituency.ConstituencyName);
         lvi.SubItems.Add(constituency.ConstituencyId);// 0 index
         lvi.SubItems.Add(constituency.ElectionId); // 1 index
 
-        lvConstituencies.Items.Add(txtConstituencyName.Text);
+        lvConstituencies.Items.Add(lvi);
 
         txtConstituencyName.Text = string.Empty;
+
+        RefreshCmbCandidateConstituency();
     }
 
     /// <summary>
@@ -273,22 +278,26 @@ public partial class frmCreateElection : Form
     private void cmbAddCandidate_Click(object sender, EventArgs e)
     {
         if (ValidateCandidateName() == false ||
-            ValidateCandidateParty() == false || 
+            ValidateCandidateParty() == false ||
             ValidateCandidateConstituency() == false)
             return;
 
-        string constituencyId = _constituencies.First(c => c.ConstituencyId == cmbCandidateConstituency.SelectedValue!.ToString()).ConstituencyId;
+        string constituencyId = _constituencies.First(c => c.ConstituencyId == cmbCandidateConstituency.SelectedValue).ConstituencyId;
         string partyId = cmbCandidateParty.SelectedValue!.ToString()!;
 
-        Candidate candidateToAdd = new (txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
+        Candidate candidateToAdd = new(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
 
         ListViewItem item = new(candidateToAdd.FullName);
         item.SubItems.Add(candidateToAdd.PartyId).Tag = "PartyId"; // index 0
         item.SubItems.Add(constituencyId).Tag = "ConstituencyId"; // index 1
-        
+
         lvCandidates.Items.Add(item);
 
         _dbService!.InsertEntity(candidateToAdd);
+
+        // TODO: Add error message if candidate already exists
+
+        // TODO: add column to lvConstituencies to show the number of candidates in each constituency
     }
 
     /// <summary>
@@ -345,18 +354,20 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// Loads parties based on the selected country
+    /// Loads parties into cmbCandidateParty based on the selected country
     /// </summary>
     private void cmbCountry_SelectedIndexChanged(object sender, EventArgs e)
     {
+        cmbCandidateParty.Items.Clear();
+
         if (cmbCountry.SelectedIndex != -1 && cmbCountry.SelectedItem is Country selectedCountry)
         {
-            _parties = _parties.Where(p => p.Country == selectedCountry).ToList();
+            foreach (Party p in _allParties.Where(p => p.Country == selectedCountry).ToList())
+            {
+                cmbCandidateParty.Items.Add(new { Text = p.Name, Value = p.PartyId });
+            }
         }
 
-        // Disable the comboBox so the country cant be changed as we now load in the parties based on country
-        // User must reset the form and start again if they wish to change the country
-        cmbCountry.Enabled = false;
     }
 
     /// <summary>
@@ -373,7 +384,7 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void ClearAllControls()
     {
-        foreach (TextBox tb in new List<TextBox> { txtCandidateFirstName, txtCandidateLastName, txtConstituencyName, txtElectionName})
+        foreach (TextBox tb in new List<TextBox> { txtCandidateFirstName, txtCandidateLastName, txtConstituencyName, txtElectionName })
             tb.Clear();
 
         foreach (ComboBox cb in new List<ComboBox> { cmbCandidateParty, cmbCandidateConstituency, cmbCountry, cmbVoteMechanism })
@@ -390,7 +401,7 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void ResetGlobals()
     {
-        _parties.Clear();
+        _allParties.Clear();
         _candidates.Clear();
         _constituencies.Clear();
         _currentVoteMechanism = ElectionVoteMechanism.FPTP;
@@ -434,11 +445,60 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void RefreshCmbCandidateConstituency()
     {
-        cmbCandidateConstituency.Items.Clear();
+        cmbCandidateConstituency.DataSource = null;
+        cmbCandidateConstituency.DisplayMember = "ConstituencyName";
+        cmbCandidateConstituency.ValueMember = "ConstituencyId";
+        cmbCandidateConstituency.DataSource = _constituencies;
+    }
 
-        foreach (Constituency co in _constituencies.OrderBy(c => c.ConstituencyName).ToList())
+    /// <summary>
+    /// Initialises the election after validating the election details section
+    /// </summary>
+    private void btnInitialiseElection_Click(object sender, EventArgs e)
+    {
+        if (ValidateComboBoxes() == false)
         {
-            cmbCandidateConstituency.Items.Add(new { Text = co.ConstituencyName, Value = co.ConstituencyId });
+            // TODO: Add error message
+            return;
         }
+
+        _newElection = ElectionFactory.CreateElection(_currentVoteMechanism);
+
+        _newElection!.StartDate = dtpElectionStart.Value;
+        _newElection.EndDate = dtpElectionEnd.Value;
+        _newElection.Description = txtElectionName.Text;
+        _newElection.ElectionAdministratorId = _userService!.GetCurrentUser()!.Id;
+
+        InitCandidateComboBoxes();
+
+        DisableElectionDetailsComboBoxes();
+        EnableFullForm();
+    }
+
+    /// <summary>
+    /// Enable rest of the form after the election details have been set
+    /// </summary>
+    private void EnableFullForm()
+    {
+        txtConstituencyName.Enabled = true;
+        btnAddConstituency.Enabled = true;
+        lvConstituencies.Enabled = true;
+        btnRemoveConstituency.Enabled = true;
+        txtCandidateFirstName.Enabled = true;
+        txtCandidateLastName.Enabled = true;
+        cmbCandidateConstituency.Enabled = true;
+        cmbCandidateParty.Enabled = true;
+        btnAddCandidate.Enabled = true;
+        lvCandidates.Enabled = true;
+        btnRemoveCandidate.Enabled = true;
+    }
+
+    /// <summary>
+    /// Disable the election details comboBoxes
+    /// </summary>
+    private void DisableElectionDetailsComboBoxes()
+    {
+        cmbCountry.Enabled = false;
+        cmbVoteMechanism.Enabled = false;
     }
 }

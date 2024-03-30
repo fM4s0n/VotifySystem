@@ -75,7 +75,7 @@ internal class DbService : IDbService
             if (_dbContext.Users.Any(v => v.Username == "DefaultVoter") == false)
                 InsertEntity(CreateInitialVoter());
 
-            if (_dbContext.Parties.Any(p => p.Name == "Default Parties") == false)
+            if (_dbContext.Parties.Any(p => p.Name == "Default Party") == false)
                 InsertEntity(CreateDefaultParty());
         }
         catch (Exception ex)
