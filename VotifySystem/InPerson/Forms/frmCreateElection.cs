@@ -256,7 +256,7 @@ public partial class frmCreateElection : Form
             txtConstituencyName.BackColor = Color.White;
         }
 
-        Constituency constituencyToAdd = new(txtConstituencyName.Text, _newElection!.ElectionId);
+        Constituency constituencyToAdd = new(txtConstituencyName.Text, _newElection!.ElectionId, (Country)cmbCountry.SelectedItem!);
         AddConstituency(constituencyToAdd);
     }
 
@@ -519,7 +519,7 @@ public partial class frmCreateElection : Form
             return;
         }
 
-        _newElection = ElectionFactory.CreateElection(_currentVoteMechanism);
+        _newElection = ElectionFactory.CreateElection(_currentVoteMechanism, (Country)cmbCountry.SelectedItem!);
 
         _newElection!.StartDate = dtpElectionStart.Value;
         _newElection.EndDate = dtpElectionEnd.Value;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.ApplicationServices;
+using VotifySystem.Common.BusinessLogic.Helpers;
 
 namespace VotifySystem.Common.Classes.Elections;
 
@@ -7,17 +8,19 @@ namespace VotifySystem.Common.Classes.Elections;
 /// </summary>
 public static class ElectionFactory
 {
-    public static Election CreateElection(ElectionVoteMechanism voteMechanism)
+    public static Election CreateElection(ElectionVoteMechanism voteMechanism, Country country)
     {
         return voteMechanism switch
         {
             ElectionVoteMechanism.FPTP => new FirstPastThePostElection
             {
-                ElectionId = Guid.NewGuid().ToString()
+                ElectionId = Guid.NewGuid().ToString(),
+                Country = country
             },
             ElectionVoteMechanism.STV => new SingleTransferrableVoteElection
             {
-                ElectionId = Guid.NewGuid().ToString()
+                ElectionId = Guid.NewGuid().ToString(),
+                Country = country
             }
         };
     }

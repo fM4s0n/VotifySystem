@@ -29,27 +29,20 @@ public partial class ctrLoginInPerson : UserControl
         _userService = userService;
         _dbService = dbService;
 
-        //_userService.LogInEvent += UserService_LogInEvent;
+        // Listen for enter key press on login code textbox
+        txtLoginCode.KeyDown += (sender, e) =>
+        {
+            if (e.KeyCode == Keys.Enter)            
+                btnSubmitLoginCode_Click(sender, e);            
+        };
+
+        // Listen for enter key press on password textbox
+        txtPassword.KeyDown += (sender, e) =>
+        {
+            if (e.KeyCode == Keys.Enter)            
+                btnLogin_Click(sender, e);            
+        };
     }
-
-    /// <summary>
-    /// Event handler for when a user logs in
-    /// </summary>
-    /// <param name="sender">UserService</param>
-    /// <param name="e">EventArgs</param>
-    //private void UserService_LogInEvent(object sender, EventArgs e)
-    //{
-    //    UserLevel userLevel = _userService!.GetCurrentUserLevel();
-
-    //    if (userLevel == UserLevel.Voter)
-    //    {
-    //        //show ctrVoterHome
-    //    }
-    //    else if (userLevel == UserLevel.Administrator)
-    //    {
-    //        //TODO show ctrAdminHome
-    //    }
-    //}
 
     /// <summary>
     /// Login using a login code method

@@ -1,4 +1,6 @@
-﻿namespace VotifySystem.Common.Classes;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
+
+namespace VotifySystem.Common.Classes;
 
 /// <summary>
 /// Constituency class
@@ -10,16 +12,18 @@ public class Constituency
     public string ConstituencyId { get; set; } = string.Empty;
     public string ConstituencyName { get; set; } = string.Empty;
     public string ElectionId { get; set; } = string.Empty;
+    public Country Country { get; set; } = Country.UK;
 
     /// <summary>
     /// Default Constructor for EF Core
     /// </summary>
     public Constituency() { }
 
-    public Constituency (string constituencyName, string electionId)
+    public Constituency (string constituencyName, string electionId, Country country)
     {
         ConstituencyId = Guid.NewGuid ().ToString();
         ConstituencyName = constituencyName;
         ElectionId = electionId;
+        Country = country;
     }
 }

@@ -100,8 +100,11 @@ public partial class frmMain : Form
                 break;
 
             case UserLevel.Voter:
-                //ctrVoterHome = new() { Visible = true };
                 ctrMainDefault.Visible = false;
+                ctrLoginBase.Visible = false;
+                ctrVoterHome.Init(_userService!, _dbService!);
+                ctrVoterHome.Visible = true;
+                ctrVoterHome.Show();
                 break;
 
             case UserLevel.None:

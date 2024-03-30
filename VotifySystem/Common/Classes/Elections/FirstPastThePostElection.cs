@@ -7,8 +7,6 @@ public class FirstPastThePostElection : Election
 {
     public readonly ElectionVoteMechanism VoteMechanism = ElectionVoteMechanism.FPTP;
 
-    public FirstPastThePostElection()
-    {
-    }
+    public FirstPastThePostElection() { }
 }
     

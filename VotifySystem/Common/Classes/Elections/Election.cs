@@ -1,4 +1,6 @@
-﻿namespace VotifySystem.Common.Classes.Elections;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
+
+namespace VotifySystem.Common.Classes.Elections;
 
 /// <summary>
 /// Election class
@@ -10,6 +12,8 @@ public abstract class Election
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public string ElectionAdministratorId { get; set; }
+    public Country Country { get; set; } = Country.UK;
+
     public Election() { }
 }
 

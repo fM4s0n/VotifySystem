@@ -10,6 +10,16 @@ public class ElectionVoter
 {
     public string ElectionId { get; set; } = string.Empty;
     public string VoterId { get; set; } = string.Empty;
+    public string ConstituencyId { get; set; } = string.Empty;
     public bool HasVoted { get; set; } = false;
+
     public ElectionVoter() { }
+
+    public ElectionVoter(string electionId, string voterId, string constituencyId)
+    {
+        ElectionId = electionId;
+        VoterId = voterId;
+        ConstituencyId = constituencyId;
+        HasVoted = false;
+    }
 }

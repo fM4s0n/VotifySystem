@@ -31,6 +31,7 @@
             ctrMainDefault = new Common.Controls.ctrMainDefault();
             ctrLoginBase = new Controls.ctrLoginBase();
             ctrAdminHome = new Controls.ctrAdminHome();
+            ctrVoterHome = new Controls.ctrVoterHome();
             SuspendLayout();
             // 
             // ctrMainDefault
@@ -58,17 +59,27 @@
             ctrAdminHome.TabIndex = 2;
             ctrAdminHome.Visible = false;
             // 
+            // ctrVoterHome
+            // 
+            ctrVoterHome.Location = new Point(37, 45);
+            ctrVoterHome.Margin = new Padding(3, 2, 3, 2);
+            ctrVoterHome.Name = "ctrVoterHome";
+            ctrVoterHome.Size = new Size(875, 450);
+            ctrVoterHome.TabIndex = 3;
+            ctrVoterHome.Visible = false;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(967, 560);
+            Controls.Add(ctrVoterHome);
             Controls.Add(ctrAdminHome);
             Controls.Add(ctrLoginBase);
             Controls.Add(ctrMainDefault);
             Name = "frmMain";
-            Text = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
+            Text = "Votify";
             ResumeLayout(false);
         }
 
@@ -77,5 +88,6 @@
         private Common.Controls.ctrMainDefault ctrMainDefault;
         private Controls.ctrLoginBase ctrLoginBase;
         private Controls.ctrAdminHome ctrAdminHome;
+        private Controls.ctrVoterHome ctrVoterHome;
     }
 }
