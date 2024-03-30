@@ -18,7 +18,8 @@ public partial class frmMain : Form
     private static frmMain? _instance;
     public static frmMain GetInstance() { return _instance!; }
 
-    private UserLevel _mode = UserLevel.None;
+    private UserLevel _userLevelMode = UserLevel.None;
+    private LoginMode _loginMode = LoginMode.InPerson;
 
     public frmMain(IUserService userService, IDbService dbService)
     {
@@ -80,7 +81,8 @@ public partial class frmMain : Form
     /// </summary>
     private void SetMode()
     {
-        _mode = _userService!.GetCurrentUserLevel();
+        _userLevelMode = _userService!.GetCurrentUserLevel();
+        _loginMode = _userService!.GetLoginMode();
         SetVisibleControl();
     }
 
@@ -89,7 +91,7 @@ public partial class frmMain : Form
     /// </summary>
     private void SetVisibleControl()
     {
-        switch (_mode)
+        switch (_userLevelMode)
         {
             case UserLevel.Administrator:
                 ctrMainDefault.Visible = false;
@@ -102,9 +104,17 @@ public partial class frmMain : Form
             case UserLevel.Voter:
                 ctrMainDefault.Visible = false;
                 ctrLoginBase.Visible = false;
-                ctrVoterHome.Init(_userService!, _dbService!);
-                ctrVoterHome.Visible = true;
-                ctrVoterHome.Show();
+                if (_loginMode == LoginMode.InPerson)
+                {
+                    ctrVoterHome.Init(_userService!, _dbService!);
+                    ctrVoterHome.Visible = true;
+                    ctrVoterHome.Show();
+                }
+                else
+                {
+                    // Show online login
+                }
+
                 break;
 
             case UserLevel.None:
@@ -139,6 +149,8 @@ public partial class frmMain : Form
     /// </summary>
     internal void ShowOnlineLogin()
     {
-
+        ctrLoginBase.Init(_userService!, _dbService!, LoginMode.Online);
+        ctrLoginBase.Show();
+        ctrMainDefault.Visible = false;
     }
 }

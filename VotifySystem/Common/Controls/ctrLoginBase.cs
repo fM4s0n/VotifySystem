@@ -28,22 +28,17 @@ public partial class ctrLoginBase : UserControl
 
         _userService.LogInEvent += UserService_LogInEvent;
 
-        if (_loginMode == LoginMode.InPerson)
-        {
-            ctrLoginInPerson.Init(userService, dbService);
-            ctrLoginInPerson.Visible = true;
-        }
+        ctrLogin.Init(userService, dbService, loginMode);
+        ctrLogin.Visible = true;       
     }
 
     /// <summary>
-    ///
+    /// Log in event
     /// </summary>
-    /// <param name="sender">Event senser</param>
-    /// <param name="e">EventArgs</param>
     private void UserService_LogInEvent(object sender, EventArgs e)
     {
-        ctrLoginInPerson.ResetControl();
-        ctrLoginInPerson.Visible = false;
+        ctrLogin.ResetControl();
+        ctrLogin.Visible = false;
     }
 }
 

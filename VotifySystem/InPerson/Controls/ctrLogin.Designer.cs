@@ -1,6 +1,6 @@
 ﻿namespace VotifySystem.Common.Controls.Login;
 
-partial class ctrLoginInPerson
+partial class ctrLogin
 {
     /// <summary> 
     /// Required designer variable.

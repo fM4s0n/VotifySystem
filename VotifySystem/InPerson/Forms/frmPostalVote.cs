@@ -8,7 +8,7 @@ using VotifySystem.Common.DataAccess.Database;
 namespace VotifySystem.InPerson.Forms;
 
 /// <summary>
-/// Form for admins top add postal votes to an election
+/// Form for admins to add postal votes to candidates in an election
 /// </summary>
 public partial class frmPostalVote : Form
 {
@@ -138,9 +138,16 @@ public partial class frmPostalVote : Form
         {
             candidate.AddVotes(int.Parse(cmbCandidate.Text));
             _dbService.UpdateEntity(candidate);
+
+            MessageBox.Show($"{cmbCandidate.Text} votes added for {candidate.FullName}", "Votes added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
         }
     }
 
+    /// <summary>
+    /// Validates the vote input text is not nullOrWhiteSpace and is a number over 0
+    /// </summary>
+    /// <returns></returns>
     private bool ValidateVoteInput()
     {        
         txtVotesToAdd.Text = txtVotesToAdd.Text.Trim();

@@ -3,18 +3,20 @@ using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Forms;
+using VotifySystem.Controls;
 
 namespace VotifySystem.Common.Controls.Login;
 
 /// <summary>
 /// Login control for in person voting
 /// </summary>
-public partial class ctrLoginInPerson : UserControl
+public partial class ctrLogin : UserControl
 {
     private IUserService? _userService;
     private IDbService? _dbService;
+    private LoginMode _loginMode = LoginMode.InPerson;
 
-    public ctrLoginInPerson()
+    public ctrLogin()
     {
         InitializeComponent();
     }
@@ -24,10 +26,13 @@ public partial class ctrLoginInPerson : UserControl
     /// </summary>
     /// <param name="userService"></param>
     /// <param name="dbService"></param>
-    public void Init(IUserService userService, IDbService dbService)
+    public void Init(IUserService userService, IDbService dbService, LoginMode loginMode)
     {
         _userService = userService;
         _dbService = dbService;
+        _loginMode = loginMode;
+
+        SetMode();
 
         // Listen for enter key press on login code textbox
         txtLoginCode.KeyDown += (sender, e) =>
@@ -42,6 +47,26 @@ public partial class ctrLoginInPerson : UserControl
             if (e.KeyCode == Keys.Enter)            
                 btnLogin_Click(sender, e);            
         };
+    }
+
+    /// <summary>
+    /// Set mode of the control based on the login mode passed in
+    /// Online does not show the login code section
+    /// </summary>
+    private void SetMode()
+    {
+        if (_loginMode == LoginMode.InPerson)
+        {
+            lblLoginCode.Visible = true;
+            txtLoginCode.Visible = true;
+            btnSubmitLoginCode.Visible = true;
+        }
+        else
+        {
+            lblLoginCode.Visible = false;
+            txtLoginCode.Visible = false;
+            btnSubmitLoginCode.Visible = false;
+        }
     }
 
     /// <summary>
@@ -101,18 +126,18 @@ public partial class ctrLoginInPerson : UserControl
 
         if (attemptedUser == null)
         {
-            MessageBox.Show("Login details not found, please check detials and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Login details not found, please check details and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
         if (VerifyUser(attemptedUser) == false)
         {
-            MessageBox.Show("Login details not found, please check detials and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Login details not found, please check details and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return; 
         }
 
         // User is valid, so log in the user
-        _userService!.LogInUser(attemptedUser);
+        _userService!.LogInUser(attemptedUser, _loginMode);
     }
 
     /// <summary>

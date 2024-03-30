@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using VotifySystem.Common.Classes;
+using VotifySystem.Controls;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 
@@ -9,10 +10,11 @@ public interface IUserService
     event UserService.LoginEventHandler LogInEvent;
 
     /// <summary>
-    /// Set the current user
+    /// Log in the user and set the login mode
     /// </summary>
-    /// <param name="user">User to be set</param>
-    void LogInUser(User user);
+    /// <param name="user">User that has logged in</param>
+    /// <param name="loginMode">InPerson or Online</param>
+    void LogInUser(User user, LoginMode loginMode);
 
     /// <summary>
     /// Get the current user
@@ -53,4 +55,6 @@ public interface IUserService
     /// </summary>
     /// <returns></returns>
     string GenerateLoginCode();
+
+    LoginMode GetLoginMode();
 }
