@@ -8,16 +8,10 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// <summary>
 /// Database Service
 /// </summary>
-internal class DbService : IDbService
+internal class DbService(VotifyDatabaseContext dbContext, IUserService userService) : IDbService
 {
-    private VotifyDatabaseContext _dbContext;
-    private static IUserService? _userService;
-
-    public DbService(VotifyDatabaseContext dbContext, IUserService userService)
-    {
-        _dbContext = dbContext;
-        _userService = userService;
-    }
+    private readonly VotifyDatabaseContext _dbContext = dbContext;
+    private readonly IUserService? _userService = userService;
 
     /// <summary>
     /// Generic insert statement to insert a new entity into the Db
@@ -89,7 +83,7 @@ internal class DbService : IDbService
     /// Create the default voter for seed data
     /// </summary>
     /// <returns>Instance of the default voter</returns>
-    private static Voter CreateInitialVoter()
+    private Voter CreateInitialVoter()
     {
         DateTime dob = new(year: 1980, 1, 1);
         Voter defaultVoter = new("Default", "Voter", "DefaultVoter", VoteMethod.InPerson, "Default address",dob, Country.UK);
@@ -102,7 +96,7 @@ internal class DbService : IDbService
     /// Create instance of the Default Administrator
     /// </summary>
     /// <returns>Default administrator for seed data</returns>
-    private static Administrator CreateInitialAdministrator()
+    private Administrator CreateInitialAdministrator()
     { 
         Administrator defaultAdmin = new("Default", "Admin", "DefaultAdmin"); 
         defaultAdmin.Password = _userService!.HashPassword(defaultAdmin, "Password");

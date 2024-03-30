@@ -1,5 +1,4 @@
-﻿using System.Xml.Linq;
-using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
@@ -17,8 +16,8 @@ public partial class frmCreateElection : Form
 
     private Election? _newElection;
     private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
-    private List<Candidate> _candidates = [];
-    private List<Constituency> _constituencies = [];
+    private readonly List<Candidate> _candidates = [];
+    private readonly List<Constituency> _constituencies = [];
     private List<Party> _allParties = [];
 
     public frmCreateElection(IUserService userService, IDbService dbService)

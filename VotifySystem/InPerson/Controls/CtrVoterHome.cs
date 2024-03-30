@@ -1,5 +1,6 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.DataAccess.Database;
+using VotifySystem.Common.Forms;
 using VotifySystem.InPerson.Forms;
 
 namespace VotifySystem.Controls;
@@ -35,5 +36,15 @@ public partial class ctrVoterHome : UserControl
     {
         frmRegisterToVote frmRegisterToVote = new(_userService!, _dbService!);
         frmRegisterToVote.ShowDialog();
+    }
+
+    /// <summary>
+    /// click event for voting in person
+    /// shows the form for voting in person
+    /// </summary>
+    private void btnVoteInPerson_Click(object sender, EventArgs e)
+    {
+        frmVote frmVote = new(_userService!, _dbService!);
+        frmVote.ShowDialog();
     }
 }
