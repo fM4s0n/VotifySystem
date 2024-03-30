@@ -92,6 +92,7 @@ partial class frmVote
         ctrFPTPVote.Name = "ctrFPTPVote";
         ctrFPTPVote.Size = new Size(420, 430);
         ctrFPTPVote.TabIndex = 0;
+        ctrFPTPVote.Visible = false;
         // 
         // frmVote
         // 

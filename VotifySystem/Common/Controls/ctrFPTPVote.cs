@@ -10,16 +10,23 @@ public partial class ctrFPTPVote : UserControl
 {
     IDbService _dbService;
     Election? _election;
+    ElectionVoter? _electionVoter;
 
     public ctrFPTPVote()
     {
         InitializeComponent();
     }
 
-    public void SetElection(Election election, IDbService dbService)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="election"></param>
+    /// <param name="dbService"></param>
+    /// <param name="electionVoter"></param>
+    public void Init(Election election, IDbService dbService, ElectionVoter electionVoter)
     {
         _election = election;
         _dbService = dbService;
-
+        _electionVoter = electionVoter;
     }
 }

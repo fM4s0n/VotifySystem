@@ -105,8 +105,8 @@ public partial class frmVote : Form
         switch (electionVoteMechanism)
         {
             case ElectionVoteMechanism.FPTP:
-
-
+                ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue), _dbService);
+                ctrFPTPVote.Visible = true;
                 break;
             case ElectionVoteMechanism.STV:
                 break;
