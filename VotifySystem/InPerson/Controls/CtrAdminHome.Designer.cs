@@ -33,12 +33,13 @@ partial class ctrAdminHome
         pictureBox1 = new PictureBox();
         btnLogOut = new Button();
         btnManageParties = new Button();
+        btnPostalVote = new Button();
         ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
         SuspendLayout();
         // 
         // btnCreateElection
         // 
-        btnCreateElection.Location = new Point(102, 248);
+        btnCreateElection.Location = new Point(54, 248);
         btnCreateElection.Name = "btnCreateElection";
         btnCreateElection.Size = new Size(162, 23);
         btnCreateElection.TabIndex = 1;
@@ -48,7 +49,7 @@ partial class ctrAdminHome
         // 
         // btnManageElection
         // 
-        btnManageElection.Location = new Point(342, 248);
+        btnManageElection.Location = new Point(228, 248);
         btnManageElection.Name = "btnManageElection";
         btnManageElection.Size = new Size(162, 23);
         btnManageElection.TabIndex = 2;
@@ -77,7 +78,7 @@ partial class ctrAdminHome
         // 
         // btnManageParties
         // 
-        btnManageParties.Location = new Point(617, 248);
+        btnManageParties.Location = new Point(672, 248);
         btnManageParties.Name = "btnManageParties";
         btnManageParties.Size = new Size(162, 23);
         btnManageParties.TabIndex = 5;
@@ -85,10 +86,21 @@ partial class ctrAdminHome
         btnManageParties.UseVisualStyleBackColor = true;
         btnManageParties.Click += btnManageParties_Click;
         // 
+        // btnPostalVote
+        // 
+        btnPostalVote.Location = new Point(465, 248);
+        btnPostalVote.Name = "btnPostalVote";
+        btnPostalVote.Size = new Size(162, 23);
+        btnPostalVote.TabIndex = 6;
+        btnPostalVote.Text = "Submit Postal Votes";
+        btnPostalVote.UseVisualStyleBackColor = true;
+        btnPostalVote.Click += btnPostalVote_Click;
+        // 
         // ctrAdminHome
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(btnPostalVote);
         Controls.Add(btnManageParties);
         Controls.Add(btnLogOut);
         Controls.Add(pictureBox1);
@@ -96,7 +108,6 @@ partial class ctrAdminHome
         Controls.Add(btnCreateElection);
         Name = "ctrAdminHome";
         Size = new Size(875, 450);
-        Load += ctrAdminHome_Load;
         ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
         ResumeLayout(false);
     }
@@ -108,4 +119,5 @@ partial class ctrAdminHome
     private PictureBox pictureBox1;
     private Button btnLogOut;
     private Button btnManageParties;
+    private Button btnPostalVote;
 }

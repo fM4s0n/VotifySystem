@@ -55,7 +55,7 @@ partial class frmVote
         grpSelectElection.Controls.Add(cmbSelectElection);
         grpSelectElection.Location = new Point(12, 61);
         grpSelectElection.Name = "grpSelectElection";
-        grpSelectElection.Size = new Size(429, 100);
+        grpSelectElection.Size = new Size(439, 100);
         grpSelectElection.TabIndex = 1;
         grpSelectElection.TabStop = false;
         grpSelectElection.Text = "Select Election";
@@ -83,22 +83,21 @@ partial class frmVote
         pnlVoteControl.Controls.Add(ctrFPTPVote);
         pnlVoteControl.Location = new Point(12, 167);
         pnlVoteControl.Name = "pnlVoteControl";
-        pnlVoteControl.Size = new Size(429, 438);
+        pnlVoteControl.Size = new Size(439, 438);
         pnlVoteControl.TabIndex = 2;
         // 
         // ctrFPTPVote
         // 
-        ctrFPTPVote.Location = new Point(6, 5);
+        ctrFPTPVote.Location = new Point(6, 10);
         ctrFPTPVote.Name = "ctrFPTPVote";
-        ctrFPTPVote.Size = new Size(420, 430);
+        ctrFPTPVote.Size = new Size(425, 113);
         ctrFPTPVote.TabIndex = 0;
-        ctrFPTPVote.Visible = false;
         // 
         // frmVote
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(453, 617);
+        ClientSize = new Size(463, 649);
         Controls.Add(pnlVoteControl);
         Controls.Add(grpSelectElection);
         Controls.Add(lblElectionName);

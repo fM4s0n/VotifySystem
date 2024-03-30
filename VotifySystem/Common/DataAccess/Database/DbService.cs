@@ -51,6 +51,24 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
     }
 
     /// <summary>
+    /// Generic update statement to update an entity in the Db
+    /// </summary>
+    /// <typeparam name="T">Type of the object</typeparam>
+    /// <param name="entity">object to be updated</param>
+    public void UpdateEntity<T>(T entity) where T : class
+    {
+        try
+        {
+            _dbContext.Set<T>().Update(entity);
+            _dbContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    /// <summary>
     /// Gets the current
     /// </summary>
     /// <returns>current instance of VotifyDatabaseContext</returns>

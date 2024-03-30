@@ -28,29 +28,53 @@ partial class ctrFPTPVote
     /// </summary>
     private void InitializeComponent()
     {
-        chkCandidates = new CheckedListBox();
+        btnSubmitVote = new Button();
+        cmbSelectCandidate = new ComboBox();
+        lblSelectCandidate = new Label();
         SuspendLayout();
         // 
-        // chkCandidates
+        // btnSubmitVote
         // 
-        chkCandidates.CheckOnClick = true;
-        chkCandidates.FormattingEnabled = true;
-        chkCandidates.Location = new Point(32, 30);
-        chkCandidates.Name = "chkCandidates";
-        chkCandidates.Size = new Size(365, 382);
-        chkCandidates.TabIndex = 0;
+        btnSubmitVote.Location = new Point(329, 65);
+        btnSubmitVote.Name = "btnSubmitVote";
+        btnSubmitVote.Size = new Size(75, 23);
+        btnSubmitVote.TabIndex = 1;
+        btnSubmitVote.Text = "Submit Vote";
+        btnSubmitVote.UseVisualStyleBackColor = true;
+        btnSubmitVote.Click += btnSubmitVote_Click;
+        // 
+        // cmbSelectCandidate
+        // 
+        cmbSelectCandidate.FormattingEnabled = true;
+        cmbSelectCandidate.Location = new Point(18, 36);
+        cmbSelectCandidate.Name = "cmbSelectCandidate";
+        cmbSelectCandidate.Size = new Size(386, 23);
+        cmbSelectCandidate.TabIndex = 2;
+        // 
+        // lblSelectCandidate
+        // 
+        lblSelectCandidate.AutoSize = true;
+        lblSelectCandidate.Location = new Point(18, 18);
+        lblSelectCandidate.Name = "lblSelectCandidate";
+        lblSelectCandidate.Size = new Size(123, 15);
+        lblSelectCandidate.TabIndex = 3;
+        lblSelectCandidate.Text = "Select One Candidate:";
         // 
         // ctrFPTPVote
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        Controls.Add(chkCandidates);
+        Controls.Add(lblSelectCandidate);
+        Controls.Add(cmbSelectCandidate);
+        Controls.Add(btnSubmitVote);
         Name = "ctrFPTPVote";
-        Size = new Size(425, 435);
+        Size = new Size(425, 113);
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
-
-    private CheckedListBox chkCandidates;
+    private Button btnSubmitVote;
+    private ComboBox cmbSelectCandidate;
+    private Label lblSelectCandidate;
 }

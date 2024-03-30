@@ -7,8 +7,8 @@ using VotifySystem.Common.DataAccess.Database;
 namespace VotifySystem.Common.Forms;
 public partial class frmVote : Form
 {
-    private readonly IUserService _userService;
-    private readonly IDbService _dbService;
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
 
     private ElectionVoteMechanism? _electionVoteMechanism;
 
@@ -28,7 +28,24 @@ public partial class frmVote : Form
         _userService = userService;
         _dbService = dbService;
 
+        // listen to the vote completed event
+        ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
+
         Init();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ctrFPTPVote_VoteCompleted(object sender, EventArgs e)
+    {
+        ctrFPTPVote.Visible = false;
+
+        // update the election voter to show that the user has voted
+        _electionVoter!.HasVoted = true;
+        _dbService!.UpdateEntity(_electionVoter);
+
+        Close();
     }
 
     /// <summary>
@@ -42,7 +59,7 @@ public partial class frmVote : Form
             Close();
         }
 
-        _electionVoter = _dbService.GetDatabaseContext().ElectionVoters.FirstOrDefault(ev => ev.VoterId == _userService.GetCurrentUser()!.Id);
+        _electionVoter = _dbService!.GetDatabaseContext().ElectionVoters.FirstOrDefault(ev => ev.VoterId == _userService.GetCurrentUser()!.Id);
 
         if (_electionVoter == null)
         {
@@ -105,7 +122,7 @@ public partial class frmVote : Form
         switch (electionVoteMechanism)
         {
             case ElectionVoteMechanism.FPTP:
-                ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue), _dbService);
+                ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue), _dbService!, _electionVoter!);
                 ctrFPTPVote.Visible = true;
                 break;
             case ElectionVoteMechanism.STV:

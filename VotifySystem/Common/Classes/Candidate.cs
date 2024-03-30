@@ -28,6 +28,7 @@ public class Candidate : Person
 
     /// <summary>
     /// Add or remove votes for an electionCandidate
+    /// TODO: Refactor to use a Vote object and vote table to allow for multiple votes concurrently
     /// </summary>
     /// <param name="votesReceived">Votes to add. Can be positive or negative if required</param>
     public void AddVotes(int votesReceived)

@@ -13,8 +13,8 @@ public partial class ctrAdminHome : UserControl
     private IUserService? _userService;
     private IDbService? _dbService;
 
-    public ctrAdminHome() 
-    { 
+    public ctrAdminHome()
+    {
         InitializeComponent();
     }
 
@@ -56,7 +56,7 @@ public partial class ctrAdminHome : UserControl
 
     /// <summary>
     /// Click event for Manage Parties button
-    /// Launmch Manage Parties form
+    /// Launch Manage Parties form
     /// </summary>
     private void btnManageParties_Click(object sender, EventArgs e)
     {
@@ -64,7 +64,10 @@ public partial class ctrAdminHome : UserControl
         form.ShowDialog();
     }
 
-    private void ctrAdminHome_Load(object sender, EventArgs e)
+    /// <summary>
+    /// launches the postal vote form
+    /// </summary>
+    private void btnPostalVote_Click(object sender, EventArgs e)
     {
 
     }
