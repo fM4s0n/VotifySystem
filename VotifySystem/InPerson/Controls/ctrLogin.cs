@@ -74,30 +74,50 @@ public partial class ctrLogin : UserControl
     /// </summary>
     public void btnSubmitLoginCode_Click(object sender, EventArgs e)
     {
-        // Validate input
-        if (string.IsNullOrWhiteSpace(txtLoginCode.Text))
+        string loginCode = txtLoginCode.Text = txtLoginCode.Text.Trim();
+        if (ValidateLoginCodeText(loginCode) == false)
+            return;
+
+        LoginCode foundCode = _dbService!.GetDatabaseContext().LoginCodes.First(lc => lc.Code == loginCode);
+
+        if (foundCode == null) 
         {
-            txtLoginCode.BackColor = Color.Red;
+            MessageBox.Show("Error with login code, please generate a new code and try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        else
+
+        if (foundCode.Valid == false)
         {
-            txtLoginCode.BackColor = Color.White;
+            MessageBox.Show("Login code is invalid or expired", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
 
-        string loginCode = txtLoginCode.Text.Trim();
+        User user = _dbService.GetDatabaseContext().Users.First(u => u.Id == foundCode.UserId);
 
-        //check db
-        bool success = false;
-
-        if (success)
+        if (user == null)
         {
-            //TODO
+            MessageBox.Show("User not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
-        else
-        {
 
+        _userService!.LogInUser(user, LoginMode.InPerson);
+    }
+
+    /// <summary>`
+    /// Validates the code input is correct length
+    /// </summary>
+    /// <returns>True if the length is 6, false if not</returns>
+    private bool ValidateLoginCodeText(string loginCode)
+    {
+        if (loginCode.Length != 6)
+        {
+            txtLoginCode.BackColor = Color.Red;
+            MessageBox.Show("Login code must be 6 characters long", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
         }
+
+        txtLoginCode.BackColor = Color.White;
+        return true;
     }
 
     /// <summary>
@@ -112,8 +132,6 @@ public partial class ctrLogin : UserControl
     /// <summary>
     /// Click event for login button
     /// </summary>
-    /// <param name="sender">btnLogin</param>
-    /// <param name="e">EventArgs</param>
     private void btnLogin_Click(object sender, EventArgs e)
     {
         if (ValidateUserInput() == false)

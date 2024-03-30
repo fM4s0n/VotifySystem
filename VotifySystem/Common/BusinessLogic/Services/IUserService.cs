@@ -54,7 +54,7 @@ public interface IUserService
     /// 
     /// </summary>
     /// <returns></returns>
-    string GenerateLoginCode();
+    LoginCode GenerateLoginCode();
 
     LoginMode GetLoginMode();
 }

@@ -88,7 +88,7 @@ public class UserService : IUserService
     /// <param name="hashedPassword"></param>
     /// <param name="unhashedPassword"></param>
     /// <param name="user"></param>
-    /// <returns>Failed or successfull verification of password input </returns>
+    /// <returns>Failed or successful verification of password input </returns>
     public PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user)
     {
         PasswordHasher<User> passwordHasher = new();
@@ -98,8 +98,8 @@ public class UserService : IUserService
     /// <summary>
     /// Generates a random 6 digit login code
     /// </summary>
-    /// <returns></returns>
-    public string GenerateLoginCode() => Guid.NewGuid().ToString()[..6];    
+    /// <returns>New object of LoginCode</returns>
+    public LoginCode GenerateLoginCode() => new(Guid.NewGuid().ToString()[..6], _currentUser!.Id);
 
-    public LoginMode GetLoginMode() => 
+    public LoginMode GetLoginMode() => _loginMode;
 }
