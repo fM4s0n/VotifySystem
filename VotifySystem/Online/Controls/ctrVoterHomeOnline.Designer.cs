@@ -33,12 +33,15 @@ partial class ctrVoterHomeOnline
         lblExpiryWarning = new Label();
         lblLoginCode = new Label();
         grpVoteOnline = new GroupBox();
+        btnRegister = new Button();
+        btnVoteOnline = new Button();
         grpLoginCode.SuspendLayout();
+        grpVoteOnline.SuspendLayout();
         SuspendLayout();
         // 
         // btnGenerateLoginCode
         // 
-        btnGenerateLoginCode.Location = new Point(61, 32);
+        btnGenerateLoginCode.Location = new Point(87, 32);
         btnGenerateLoginCode.Name = "btnGenerateLoginCode";
         btnGenerateLoginCode.Size = new Size(165, 23);
         btnGenerateLoginCode.TabIndex = 0;
@@ -62,7 +65,7 @@ partial class ctrVoterHomeOnline
         // 
         lblExpiryWarning.AutoSize = true;
         lblExpiryWarning.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblExpiryWarning.Location = new Point(19, 147);
+        lblExpiryWarning.Location = new Point(39, 144);
         lblExpiryWarning.Name = "lblExpiryWarning";
         lblExpiryWarning.Size = new Size(274, 25);
         lblExpiryWarning.TabIndex = 2;
@@ -73,20 +76,43 @@ partial class ctrVoterHomeOnline
         // 
         lblLoginCode.AutoSize = true;
         lblLoginCode.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblLoginCode.Location = new Point(61, 90);
+        lblLoginCode.Location = new Point(87, 90);
         lblLoginCode.Name = "lblLoginCode";
         lblLoginCode.Size = new Size(177, 37);
         lblLoginCode.TabIndex = 1;
         lblLoginCode.Text = "lblLoginCode";
+        lblLoginCode.Visible = false;
         // 
         // grpVoteOnline
         // 
+        grpVoteOnline.Controls.Add(btnRegister);
+        grpVoteOnline.Controls.Add(btnVoteOnline);
         grpVoteOnline.Location = new Point(417, 147);
         grpVoteOnline.Name = "grpVoteOnline";
         grpVoteOnline.Size = new Size(370, 188);
         grpVoteOnline.TabIndex = 2;
         grpVoteOnline.TabStop = false;
         grpVoteOnline.Text = "Vote Online";
+        // 
+        // btnRegister
+        // 
+        btnRegister.Location = new Point(108, 32);
+        btnRegister.Name = "btnRegister";
+        btnRegister.Size = new Size(165, 23);
+        btnRegister.TabIndex = 4;
+        btnRegister.Text = "Register for an election";
+        btnRegister.UseVisualStyleBackColor = true;
+        btnRegister.Click += btnRegister_Click;
+        // 
+        // btnVoteOnline
+        // 
+        btnVoteOnline.Location = new Point(108, 104);
+        btnVoteOnline.Name = "btnVoteOnline";
+        btnVoteOnline.Size = new Size(165, 23);
+        btnVoteOnline.TabIndex = 3;
+        btnVoteOnline.Text = "Vote online";
+        btnVoteOnline.UseVisualStyleBackColor = true;
+        btnVoteOnline.Click += btnVoteOnline_Click;
         // 
         // ctrVoterHomeOnline
         // 
@@ -98,6 +124,7 @@ partial class ctrVoterHomeOnline
         Size = new Size(807, 393);
         grpLoginCode.ResumeLayout(false);
         grpLoginCode.PerformLayout();
+        grpVoteOnline.ResumeLayout(false);
         ResumeLayout(false);
     }
 
@@ -108,4 +135,6 @@ partial class ctrVoterHomeOnline
     private Label lblLoginCode;
     private Label lblExpiryWarning;
     private GroupBox grpVoteOnline;
+    private Button btnVoteOnline;
+    private Button btnRegister;
 }

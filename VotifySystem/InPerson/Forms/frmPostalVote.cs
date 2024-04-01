@@ -1,5 +1,4 @@
-﻿using System.Xml.Serialization;
-using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
@@ -117,6 +116,9 @@ public partial class frmPostalVote : Form
         txtVotesToAdd.Text = string.Empty;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void btnSubmit_Click(object sender, EventArgs e)
     {
         if (cmbCandidate.SelectedIndex != -1)

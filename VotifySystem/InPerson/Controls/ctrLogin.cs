@@ -60,12 +60,14 @@ public partial class ctrLogin : UserControl
             lblLoginCode.Visible = true;
             txtLoginCode.Visible = true;
             btnSubmitLoginCode.Visible = true;
+            grpLoginOneTimeCode.Visible = true;
         }
         else
         {
             lblLoginCode.Visible = false;
             txtLoginCode.Visible = false;
             btnSubmitLoginCode.Visible = false;
+            grpLoginOneTimeCode.Visible = false;
         }
     }
 
@@ -99,6 +101,9 @@ public partial class ctrLogin : UserControl
             MessageBox.Show("User not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
+
+        foundCode.Used = true;
+        _dbService.UpdateEntity(foundCode);
 
         _userService!.LogInUser(user, LoginMode.InPerson);
     }

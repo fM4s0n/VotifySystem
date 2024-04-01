@@ -30,7 +30,7 @@ partial class frmCreateAccount
     {
         lblFirstName = new Label();
         lblLastName = new Label();
-        lblDateOfBirth = new Label();
+        lblDoB = new Label();
         lblCountry = new Label();
         dtpDoB = new DateTimePicker();
         txtFirstName = new TextBox();
@@ -47,74 +47,72 @@ partial class frmCreateAccount
         txtPassword = new TextBox();
         lblPassword = new Label();
         btnCancel = new Button();
+        lblEn = new Label();
+        lblFr = new Label();
         SuspendLayout();
         // 
         // lblFirstName
         // 
         lblFirstName.AutoSize = true;
-        lblFirstName.Location = new Point(79, 152);
+        lblFirstName.Location = new Point(69, 133);
         lblFirstName.Name = "lblFirstName";
-        lblFirstName.Size = new Size(83, 20);
+        lblFirstName.Size = new Size(67, 15);
         lblFirstName.TabIndex = 0;
         lblFirstName.Text = "First Name:";
         // 
         // lblLastName
         // 
         lblLastName.AutoSize = true;
-        lblLastName.Location = new Point(79, 191);
+        lblLastName.Location = new Point(69, 162);
         lblLastName.Name = "lblLastName";
-        lblLastName.Size = new Size(79, 20);
+        lblLastName.Size = new Size(64, 15);
         lblLastName.TabIndex = 1;
         lblLastName.Text = "Last name:";
         // 
-        // lblDateOfBirth
+        // lblDoB
         // 
-        lblDateOfBirth.AutoSize = true;
-        lblDateOfBirth.Location = new Point(73, 315);
-        lblDateOfBirth.Name = "lblDateOfBirth";
-        lblDateOfBirth.Size = new Size(94, 20);
-        lblDateOfBirth.TabIndex = 2;
-        lblDateOfBirth.Text = "Date of Birth";
+        lblDoB.AutoSize = true;
+        lblDoB.Location = new Point(64, 255);
+        lblDoB.Name = "lblDoB";
+        lblDoB.Size = new Size(73, 15);
+        lblDoB.TabIndex = 2;
+        lblDoB.Text = "Date of Birth";
         // 
         // lblCountry
         // 
         lblCountry.AutoSize = true;
-        lblCountry.Location = new Point(95, 384);
+        lblCountry.Location = new Point(83, 307);
         lblCountry.Name = "lblCountry";
-        lblCountry.Size = new Size(60, 20);
+        lblCountry.Size = new Size(50, 15);
         lblCountry.TabIndex = 3;
         lblCountry.Text = "Country";
         // 
         // dtpDoB
         // 
-        dtpDoB.Location = new Point(163, 307);
-        dtpDoB.Margin = new Padding(3, 4, 3, 4);
+        dtpDoB.Location = new Point(143, 249);
         dtpDoB.Name = "dtpDoB";
-        dtpDoB.Size = new Size(364, 27);
+        dtpDoB.Size = new Size(319, 23);
         dtpDoB.TabIndex = 5;
         // 
         // txtFirstName
         // 
-        txtFirstName.Location = new Point(162, 148);
-        txtFirstName.Margin = new Padding(3, 4, 3, 4);
+        txtFirstName.Location = new Point(142, 130);
         txtFirstName.Name = "txtFirstName";
-        txtFirstName.Size = new Size(364, 27);
+        txtFirstName.Size = new Size(319, 23);
         txtFirstName.TabIndex = 6;
         // 
         // txtLastName
         // 
-        txtLastName.Location = new Point(162, 187);
-        txtLastName.Margin = new Padding(3, 4, 3, 4);
+        txtLastName.Location = new Point(142, 159);
         txtLastName.Name = "txtLastName";
-        txtLastName.Size = new Size(364, 27);
+        txtLastName.Size = new Size(319, 23);
         txtLastName.TabIndex = 7;
         // 
         // btnSubmit
         // 
-        btnSubmit.Location = new Point(290, 723);
-        btnSubmit.Margin = new Padding(3, 4, 3, 4);
+        btnSubmit.Location = new Point(254, 542);
         btnSubmit.Name = "btnSubmit";
-        btnSubmit.Size = new Size(237, 31);
+        btnSubmit.Size = new Size(207, 23);
         btnSubmit.TabIndex = 8;
         btnSubmit.Text = "Submit";
         btnSubmit.UseVisualStyleBackColor = true;
@@ -123,107 +121,124 @@ partial class frmCreateAccount
         // cmbCountry
         // 
         cmbCountry.FormattingEnabled = true;
-        cmbCountry.Location = new Point(162, 380);
-        cmbCountry.Margin = new Padding(3, 4, 3, 4);
+        cmbCountry.Location = new Point(142, 304);
         cmbCountry.Name = "cmbCountry";
-        cmbCountry.Size = new Size(364, 28);
+        cmbCountry.Size = new Size(319, 23);
         cmbCountry.TabIndex = 9;
         // 
         // lblCreateAccount
         // 
         lblCreateAccount.AutoSize = true;
         lblCreateAccount.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblCreateAccount.Location = new Point(178, 47);
+        lblCreateAccount.Location = new Point(156, 35);
         lblCreateAccount.Name = "lblCreateAccount";
-        lblCreateAccount.Size = new Size(251, 46);
+        lblCreateAccount.Size = new Size(197, 37);
         lblCreateAccount.TabIndex = 11;
         lblCreateAccount.Text = "Create Account";
         // 
         // lblAddress
         // 
         lblAddress.AutoSize = true;
-        lblAddress.Location = new Point(97, 354);
+        lblAddress.Location = new Point(85, 285);
         lblAddress.Name = "lblAddress";
-        lblAddress.Size = new Size(62, 20);
+        lblAddress.Size = new Size(49, 15);
         lblAddress.TabIndex = 12;
         lblAddress.Text = "Address";
         // 
         // txtAddress
         // 
-        txtAddress.Location = new Point(163, 346);
-        txtAddress.Margin = new Padding(3, 4, 3, 4);
+        txtAddress.Location = new Point(143, 279);
         txtAddress.Name = "txtAddress";
-        txtAddress.Size = new Size(364, 27);
+        txtAddress.Size = new Size(319, 23);
         txtAddress.TabIndex = 14;
         // 
         // cmbVoteMethod
         // 
         cmbVoteMethod.FormattingEnabled = true;
-        cmbVoteMethod.Location = new Point(162, 418);
-        cmbVoteMethod.Margin = new Padding(3, 4, 3, 4);
+        cmbVoteMethod.Location = new Point(142, 333);
         cmbVoteMethod.Name = "cmbVoteMethod";
-        cmbVoteMethod.Size = new Size(364, 28);
+        cmbVoteMethod.Size = new Size(319, 23);
         cmbVoteMethod.TabIndex = 16;
         // 
         // lblVoteMethod
         // 
         lblVoteMethod.AutoSize = true;
-        lblVoteMethod.Location = new Point(69, 422);
+        lblVoteMethod.Location = new Point(60, 335);
         lblVoteMethod.Name = "lblVoteMethod";
-        lblVoteMethod.Size = new Size(95, 20);
+        lblVoteMethod.Size = new Size(75, 15);
         lblVoteMethod.TabIndex = 17;
         lblVoteMethod.Text = "Vote Method";
         // 
         // txtEmail
         // 
-        txtEmail.Location = new Point(162, 227);
-        txtEmail.Margin = new Padding(3, 4, 3, 4);
+        txtEmail.Location = new Point(142, 189);
         txtEmail.Name = "txtEmail";
-        txtEmail.Size = new Size(364, 27);
+        txtEmail.Size = new Size(319, 23);
         txtEmail.TabIndex = 19;
         // 
         // lblEmail
         // 
         lblEmail.AutoSize = true;
-        lblEmail.Location = new Point(79, 231);
+        lblEmail.Location = new Point(69, 192);
         lblEmail.Name = "lblEmail";
-        lblEmail.Size = new Size(46, 20);
+        lblEmail.Size = new Size(36, 15);
         lblEmail.TabIndex = 18;
         lblEmail.Text = "Email";
         // 
         // txtPassword
         // 
-        txtPassword.Location = new Point(162, 262);
-        txtPassword.Margin = new Padding(3, 4, 3, 4);
+        txtPassword.Location = new Point(142, 215);
         txtPassword.Name = "txtPassword";
-        txtPassword.Size = new Size(364, 27);
+        txtPassword.Size = new Size(319, 23);
         txtPassword.TabIndex = 21;
         // 
         // lblPassword
         // 
         lblPassword.AutoSize = true;
-        lblPassword.Location = new Point(79, 266);
+        lblPassword.Location = new Point(69, 219);
         lblPassword.Name = "lblPassword";
-        lblPassword.Size = new Size(70, 20);
+        lblPassword.Size = new Size(57, 15);
         lblPassword.TabIndex = 20;
         lblPassword.Text = "Password";
         // 
         // btnCancel
         // 
-        btnCancel.Location = new Point(12, 723);
-        btnCancel.Margin = new Padding(3, 4, 3, 4);
+        btnCancel.Location = new Point(69, 542);
         btnCancel.Name = "btnCancel";
-        btnCancel.Size = new Size(237, 31);
+        btnCancel.Size = new Size(179, 23);
         btnCancel.TabIndex = 22;
         btnCancel.Text = "Cancel";
         btnCancel.UseVisualStyleBackColor = true;
         btnCancel.Click += btnCancel_Click;
         // 
+        // lblEn
+        // 
+        lblEn.AutoSize = true;
+        lblEn.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+        lblEn.Location = new Point(3, 9);
+        lblEn.Name = "lblEn";
+        lblEn.Size = new Size(22, 15);
+        lblEn.TabIndex = 23;
+        lblEn.Text = "EN";
+        lblEn.Click += lblEn_Click;
+        // 
+        // lblFr
+        // 
+        lblFr.AutoSize = true;
+        lblFr.Location = new Point(31, 9);
+        lblFr.Name = "lblFr";
+        lblFr.Size = new Size(20, 15);
+        lblFr.TabIndex = 24;
+        lblFr.Text = "FR";
+        lblFr.Click += lblFr_Click;
+        // 
         // frmCreateAccount
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(589, 796);
+        ClientSize = new Size(515, 597);
+        Controls.Add(lblFr);
+        Controls.Add(lblEn);
         Controls.Add(btnCancel);
         Controls.Add(txtPassword);
         Controls.Add(lblPassword);
@@ -240,10 +255,9 @@ partial class frmCreateAccount
         Controls.Add(txtFirstName);
         Controls.Add(dtpDoB);
         Controls.Add(lblCountry);
-        Controls.Add(lblDateOfBirth);
+        Controls.Add(lblDoB);
         Controls.Add(lblLastName);
         Controls.Add(lblFirstName);
-        Margin = new Padding(3, 4, 3, 4);
         Name = "frmCreateAccount";
         Text = "frmCreateAccount";
         ResumeLayout(false);
@@ -254,7 +268,7 @@ partial class frmCreateAccount
 
     private Label lblFirstName;
     private Label lblLastName;
-    private Label lblDateOfBirth;
+    private Label lblDoB;
     private Label lblCountry;
     private DateTimePicker dtpDoB;
     private TextBox txtFirstName;
@@ -271,4 +285,6 @@ partial class frmCreateAccount
     private TextBox txtPassword;
     private Label lblPassword;
     private Button btnCancel;
+    private Label lblEn;
+    private Label lblFr;
 }

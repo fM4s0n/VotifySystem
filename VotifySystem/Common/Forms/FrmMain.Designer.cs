@@ -32,6 +32,7 @@
             ctrLoginBase = new Controls.ctrLoginBase();
             ctrAdminHome = new Controls.ctrAdminHome();
             ctrVoterHome = new Controls.ctrVoterHome();
+            ctrVoterHomeOnline = new Online.Controls.ctrVoterHomeOnline();
             SuspendLayout();
             // 
             // ctrMainDefault
@@ -68,11 +69,20 @@
             ctrVoterHome.TabIndex = 3;
             ctrVoterHome.Visible = false;
             // 
+            // ctrVoterHomeOnline1
+            // 
+            ctrVoterHomeOnline.Location = new Point(105, 81);
+            ctrVoterHomeOnline.Name = "ctrVoterHomeOnline1";
+            ctrVoterHomeOnline.Size = new Size(807, 393);
+            ctrVoterHomeOnline.TabIndex = 4;
+            ctrVoterHomeOnline.Visible = false;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(967, 560);
+            Controls.Add(ctrVoterHomeOnline);
             Controls.Add(ctrVoterHome);
             Controls.Add(ctrAdminHome);
             Controls.Add(ctrLoginBase);
@@ -89,5 +99,6 @@
         private Controls.ctrLoginBase ctrLoginBase;
         private Controls.ctrAdminHome ctrAdminHome;
         private Controls.ctrVoterHome ctrVoterHome;
+        private Online.Controls.ctrVoterHomeOnline ctrVoterHomeOnline;
     }
 }

@@ -69,6 +69,7 @@ public partial class ctrAdminHome : UserControl
     /// </summary>
     private void btnPostalVote_Click(object sender, EventArgs e)
     {
-
+        frmPostalVote frm = new(_userService!, _dbService!);
+        frm.ShowDialog();
     }
 }

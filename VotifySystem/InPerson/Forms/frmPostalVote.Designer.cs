@@ -173,6 +173,7 @@ partial class frmPostalVote
         Controls.Add(lblPostalVotes);
         Name = "frmPostalVote";
         Text = "frmPostalVote";
+        StartPosition = FormStartPosition.CenterScreen;
         ResumeLayout(false);
         PerformLayout();
     }

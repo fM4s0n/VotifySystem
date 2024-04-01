@@ -9,12 +9,8 @@ namespace VotifyDataAccess.Database;
 /// https://entityframeworkcore.com/providers-sqlite
 /// </summary>
 /// <param name="options">DbContext Options</param>
-public class VotifyDatabaseContext : DbContext
+public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : DbContext(options)
 {
-    public VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : base(options)
-    { 
-    }
-
     public DbSet<User> Users { get; set; }
     public DbSet<Candidate> Candidates { get; set; }
     public DbSet<Constituency> Constituencies { get; set; }
@@ -40,7 +36,7 @@ public class VotifyDatabaseContext : DbContext
             .HasDiscriminator<string>("election_type")
             .HasValue<FirstPastThePostElection>("FPTP_Election")
             .HasValue<SingleTransferrableVoteElection>("STV_Election");
-        modelBuilder.Entity<LoginCode>().ToTable("LoginCode").HasNoKey();
+        modelBuilder.Entity<LoginCode>().ToTable("LoginCode");
 
         base.OnModelCreating(modelBuilder);
     }

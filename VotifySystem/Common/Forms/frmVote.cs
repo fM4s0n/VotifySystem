@@ -10,7 +10,7 @@ public partial class frmVote : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    private ElectionVoteMechanism? _electionVoteMechanism;
+    private readonly ElectionVoteMechanism? _electionVoteMechanism;
 
     private List<Election> _validElections = [];
     private ElectionVoter? _electionVoter;
@@ -57,6 +57,7 @@ public partial class frmVote : Form
         {
             MessageBox.Show("Only voters may vote in elections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
+            return;
         }
 
         _electionVoter = _dbService!.GetDatabaseContext().ElectionVoters.FirstOrDefault(ev => ev.VoterId == _userService.GetCurrentUser()!.Id);
@@ -65,6 +66,7 @@ public partial class frmVote : Form
         {
             MessageBox.Show("You are not registered to vote in any elections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
+            return;
         }
 
         _validElections = _dbService.GetDatabaseContext().Elections.Where(e => e.EndDate > DateTime.Now && e.ElectionId == _electionVoter!.ElectionId).ToList();
@@ -122,7 +124,7 @@ public partial class frmVote : Form
         switch (electionVoteMechanism)
         {
             case ElectionVoteMechanism.FPTP:
-                ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue), _dbService!, _electionVoter!);
+                ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue), _dbService!);
                 ctrFPTPVote.Visible = true;
                 break;
             case ElectionVoteMechanism.STV:

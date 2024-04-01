@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using System.Globalization;
+using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.DataAccess.Database;
@@ -31,11 +32,30 @@ internal partial class frmCreateAccount : Form
     /// </summary>
     private void Init()
     {
+        SetLanguage();
+
         foreach (VoteMethod vm in Enum.GetValues(typeof(VoteMethod)))
             cmbVoteMethod.Items.Add(VoterHelper.VoteMethodFriendlyNames[vm.ToString()]);
 
         foreach (Country c in Enum.GetValues(typeof(Country)))
             cmbCountry.Items.Add(c);
+    }
+
+    private void SetLanguage()
+    {
+        lblCreateAccount.Text = LocalisationHelper.GetTranslation("Create Account");
+        lblFirstName.Text = LocalisationHelper.GetTranslation("First Name");
+        lblLastName.Text = LocalisationHelper.GetTranslation("Last Name");
+        lblEmail.Text = LocalisationHelper.GetTranslation("Email");
+        lblPassword.Text = LocalisationHelper.GetTranslation("Password");
+        lblDoB.Text = LocalisationHelper.GetTranslation("DoB");
+        lblCountry.Text = LocalisationHelper.GetTranslation("Country");
+        lblAddress.Text = LocalisationHelper.GetTranslation("Address");
+        lblVoteMethod.Text = LocalisationHelper.GetTranslation("Vote Method");
+        btnSubmit.Text = LocalisationHelper.GetTranslation("Submit");
+        btnCancel.Text = LocalisationHelper.GetTranslation("Cancel");
+
+        dtpDoB.CustomFormat = CultureInfo.GetCultureInfo(_userService!.GetAppCultureCode()).DateTimeFormat.ShortDatePattern;
     }
 
     /// <summary>
@@ -162,5 +182,15 @@ internal partial class frmCreateAccount : Form
     private void btnCancel_Click(object sender, EventArgs e)
     {
         Close();
+    }
+
+    private void lblEn_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void lblFr_Click(object sender, EventArgs e)
+    {
+
     }
 }

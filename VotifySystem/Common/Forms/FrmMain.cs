@@ -112,9 +112,10 @@ public partial class frmMain : Form
                 }
                 else
                 {
-                    // Show online login
+                    ctrVoterHomeOnline.Init(_userService!, _dbService!);
+                    ctrVoterHomeOnline.Visible = true;
+                    ctrVoterHomeOnline.Show();
                 }
-
                 break;
 
             case UserLevel.None:

@@ -8,6 +8,7 @@ namespace VotifySystem.Common.Classes;
 /// </summary>
 public class LoginCode
 {
+    public string Id { get; set; } = string.Empty;
     public string Code { get; set; } = string.Empty;
     public string UserId { get; set; } = string.Empty;
     public bool Used { get; set; } = false;
@@ -16,13 +17,14 @@ public class LoginCode
     [NotMapped]
     public bool Valid 
     { 
-        get { return Used == true || DateTime.Now > GeneratedDate.AddMinutes(30); } 
+        get { return Used == false && DateTime.Now < GeneratedDate.AddMinutes(30); } 
     }
 
     public LoginCode() { }
 
     public LoginCode(string code, string userId)
     {
+        Id = Guid.NewGuid().ToString();
         Code = code;
         UserId = userId;
     }

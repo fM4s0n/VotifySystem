@@ -26,4 +26,10 @@
     <Folder Include="Online\Forms\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="VotifyDB.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

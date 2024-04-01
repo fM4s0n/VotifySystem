@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-
+using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 using VotifySystem.Controls;
 
@@ -12,6 +12,8 @@ public class UserService : IUserService
 {
     private User? _currentUser = null;
     private LoginMode _loginMode = LoginMode.InPerson;
+    private Country _appCountry = Country.UK;
+
 
     // Define the public delegates for login and logout events
     public delegate void LogoutEventHandler(object sender, EventArgs e);
@@ -102,4 +104,8 @@ public class UserService : IUserService
     public LoginCode GenerateLoginCode() => new(Guid.NewGuid().ToString()[..6], _currentUser!.Id);
 
     public LoginMode GetLoginMode() => _loginMode;
+
+    public string GetAppCultureCode() => LocalisationHelper.GetCultureCode(_appCountry);
+
+    public void SetAppLanguage(Country country) { _appCountry = country; }
 }

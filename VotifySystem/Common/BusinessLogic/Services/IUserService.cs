@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 using VotifySystem.Controls;
 
@@ -56,5 +57,17 @@ public interface IUserService
     /// <returns></returns>
     LoginCode GenerateLoginCode();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     LoginMode GetLoginMode();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    string GetAppCultureCode();
+
+    void SetAppLanguage(Country country);
 }
