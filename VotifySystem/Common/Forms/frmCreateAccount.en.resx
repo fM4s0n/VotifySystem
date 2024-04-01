@@ -118,36 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btnCancel.Text" xml:space="preserve">
-    <value>Annuler</value>
+    <value>Cancel</value>
   </data>
   <data name="btnSubmit.Text" xml:space="preserve">
-    <value>Soumettre</value>
+    <value>Submit</value>
   </data>
   <data name="lblAddress.Text" xml:space="preserve">
-    <value>Adresse</value>
+    <value>Address</value>
   </data>
   <data name="lblCountry.Text" xml:space="preserve">
-    <value>Pays</value>
+    <value>Country</value>
   </data>
   <data name="lblCreateAccount.Text" xml:space="preserve">
-    <value>Créer un compte Votify</value>
+    <value>Create a Votify Account</value>
   </data>
   <data name="lblDoB.Text" xml:space="preserve">
-    <value>Date de naissance</value>
+    <value>Date of Birth</value>
   </data>
   <data name="lblEmail.Text" xml:space="preserve">
-    <value>Adresse e-mail</value>
+    <value>Email Address</value>
   </data>
   <data name="lblFirstName.Text" xml:space="preserve">
-    <value>Prénom</value>
+    <value>First Name</value>
   </data>
   <data name="lblLastName.Text" xml:space="preserve">
-    <value>Nom de famille</value>
+    <value>Last Name</value>
   </data>
   <data name="lblPassword.Text" xml:space="preserve">
-    <value>Mot de passe</value>
+    <value>Password</value>
   </data>
   <data name="lblVoteMethod.Text" xml:space="preserve">
-    <value>Méthode de vote</value>
+    <value>Vote Method</value>
   </data>
 </root>

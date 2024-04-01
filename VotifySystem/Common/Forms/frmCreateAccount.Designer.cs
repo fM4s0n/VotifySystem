@@ -72,7 +72,7 @@ partial class frmCreateAccount
         // lblDoB
         // 
         lblDoB.AutoSize = true;
-        lblDoB.Location = new Point(64, 255);
+        lblDoB.Location = new Point(69, 252);
         lblDoB.Name = "lblDoB";
         lblDoB.Size = new Size(73, 15);
         lblDoB.TabIndex = 2;
@@ -81,7 +81,7 @@ partial class frmCreateAccount
         // lblCountry
         // 
         lblCountry.AutoSize = true;
-        lblCountry.Location = new Point(83, 307);
+        lblCountry.Location = new Point(68, 310);
         lblCountry.Name = "lblCountry";
         lblCountry.Size = new Size(50, 15);
         lblCountry.TabIndex = 3;
@@ -89,21 +89,21 @@ partial class frmCreateAccount
         // 
         // dtpDoB
         // 
-        dtpDoB.Location = new Point(143, 249);
+        dtpDoB.Location = new Point(185, 247);
         dtpDoB.Name = "dtpDoB";
         dtpDoB.Size = new Size(319, 23);
         dtpDoB.TabIndex = 5;
         // 
         // txtFirstName
         // 
-        txtFirstName.Location = new Point(142, 130);
+        txtFirstName.Location = new Point(184, 133);
         txtFirstName.Name = "txtFirstName";
         txtFirstName.Size = new Size(319, 23);
         txtFirstName.TabIndex = 6;
         // 
         // txtLastName
         // 
-        txtLastName.Location = new Point(142, 159);
+        txtLastName.Location = new Point(184, 162);
         txtLastName.Name = "txtLastName";
         txtLastName.Size = new Size(319, 23);
         txtLastName.TabIndex = 7;
@@ -121,7 +121,7 @@ partial class frmCreateAccount
         // cmbCountry
         // 
         cmbCountry.FormattingEnabled = true;
-        cmbCountry.Location = new Point(142, 304);
+        cmbCountry.Location = new Point(184, 307);
         cmbCountry.Name = "cmbCountry";
         cmbCountry.Size = new Size(319, 23);
         cmbCountry.TabIndex = 9;
@@ -139,7 +139,7 @@ partial class frmCreateAccount
         // lblAddress
         // 
         lblAddress.AutoSize = true;
-        lblAddress.Location = new Point(85, 285);
+        lblAddress.Location = new Point(69, 285);
         lblAddress.Name = "lblAddress";
         lblAddress.Size = new Size(49, 15);
         lblAddress.TabIndex = 12;
@@ -147,7 +147,7 @@ partial class frmCreateAccount
         // 
         // txtAddress
         // 
-        txtAddress.Location = new Point(143, 279);
+        txtAddress.Location = new Point(185, 277);
         txtAddress.Name = "txtAddress";
         txtAddress.Size = new Size(319, 23);
         txtAddress.TabIndex = 14;
@@ -155,7 +155,7 @@ partial class frmCreateAccount
         // cmbVoteMethod
         // 
         cmbVoteMethod.FormattingEnabled = true;
-        cmbVoteMethod.Location = new Point(142, 333);
+        cmbVoteMethod.Location = new Point(184, 336);
         cmbVoteMethod.Name = "cmbVoteMethod";
         cmbVoteMethod.Size = new Size(319, 23);
         cmbVoteMethod.TabIndex = 16;
@@ -163,7 +163,7 @@ partial class frmCreateAccount
         // lblVoteMethod
         // 
         lblVoteMethod.AutoSize = true;
-        lblVoteMethod.Location = new Point(60, 335);
+        lblVoteMethod.Location = new Point(69, 339);
         lblVoteMethod.Name = "lblVoteMethod";
         lblVoteMethod.Size = new Size(75, 15);
         lblVoteMethod.TabIndex = 17;
@@ -171,7 +171,7 @@ partial class frmCreateAccount
         // 
         // txtEmail
         // 
-        txtEmail.Location = new Point(142, 189);
+        txtEmail.Location = new Point(184, 192);
         txtEmail.Name = "txtEmail";
         txtEmail.Size = new Size(319, 23);
         txtEmail.TabIndex = 19;
@@ -187,7 +187,7 @@ partial class frmCreateAccount
         // 
         // txtPassword
         // 
-        txtPassword.Location = new Point(142, 215);
+        txtPassword.Location = new Point(184, 218);
         txtPassword.Name = "txtPassword";
         txtPassword.Size = new Size(319, 23);
         txtPassword.TabIndex = 21;
@@ -195,7 +195,7 @@ partial class frmCreateAccount
         // lblPassword
         // 
         lblPassword.AutoSize = true;
-        lblPassword.Location = new Point(69, 219);
+        lblPassword.Location = new Point(69, 218);
         lblPassword.Name = "lblPassword";
         lblPassword.Size = new Size(57, 15);
         lblPassword.TabIndex = 20;

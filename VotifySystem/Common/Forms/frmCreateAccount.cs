@@ -49,26 +49,22 @@ internal partial class frmCreateAccount : Form
     {
         CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(_userService!.GetAppCultureCode());
 
-        // Default values are in English so only change if not English
-        if (CultureInfo.CurrentUICulture.Name.StartsWith("en") == false)
-        {
-            // Access resx file
-            ResourceManager rm = new("VotifySystem.Common.Forms.frmCreateAccount", typeof(frmCreateAccount).Assembly);
+        // Access resx file
+        ResourceManager rm = new("VotifySystem.Common.Forms.frmCreateAccount", typeof(frmCreateAccount).Assembly);
 
-            lblCreateAccount.Text = rm.GetString("lblCreateAccount.Text");
-            lblFirstName.Text = rm.GetString("lblFirstName.Text");
-            lblLastName.Text = rm.GetString("lblLastName.Text");
-            lblEmail.Text = rm.GetString("lblEmail.Text");
-            lblPassword.Text = rm.GetString("lblPassword.Text");
-            lblDoB.Text = rm.GetString("lblDoB.Text");
-            lblCountry.Text = rm.GetString("lblCountry.Text");
-            lblAddress.Text = rm.GetString("lblAddress.Text");
-            lblVoteMethod.Text = rm.GetString("lblVoteMethod.Text");
-            btnSubmit.Text = rm.GetString("btnSubmit.Text");
-            btnCancel.Text = rm.GetString("btnCancel.Text");
+        lblCreateAccount.Text = rm.GetString("lblCreateAccount.Text");
+        lblFirstName.Text = rm.GetString("lblFirstName.Text");
+        lblLastName.Text = rm.GetString("lblLastName.Text");
+        lblEmail.Text = rm.GetString("lblEmail.Text");
+        lblPassword.Text = rm.GetString("lblPassword.Text");
+        lblDoB.Text = rm.GetString("lblDoB.Text");
+        lblCountry.Text = rm.GetString("lblCountry.Text");
+        lblAddress.Text = rm.GetString("lblAddress.Text");
+        lblVoteMethod.Text = rm.GetString("lblVoteMethod.Text");
+        btnSubmit.Text = rm.GetString("btnSubmit.Text");
+        btnCancel.Text = rm.GetString("btnCancel.Text");
 
-            dtpDoB.CustomFormat = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
-        }
+        dtpDoB.CustomFormat = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
     }
 
     /// <summary>
@@ -216,5 +212,7 @@ internal partial class frmCreateAccount : Form
     {
         lblEn.Font = _userService!.GetAppCultureCode() == "en-GB" ? new Font(lblEn.Font, FontStyle.Bold) : new Font(lblEn.Font, FontStyle.Regular);
         lblFr.Font = _userService!.GetAppCultureCode() == "fr-FR" ? new Font(lblFr.Font, FontStyle.Bold) : new Font(lblFr.Font, FontStyle.Regular);
+
+        SetLanguage();
     }
 }
