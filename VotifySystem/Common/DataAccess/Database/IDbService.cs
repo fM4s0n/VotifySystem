@@ -35,5 +35,5 @@ public interface IDbService
     /// <summary>
     /// Seed data to the db if required
     /// </summary>
-    void SeedDataIfRequired();
+    void SeedData();
 }

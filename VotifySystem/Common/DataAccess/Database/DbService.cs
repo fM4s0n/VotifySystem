@@ -1,7 +1,5 @@
 ﻿using VotifyDataAccess.Database;
-using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
-using VotifySystem.Common.Classes;
 
 namespace VotifySystem.Common.DataAccess.Database;
 
@@ -77,18 +75,12 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
     /// <summary>
     /// Seed data to the Db if required
     /// </summary>
-    public void SeedDataIfRequired()
+    public void SeedData()
     {
         try
         {
-            if (_dbContext.Users.Any(a => a.Username == "DefaultAdmin") == false)
-                InsertEntity(CreateInitialAdministrator());
-
-            if (_dbContext.Users.Any(v => v.Username == "DefaultVoter") == false)
-                InsertEntity(CreateInitialVoter());
-
-            if (_dbContext.Parties.Any(p => p.Name == "Default Party") == false)
-                InsertEntity(CreateDefaultParty());
+            DataSeedHelper dataSeeder = new(_userService!, this);
+            dataSeeder.SeedDataIfNeeded();
         }
         catch (Exception ex)
         {
@@ -97,34 +89,4 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
         }
     }
 
-    /// <summary>
-    /// Create the default voter for seed data
-    /// </summary>
-    /// <returns>Instance of the default voter</returns>
-    private Voter CreateInitialVoter()
-    {
-        DateTime dob = new(year: 1980, 1, 1);
-        Voter defaultVoter = new("Default", "Voter", "DefaultVoter", VoteMethod.InPerson, "Default address",dob, Country.UK);
-        defaultVoter.Password = _userService!.HashPassword(defaultVoter, "Password");
-        
-        return defaultVoter;
-    }
-
-    /// <summary>
-    /// Create instance of the Default Administrator
-    /// </summary>
-    /// <returns>Default administrator for seed data</returns>
-    private Administrator CreateInitialAdministrator()
-    { 
-        Administrator defaultAdmin = new("Default", "Admin", "DefaultAdmin"); 
-        defaultAdmin.Password = _userService!.HashPassword(defaultAdmin, "Password");
-
-        return defaultAdmin;
-    }
-
-    /// <summary>
-    /// Create the default party for seed data
-    /// </summary>
-    /// <returns>Default Party for seed data</returns>
-    private static Party CreateDefaultParty() => new("Default Party", Country.UK);
 }

@@ -43,7 +43,7 @@ public partial class frmMain : Form
         _userService!.LogInEvent += UserService_LogInEvent;
         AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
 
-        _dbService!.SeedDataIfRequired();
+        _dbService!.SeedData();
         SetMode();
 
         ctrMainDefault = new() { Parent = this };
