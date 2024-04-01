@@ -53,6 +53,7 @@ partial class frmManageParties
         lvParties.Size = new Size(358, 343);
         lvParties.TabIndex = 0;
         lvParties.UseCompatibleStateImageBehavior = false;
+        lvParties.Visible = false;
         // 
         // grpAddParty
         // 
@@ -68,22 +69,22 @@ partial class frmManageParties
         // 
         // btnAddParty
         // 
-        btnAddParty.Enabled = false;
         btnAddParty.Location = new Point(289, 64);
         btnAddParty.Name = "btnAddParty";
         btnAddParty.Size = new Size(75, 23);
         btnAddParty.TabIndex = 1;
         btnAddParty.Text = "Add Party";
         btnAddParty.UseVisualStyleBackColor = true;
+        btnAddParty.Visible = false;
         btnAddParty.Click += btnAddParty_Click;
         // 
         // txtPartyName
         // 
-        txtPartyName.Enabled = false;
         txtPartyName.Location = new Point(6, 35);
         txtPartyName.Name = "txtPartyName";
         txtPartyName.Size = new Size(358, 23);
         txtPartyName.TabIndex = 0;
+        txtPartyName.Visible = false;
         // 
         // lblManageParties
         // 
@@ -145,6 +146,7 @@ partial class frmManageParties
         grpParties.TabIndex = 6;
         grpParties.TabStop = false;
         grpParties.Text = "Parties";
+        grpParties.Visible = false;
         // 
         // btnClose
         // 
@@ -167,8 +169,8 @@ partial class frmManageParties
         Controls.Add(lblManageParties);
         Controls.Add(grpAddParty);
         Name = "frmManageParties";
-        Text = "frmCreateParty";
         StartPosition = FormStartPosition.CenterScreen;
+        Text = "frmCreateParty";
         grpAddParty.ResumeLayout(false);
         grpAddParty.PerformLayout();
         grpSelectCountry.ResumeLayout(false);

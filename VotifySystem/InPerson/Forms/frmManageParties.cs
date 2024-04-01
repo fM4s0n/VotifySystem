@@ -37,7 +37,14 @@ public partial class frmManageParties : Form
         foreach (Country c in Enum.GetValues(typeof(Country)))
             cmbCountry.Items.Add(c);
 
-        lvParties.Columns.Add("Party", lvParties.Width);
+        InitListView();
+    }
+
+    private void InitListView()
+    {
+        lvParties.View = View.Details;
+        lvParties.Columns.Add("Party", lvParties.Width - 2);
+        lvParties.GridLines = true;
     }
 
     /// <summary>
@@ -68,7 +75,7 @@ public partial class frmManageParties : Form
     private bool ValidatePartyDeletion(Party partyToDelete)
     {
         // Get candidates whose partyId is the same as partyToDelete
-        List<Candidate> candidates = _dbService.GetDatabaseContext().Candidates.Where(c => c.PartyId == partyToDelete.PartyId).ToList();
+        List<Candidate> candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.PartyId == partyToDelete.PartyId).ToList();
 
         // Get elections that are either ongoing or planned for future who contain candidates impacted by partyToDelete
         List<Election> elections = _dbService.GetDatabaseContext().Elections
@@ -106,12 +113,13 @@ public partial class frmManageParties : Form
             return;
         }
 
-        txtPartyName.Enabled = true;
-        btnAddParty.Enabled = true;
-        lvParties.Enabled = true;
-        txtPartyName.Enabled = true;
-        btnAddParty.Enabled = true;
-        btnRemoveParty.Enabled = true;
+        grpAddParty.Visible = true;
+        txtPartyName.Visible = true;
+        btnAddParty.Visible = true;
+
+        grpParties.Visible = true;
+        lvParties.Visible = true;
+        btnRemoveParty.Visible = true;
 
         RefreshParties();
     }
@@ -124,6 +132,7 @@ public partial class frmManageParties : Form
         lvParties.Items.Clear();
         _parties.Clear();
 
+        // TODO: Refactor to not talk to db as much
         if (cmbCountry.SelectedItem != null && cmbCountry.SelectedItem is Country selectedCountry)        
             _parties = _dbService!.GetDatabaseContext().Parties.Where(p => p.Country == selectedCountry).OrderBy(p => p.Name).ToList();
 
@@ -136,6 +145,7 @@ public partial class frmManageParties : Form
     /// </summary>
     private void btnAddParty_Click(object sender, EventArgs e)
     {
+        // Check the party name is not empty and is a valid Country
         if (cmbCountry.SelectedItem != null 
             && cmbCountry.SelectedItem is Country selectedCountry 
             && string.IsNullOrWhiteSpace(txtPartyName.Text) == false)
