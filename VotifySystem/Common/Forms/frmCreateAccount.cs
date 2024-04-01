@@ -12,9 +12,9 @@ namespace VotifySystem.Common.Forms;
 /// </summary>
 internal partial class frmCreateAccount : Form
 {
-    private IUserService? _userService;
-    private IDbService? _dbService;
-
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
+    
     internal frmCreateAccount(IUserService userService, IDbService dbService)
     {
         InitializeComponent();

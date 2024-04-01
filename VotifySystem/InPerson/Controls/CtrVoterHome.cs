@@ -34,8 +34,17 @@ public partial class ctrVoterHome : UserControl
     /// </summary>
     private void btnRegisterToVote_Click(object sender, EventArgs e)
     {
-        frmRegisterToVote frmRegisterToVote = new(_userService!, _dbService!);
-        frmRegisterToVote.ShowDialog();
+        try
+        {
+            frmRegisterToVote frm = new(_userService!, _dbService!);
+
+            //TODO: work out why this doesn't work - ObjectDisposedException on this line on internally called Close() TEMP solution is to wrap in try catch
+            frm.Show(); 
+        }
+        catch 
+        { 
+            return;
+        }
     }
 
     /// <summary>
@@ -44,7 +53,14 @@ public partial class ctrVoterHome : UserControl
     /// </summary>
     private void btnVoteInPerson_Click(object sender, EventArgs e)
     {
-        frmVote frmVote = new(_userService!, _dbService!);
-        frmVote.ShowDialog();
+        try
+        {
+            frmVote frmVote = new(_userService!, _dbService!);
+            frmVote.ShowDialog();
+        }
+        catch 
+        { 
+            return;
+        }
     }
 }

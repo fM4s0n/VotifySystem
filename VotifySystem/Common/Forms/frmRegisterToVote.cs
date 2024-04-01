@@ -17,6 +17,7 @@ public partial class frmRegisterToVote : Form
     private List<Election> _elections = [];
     private List<Constituency> _constituencies = [];
     private Voter? _voter;
+    private List<ElectionVoter> _electionVoters = [];
 
     public frmRegisterToVote(IUserService userService, IDbService dbService)
     {
@@ -40,18 +41,31 @@ public partial class frmRegisterToVote : Form
         {
             MessageBox.Show("You must be a voter to register to vote.", "Not a voter", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             Close();
+            return;
         }
 
         _voter = (Voter)_userService!.GetCurrentUser()!;
 
-        _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.StartDate > DateTime.Now && e.Country == _voter.Country).ToList();
-        _constituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == _voter.Country).ToList();
+        _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.StartDate <= DateTime.Now && e.EndDate > DateTime.Now && e.Country == _voter.Country).ToList();
+        _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.VoterId == _voter.Id).ToList();
+
+        // Remove elections that the voter has already registered for
+        foreach (ElectionVoter ev in _electionVoters)
+        {
+            Election election = _elections.First(e => e.ElectionId == ev.ElectionId);
+            _elections.Remove(election);
+        }
 
         if (_elections.Count == 0)
         {
-            MessageBox.Show("No elections available to register for.", "No elections", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            Close();
+            if (MessageBox.Show("No elections available to register for.", "No elections", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
+            {   
+                Close();
+                //return;
+            }
         }
+
+        _constituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == _voter.Country).ToList();
 
         ResetCmbElections();
         ResetCmbConstituencies();
@@ -66,17 +80,19 @@ public partial class frmRegisterToVote : Form
         cmbElections.DisplayMember = "Description";
         cmbElections.ValueMember = "ElectionId";
         cmbElections.DataSource = _elections;
+        cmbElections.SelectedIndex = -1;
     }
 
     /// <summary>
-    /// 
+    /// Inits / resets the combo box for constituencies with refreshed data
     /// </summary>
     private void ResetCmbConstituencies()
     {
         cmbConstituencies.DataSource = null;
-        cmbConstituencies.DisplayMember = "Name";
+        cmbConstituencies.DisplayMember = "ConstituencyName";
         cmbConstituencies.ValueMember = "ConstituencyId";
         cmbConstituencies.DataSource = _constituencies;
+        cmbConstituencies.SelectedIndex = -1;
     }
 
     /// <summary>
@@ -102,5 +118,6 @@ public partial class frmRegisterToVote : Form
         string electionDescription = _elections.First(e => e.ElectionId == electionId).Description;
         MessageBox.Show($"Successfully registered for {electionDescription}.", "Successfully Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
         Close();
+        return;
     }
 }

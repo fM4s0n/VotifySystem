@@ -11,12 +11,7 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
     private readonly VotifyDatabaseContext _dbContext = dbContext;
     private readonly IUserService? _userService = userService;
 
-    /// <summary>
-    /// Generic insert statement to insert a new entity into the Db
-    /// - Includes call to SaveChanges
-    /// </summary>
-    /// <typeparam name="T">Type of the entity</typeparam>
-    /// <param name="entity">The entity to be inserted</param>
+    //<inheritdoc/>
     public void InsertEntity<T>(T entity) where T : class
     {
         try 
@@ -30,11 +25,22 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
         }   
     }
 
-    /// <summary>
-    /// Delete a record from the Db
-    /// </summary>
-    /// <typeparam name="T">Type of the object to be deleted</typeparam>
-    /// <param name="entity">Object to be deleted</param>
+
+    //<inheritdoc/>
+    public void InsertRange<T>(IEnumerable<T> entities) where T : class
+    {
+        try
+        {
+            _dbContext.Set<T>().AddRange(entities);
+            _dbContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    //<inheritdoc/>
     public void DeleteRecord<T>(T entity) where T : class
     {
         try
@@ -48,11 +54,7 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
         }
     }
 
-    /// <summary>
-    /// Generic update statement to update an entity in the Db
-    /// </summary>
-    /// <typeparam name="T">Type of the object</typeparam>
-    /// <param name="entity">object to be updated</param>
+    //<inheritdoc/>
     public void UpdateEntity<T>(T entity) where T : class
     {
         try
@@ -66,15 +68,10 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
         }
     }
 
-    /// <summary>
-    /// Gets the current
-    /// </summary>
-    /// <returns>current instance of VotifyDatabaseContext</returns>
+    //<inheritdoc/>
     public VotifyDatabaseContext GetDatabaseContext() => _dbContext;
 
-    /// <summary>
-    /// Seed data to the Db if required
-    /// </summary>
+    //<inheritdoc/>
     public void SeedData()
     {
         try

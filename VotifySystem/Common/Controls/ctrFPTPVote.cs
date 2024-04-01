@@ -1,6 +1,7 @@
 ﻿using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
+using static VotifySystem.Common.Controls.ctrFPTPVote;
 
 namespace VotifySystem.Common.Controls;
 
@@ -62,8 +63,8 @@ public partial class ctrFPTPVote : UserControl
         _comboBoxCandidates = _comboBoxCandidates.OrderBy(c => rnd.Next()).ToList();
 
         cmbSelectCandidate.DataSource = null;
-        cmbSelectCandidate.DisplayMember = "DisplayText";
-        cmbSelectCandidate.ValueMember = "CandidateId";
+        //cmbSelectCandidate.DisplayMember = "DisplayText";
+        //cmbSelectCandidate.ValueMember = "CandidateId";
         cmbSelectCandidate.DataSource = _comboBoxCandidates;
     }
 
@@ -78,9 +79,11 @@ public partial class ctrFPTPVote : UserControl
             return;
         }
 
-        Candidate candidate = _candidates.First(c => c.Id == cmbSelectCandidate.SelectedValue);
+        ComboBoxCandidate selectedCandidate = (ComboBoxCandidate)cmbSelectCandidate.SelectedItem;
+        Candidate candidate = _candidates.First(c => c.Id == selectedCandidate.CandidateId);
 
-        if (MessageBox.Show($"You have selected {candidate.FullName}. Please confirm you wish to proceeds", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+        string partyName = _parties.First(p => p.PartyId == candidate.PartyId).Name;
+        if (MessageBox.Show($"You have selected {candidate.FullName} - {partyName}. Please confirm you wish to proceed", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             cmbSelectCandidate.SelectedIndex = -1;
             return;
@@ -122,6 +125,10 @@ public partial class ctrFPTPVote : UserControl
         internal string FullName { get; set; } = string.Empty;
         internal string PartyName { get; set; } = string.Empty;
         internal string CandidateId { get; set; } = string.Empty;
-        internal string DisplayText { get { return $"{FullName} - {PartyName}"; } }
+        //internal string DisplayText { get { return $"{FullName} - {PartyName}"; } }
+        public override string ToString()
+        {
+            return $"{FullName} - {PartyName}";
+        }
     }
 }

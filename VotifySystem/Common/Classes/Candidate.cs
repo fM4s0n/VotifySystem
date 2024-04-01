@@ -17,12 +17,13 @@ public class Candidate : Person
     /// </summary>
     public Candidate() { }
 
-    public Candidate(string firstName, string lastName, string constituencyId, string partyId)
+    public Candidate(string firstName, string lastName, string constituencyId, string partyId, string electionId)
     {
         FirstName = firstName;
         LastName = lastName;
         ConstituencyId = constituencyId;
         PartyId = partyId;
+        ElectionId = electionId;
         Id = Guid.NewGuid().ToString();
     }
 

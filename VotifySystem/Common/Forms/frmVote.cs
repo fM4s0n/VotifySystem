@@ -28,24 +28,7 @@ public partial class frmVote : Form
         _userService = userService;
         _dbService = dbService;
 
-        // listen to the vote completed event
-        ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
-
         Init();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void ctrFPTPVote_VoteCompleted(object sender, EventArgs e)
-    {
-        ctrFPTPVote.Visible = false;
-
-        // update the election voter to show that the user has voted
-        _electionVoter!.HasVoted = true;
-        _dbService!.UpdateEntity(_electionVoter);
-
-        Close();
     }
 
     /// <summary>
@@ -53,7 +36,7 @@ public partial class frmVote : Form
     /// </summary>
     private void Init()
     {
-        if (_userService.GetCurrentUserLevel() != UserLevel.Voter)
+        if (_userService!.GetCurrentUserLevel() != UserLevel.Voter)
         {
             MessageBox.Show("Only voters may vote in elections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
@@ -72,6 +55,23 @@ public partial class frmVote : Form
         _validElections = _dbService.GetDatabaseContext().Elections.Where(e => e.EndDate > DateTime.Now && e.ElectionId == _electionVoter!.ElectionId).ToList();
 
         InitCmbSelectElection();
+
+        // listen to the vote completed event
+        ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ctrFPTPVote_VoteCompleted(object sender, EventArgs e)
+    {
+        ctrFPTPVote.Visible = false;
+
+        // update the election voter to show that the user has voted
+        _electionVoter!.HasVoted = true;
+        _dbService!.UpdateEntity(_electionVoter);
+
+        Close();
     }
 
     /// <summary>
@@ -79,9 +79,11 @@ public partial class frmVote : Form
     /// </summary>
     private void InitCmbSelectElection()
     {
-        cmbSelectElection.DataSource = _validElections;
+        cmbSelectElection.DataSource = null;
         cmbSelectElection.DisplayMember = "Description";
         cmbSelectElection.ValueMember = "ElectionId";
+        cmbSelectElection.DataSource = _validElections;
+        cmbSelectElection.SelectedIndex = -1;
     }
 
     /// <summary>
@@ -100,6 +102,9 @@ public partial class frmVote : Form
 
         if (election != null)
         {
+            lblElectionName.Text = election.Description;
+            lblElectionName.Visible = true;
+
             switch (election)
             {
                 case FirstPastThePostElection _:
@@ -109,7 +114,6 @@ public partial class frmVote : Form
                     SetMode(ElectionVoteMechanism.STV);
                     break;
                 default:
-                    MessageBox.Show("Invalid election type", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
             }
         }

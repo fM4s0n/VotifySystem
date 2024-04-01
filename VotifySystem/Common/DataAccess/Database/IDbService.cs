@@ -20,6 +20,13 @@ public interface IDbService
     void InsertEntity<T>(T entity) where T : class;
 
     /// <summary>
+    /// Generic insert statement to insert a range of entities of the same type into the Db
+    /// </summary>
+    /// <typeparam name="T">Type of the entity</typeparam>
+    /// <param name="entities">IEnumerable of entities to be inserted</param>
+    void InsertRange<T>(IEnumerable<T> entities) where T : class;
+
+    /// <summary>
     /// Generic update statement to update an entity in the Db
     /// </summary>
     /// <typeparam name="T">Type of the object</typeparam>

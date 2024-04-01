@@ -335,7 +335,7 @@ public partial class frmCreateElection : Form
     /// <returns>New Candidate object</returns>
     private Candidate CreateCandidate(string constituencyId, string partyId)
     {
-        return new Candidate(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId);
+        return new Candidate(txtCandidateFirstName.Text, txtCandidateLastName.Text, constituencyId, partyId, _newElection!.ElectionId);
     }
 
     /// <summary>

@@ -92,6 +92,7 @@ partial class frmVote
         ctrFPTPVote.Name = "ctrFPTPVote";
         ctrFPTPVote.Size = new Size(425, 113);
         ctrFPTPVote.TabIndex = 0;
+        ctrFPTPVote.Visible = false;
         // 
         // frmVote
         // 
@@ -103,7 +104,7 @@ partial class frmVote
         Controls.Add(lblElectionName);
         Name = "frmVote";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "frmVote";
+        Text = "Votify | Vote";
         grpSelectElection.ResumeLayout(false);
         pnlVoteControl.ResumeLayout(false);
         ResumeLayout(false);
