@@ -27,6 +27,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Common\Forms\frmCreateAccount.fr.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>frmCreateAccount.fr.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Common\Forms\frmCreateAccount.fr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>frmCreateAccount.fr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="VotifyDB.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

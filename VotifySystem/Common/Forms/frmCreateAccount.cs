@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Resources;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
@@ -41,21 +42,33 @@ internal partial class frmCreateAccount : Form
             cmbCountry.Items.Add(c);
     }
 
+    /// <summary>
+    /// Set language of form based on selected language from labels at the top of the form
+    /// </summary>
     private void SetLanguage()
     {
-        lblCreateAccount.Text = LocalisationHelper.GetTranslation("Create Account");
-        lblFirstName.Text = LocalisationHelper.GetTranslation("First Name");
-        lblLastName.Text = LocalisationHelper.GetTranslation("Last Name");
-        lblEmail.Text = LocalisationHelper.GetTranslation("Email");
-        lblPassword.Text = LocalisationHelper.GetTranslation("Password");
-        lblDoB.Text = LocalisationHelper.GetTranslation("DoB");
-        lblCountry.Text = LocalisationHelper.GetTranslation("Country");
-        lblAddress.Text = LocalisationHelper.GetTranslation("Address");
-        lblVoteMethod.Text = LocalisationHelper.GetTranslation("Vote Method");
-        btnSubmit.Text = LocalisationHelper.GetTranslation("Submit");
-        btnCancel.Text = LocalisationHelper.GetTranslation("Cancel");
+        CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(_userService!.GetAppCultureCode());
 
-        dtpDoB.CustomFormat = CultureInfo.GetCultureInfo(_userService!.GetAppCultureCode()).DateTimeFormat.ShortDatePattern;
+        // Default values are in English so only change if not English
+        if (CultureInfo.CurrentUICulture.Name.StartsWith("en") == false)
+        {
+            // Access resx file
+            ResourceManager rm = new("VotifySystem.Common.Forms.frmCreateAccount", typeof(frmCreateAccount).Assembly);
+
+            lblCreateAccount.Text = rm.GetString("lblCreateAccount.Text");
+            lblFirstName.Text = rm.GetString("lblFirstName.Text");
+            lblLastName.Text = rm.GetString("lblLastName.Text");
+            lblEmail.Text = rm.GetString("lblEmail.Text");
+            lblPassword.Text = rm.GetString("lblPassword.Text");
+            lblDoB.Text = rm.GetString("lblDoB.Text");
+            lblCountry.Text = rm.GetString("lblCountry.Text");
+            lblAddress.Text = rm.GetString("lblAddress.Text");
+            lblVoteMethod.Text = rm.GetString("lblVoteMethod.Text");
+            btnSubmit.Text = rm.GetString("btnSubmit.Text");
+            btnCancel.Text = rm.GetString("btnCancel.Text");
+
+            dtpDoB.CustomFormat = CultureInfo.CurrentUICulture.DateTimeFormat.ShortDatePattern;
+        }
     }
 
     /// <summary>
@@ -69,7 +82,7 @@ internal partial class frmCreateAccount : Form
     {
         if (ValidateAllUserInput())
         {
-            // Convert freindly name to enum
+            // Convert friendly name to enum
             VoteMethod voteMethod = cmbVoteMethod.SelectedValue switch
             {
                 "Online" => VoteMethod.Online,
@@ -102,7 +115,7 @@ internal partial class frmCreateAccount : Form
     /// <summary>
     /// Validate all textboxes and highlight any that are invalid
     /// </summary>
-    /// <returns>True if all input is vlaid</returns>
+    /// <returns>True if all input is valid</returns>
     private bool ValidateTextBoxes()
     {
         bool success = true;
@@ -145,7 +158,7 @@ internal partial class frmCreateAccount : Form
     }
 
     /// <summary>
-    /// Check if comboboxes have a selected value and highlight if not
+    /// Check if ComboBoxes have a selected value and highlight if not
     /// </summary>
     /// <returns>True if both have a selected value, false if not</returns>
     private bool ValidateComboBoxes()
@@ -186,11 +199,22 @@ internal partial class frmCreateAccount : Form
 
     private void lblEn_Click(object sender, EventArgs e)
     {
-
+        _userService!.SetAppLanguage(Country.UK);
+        AlternateLanguageLabels();
     }
 
     private void lblFr_Click(object sender, EventArgs e)
     {
+        _userService!.SetAppLanguage(Country.France);
+        AlternateLanguageLabels();
+    }
 
+    /// <summary>
+    /// Alternates the language labels being bold or not based on the current language
+    /// </summary>
+    private void AlternateLanguageLabels()
+    {
+        lblEn.Font = _userService!.GetAppCultureCode() == "en-GB" ? new Font(lblEn.Font, FontStyle.Bold) : new Font(lblEn.Font, FontStyle.Regular);
+        lblFr.Font = _userService!.GetAppCultureCode() == "fr-FR" ? new Font(lblFr.Font, FontStyle.Bold) : new Font(lblFr.Font, FontStyle.Regular);
     }
 }

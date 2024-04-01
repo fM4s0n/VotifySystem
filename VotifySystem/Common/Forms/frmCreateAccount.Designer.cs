@@ -132,9 +132,9 @@ partial class frmCreateAccount
         lblCreateAccount.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
         lblCreateAccount.Location = new Point(156, 35);
         lblCreateAccount.Name = "lblCreateAccount";
-        lblCreateAccount.Size = new Size(197, 37);
+        lblCreateAccount.Size = new Size(293, 37);
         lblCreateAccount.TabIndex = 11;
-        lblCreateAccount.Text = "Create Account";
+        lblCreateAccount.Text = "Create a Votify Account";
         // 
         // lblAddress
         // 
@@ -181,9 +181,9 @@ partial class frmCreateAccount
         lblEmail.AutoSize = true;
         lblEmail.Location = new Point(69, 192);
         lblEmail.Name = "lblEmail";
-        lblEmail.Size = new Size(36, 15);
+        lblEmail.Size = new Size(81, 15);
         lblEmail.TabIndex = 18;
-        lblEmail.Text = "Email";
+        lblEmail.Text = "Email Address";
         // 
         // txtPassword
         // 
