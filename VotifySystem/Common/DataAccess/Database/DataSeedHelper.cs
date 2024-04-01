@@ -2,6 +2,7 @@
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
+using VotifySystem.Common.Classes.Elections;
 
 namespace VotifySystem.Common.DataAccess.Database;
 
@@ -32,6 +33,29 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
 
         if (_dbService.GetDatabaseContext().Parties.Any(p => p.Name == "Red") == false)
             _dbService.InsertEntity(CreateRedParty());
+
+        if (_dbService.GetDatabaseContext().Elections.Any(e => e.Description == "Example Election") == false)
+            _dbService.InsertEntity(CreateExampleElection());
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    private FirstPastThePostElection CreateExampleElection()
+    {
+        string description = "Example Election";
+        DateTime start = new(2024, 4, 1, 9,0,0);
+        DateTime end = new(2022, 10, 1, 21, 0, 0);
+        string userId = _dbService!.GetDatabaseContext().Users.First(u => u.Username == "DefaultAdmin").Id;
+
+        Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK , description, start, end, userId);
+
+        // Create Constituencies
+
+        // Create Candidates
+
+        return (FirstPastThePostElection)election;
     }
 
     /// <summary>

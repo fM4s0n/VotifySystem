@@ -25,12 +25,13 @@ public static class ElectionFactory
         };
     }
 
-    public static Election CreateElection(ElectionVoteMechanism voteMechanism, string description, DateTime startDate, DateTime endDate, string userId)
+    public static Election CreateElection(ElectionVoteMechanism voteMechanism, Country country, string description, DateTime startDate, DateTime endDate, string userId)
     {
         return voteMechanism switch
         {
             ElectionVoteMechanism.FPTP => new FirstPastThePostElection
             {
+                Country = country,
                 ElectionId = Guid.NewGuid().ToString(),
                 Description = description,
                 StartDate = startDate,
@@ -39,6 +40,7 @@ public static class ElectionFactory
             },
             ElectionVoteMechanism.STV => new SingleTransferrableVoteElection
             {
+                Country = country,
                 ElectionId = Guid.NewGuid().ToString(),
                 Description = description,
                 StartDate = startDate,
