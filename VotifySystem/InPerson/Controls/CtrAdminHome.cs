@@ -43,7 +43,15 @@ public partial class ctrAdminHome : UserControl
     /// </summary>
     private void btnManageElection_Click(object sender, EventArgs e)
     {
-
+        try
+        {
+            frmManageElections form = new(_userService!, _dbService!);
+            form.Show();
+        }
+        catch
+        {
+            return;
+        }
     }
 
     /// <summary>

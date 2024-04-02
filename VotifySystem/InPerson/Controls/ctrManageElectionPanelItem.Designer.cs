@@ -39,6 +39,7 @@ partial class ctrManageElectionPanelItem
         lblTotalConstituenciesValue = new Label();
         lblRegisteredVotersValue = new Label();
         lblElectionCountry = new Label();
+        lblDateInfo = new Label();
         SuspendLayout();
         // 
         // lblElectionDescription
@@ -75,7 +76,7 @@ partial class ctrManageElectionPanelItem
         // 
         lblStatus.AutoSize = true;
         lblStatus.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblStatus.Location = new Point(-1, 86);
+        lblStatus.Location = new Point(3, 37);
         lblStatus.Name = "lblStatus";
         lblStatus.Size = new Size(164, 30);
         lblStatus.TabIndex = 3;
@@ -84,7 +85,7 @@ partial class ctrManageElectionPanelItem
         // lblRegisteredCandidates
         // 
         lblRegisteredCandidates.AutoSize = true;
-        lblRegisteredCandidates.Location = new Point(323, 50);
+        lblRegisteredCandidates.Location = new Point(385, 49);
         lblRegisteredCandidates.Name = "lblRegisteredCandidates";
         lblRegisteredCandidates.Size = new Size(127, 15);
         lblRegisteredCandidates.TabIndex = 4;
@@ -93,7 +94,7 @@ partial class ctrManageElectionPanelItem
         // label1
         // 
         label1.AutoSize = true;
-        label1.Location = new Point(323, 75);
+        label1.Location = new Point(385, 74);
         label1.Name = "label1";
         label1.Size = new Size(116, 15);
         label1.TabIndex = 5;
@@ -102,7 +103,7 @@ partial class ctrManageElectionPanelItem
         // label2
         // 
         label2.AutoSize = true;
-        label2.Location = new Point(323, 100);
+        label2.Location = new Point(385, 99);
         label2.Name = "label2";
         label2.Size = new Size(100, 15);
         label2.TabIndex = 6;
@@ -111,7 +112,7 @@ partial class ctrManageElectionPanelItem
         // lblRegisteredCandidatesValue
         // 
         lblRegisteredCandidatesValue.AutoSize = true;
-        lblRegisteredCandidatesValue.Location = new Point(456, 50);
+        lblRegisteredCandidatesValue.Location = new Point(518, 49);
         lblRegisteredCandidatesValue.Name = "lblRegisteredCandidatesValue";
         lblRegisteredCandidatesValue.Size = new Size(162, 15);
         lblRegisteredCandidatesValue.TabIndex = 7;
@@ -120,7 +121,7 @@ partial class ctrManageElectionPanelItem
         // lblTotalConstituenciesValue
         // 
         lblTotalConstituenciesValue.AutoSize = true;
-        lblTotalConstituenciesValue.Location = new Point(456, 75);
+        lblTotalConstituenciesValue.Location = new Point(518, 74);
         lblTotalConstituenciesValue.Name = "lblTotalConstituenciesValue";
         lblTotalConstituenciesValue.Size = new Size(151, 15);
         lblTotalConstituenciesValue.TabIndex = 8;
@@ -129,7 +130,7 @@ partial class ctrManageElectionPanelItem
         // lblRegisteredVotersValue
         // 
         lblRegisteredVotersValue.AutoSize = true;
-        lblRegisteredVotersValue.Location = new Point(456, 100);
+        lblRegisteredVotersValue.Location = new Point(518, 99);
         lblRegisteredVotersValue.Name = "lblRegisteredVotersValue";
         lblRegisteredVotersValue.Size = new Size(135, 15);
         lblRegisteredVotersValue.TabIndex = 9;
@@ -139,16 +140,27 @@ partial class ctrManageElectionPanelItem
         // 
         lblElectionCountry.AutoSize = true;
         lblElectionCountry.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblElectionCountry.Location = new Point(2, 50);
+        lblElectionCountry.Location = new Point(674, 7);
         lblElectionCountry.Name = "lblElectionCountry";
         lblElectionCountry.Size = new Size(181, 30);
         lblElectionCountry.TabIndex = 10;
         lblElectionCountry.Text = "lblElectionCountry";
         // 
+        // lblDateInfo
+        // 
+        lblDateInfo.AutoSize = true;
+        lblDateInfo.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+        lblDateInfo.Location = new Point(3, 69);
+        lblDateInfo.Name = "lblDateInfo";
+        lblDateInfo.Size = new Size(97, 21);
+        lblDateInfo.TabIndex = 11;
+        lblDateInfo.Text = "lblDateInfo";
+        // 
         // ctrManageElectionPanelItem
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(lblDateInfo);
         Controls.Add(lblElectionCountry);
         Controls.Add(lblRegisteredVotersValue);
         Controls.Add(lblTotalConstituenciesValue);
@@ -161,7 +173,7 @@ partial class ctrManageElectionPanelItem
         Controls.Add(btnViewResults);
         Controls.Add(lblElectionDescription);
         Name = "ctrManageElectionPanelItem";
-        Size = new Size(860, 121);
+        Size = new Size(860, 127);
         ResumeLayout(false);
         PerformLayout();
     }
@@ -179,4 +191,5 @@ partial class ctrManageElectionPanelItem
     private Label lblTotalConstituenciesValue;
     private Label lblRegisteredVotersValue;
     private Label lblElectionCountry;
+    private Label lblDateInfo;
 }

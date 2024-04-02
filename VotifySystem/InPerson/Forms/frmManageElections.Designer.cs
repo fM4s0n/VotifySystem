@@ -34,30 +34,29 @@ partial class frmManageElections
         // 
         // flpElections
         // 
-        flpElections.Location = new Point(12, 75);
-        flpElections.Margin = new Padding(3, 4, 3, 4);
+        flpElections.FlowDirection = FlowDirection.TopDown;
+        flpElections.Location = new Point(10, 60);
         flpElections.Name = "flpElections";
-        flpElections.Size = new Size(1058, 684);
+        flpElections.Size = new Size(875, 570);
         flpElections.TabIndex = 0;
         // 
         // lblManageElections
         // 
         lblManageElections.AutoSize = true;
         lblManageElections.Font = new Font("Segoe UI", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblManageElections.Location = new Point(326, 9);
+        lblManageElections.Location = new Point(285, 7);
         lblManageElections.Name = "lblManageElections";
-        lblManageElections.Size = new Size(394, 62);
+        lblManageElections.Size = new Size(310, 50);
         lblManageElections.TabIndex = 0;
         lblManageElections.Text = "Manage Elections";
         // 
         // frmManageElections
         // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(1082, 853);
+        ClientSize = new Size(901, 640);
         Controls.Add(lblManageElections);
         Controls.Add(flpElections);
-        Margin = new Padding(3, 4, 3, 4);
         Name = "frmManageElections";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Votify | Manage Elections";

@@ -27,8 +27,7 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
 
         SeedParties();
 
-        if (_dbService.GetDatabaseContext().Elections.Any(e => e.Description == "Example Election") == false)
-            _dbService.InsertEntity(CreateExampleElection());
+        SeedElections();
     }
 
     /// <summary>
@@ -44,9 +43,21 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
     }
 
     /// <summary>
+    /// Seeds the example elections if they are not already in the database
+    /// </summary>
+    private void SeedElections()
+    {
+        foreach (Election election in new List<Election> { CreateExampleElection(), CreateExampleCompletedElection() })
+        {
+            if (_dbService!.GetDatabaseContext().Elections.Any(e => e.Description == election.Description) == false)
+                _dbService.InsertEntity(election);
+        }
+    }
+
+    /// <summary>
     /// Creates a new example election with candidates and constituencies
     /// </summary>
-    /// <returns></returns>
+    /// <returns>FPTP election</returns>
     private FirstPastThePostElection CreateExampleElection()
     {
         string description = "Example Election";
@@ -65,6 +76,7 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
         // Create Candidates
         Candidate redCandidateLeeds = new("Red Candidate", "Leeds", leeds.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
         Candidate blueCandidateLeeds = new("Blue Candidate", "Leeds", leeds.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
+
         Candidate redCandidateManchester = new("Red Candidate", "Manchester", manchester.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
         Candidate blueCandidateManchester = new("Blue Candidate", "Manchester", manchester.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
 
@@ -74,6 +86,42 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
         blueCandidateManchester.AddVotes(400);
 
         _dbService.InsertRange(new List<Candidate> { redCandidateLeeds, blueCandidateLeeds });
+
+        return (FirstPastThePostElection)election;
+    }
+
+    /// <summary>
+    /// Created example completed election
+    /// </summary>
+    /// <returns>Insance of FPTP election that has finished</returns>
+    private FirstPastThePostElection CreateExampleCompletedElection()
+    {
+        string description = "Example Completed Election";
+        DateTime start = new(2024, 3, 1, 9, 0, 0);
+        DateTime end = new(2024, 4, 1, 21, 0, 0);
+        string userId = _dbService!.GetDatabaseContext().Users.First(u => u.Username == "DefaultAdmin").Id;
+
+        Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId);
+
+        // Create Constituencies
+        Constituency york = new("York", election.ElectionId, Country.UK);
+        Constituency newcastle = new("newcastle", election.ElectionId, Country.UK);
+
+        _dbService.InsertRange(new List<Constituency> { york, newcastle });
+
+        // Create Candidates
+        Candidate redCandidateYork = new("Red Candidate", "york", york.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
+        Candidate blueCandidateYork = new("Blue Candidate", "york", york.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
+
+        Candidate redCandidateNewcastle = new("Red Candidate", "newcastle", newcastle.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
+        Candidate blueCandidateNewcastle = new("Blue Candidate", "newcastle", newcastle.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
+
+        redCandidateYork.AddVotes(100);
+        blueCandidateYork.AddVotes(200);
+        redCandidateNewcastle.AddVotes(300);
+        blueCandidateNewcastle.AddVotes(300);
+
+        _dbService.InsertRange(new List<Candidate> { redCandidateYork, blueCandidateYork, redCandidateNewcastle, blueCandidateNewcastle });
 
         return (FirstPastThePostElection)election;
     }

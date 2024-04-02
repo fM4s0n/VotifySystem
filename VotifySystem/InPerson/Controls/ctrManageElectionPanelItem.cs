@@ -2,8 +2,6 @@
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
-using VotifySystem.Forms;
-using VotifySystem.InPerson.Forms;
 
 namespace VotifySystem.InPerson.Controls;
 
@@ -43,6 +41,32 @@ public partial class ctrManageElectionPanelItem : UserControl
         lblRegisteredVotersValue.Text = _dbService!.GetDatabaseContext().ElectionVoters.Where(v => v.ElectionId == _election.ElectionId).ToList().Count.ToString();
         btnViewResults.Enabled = _election.GetElectionStatus() == ElectionStatus.Completed;
         SetStatusLabel();
+        SetDateInfoLabel();
+    }
+
+    private void SetDateInfoLabel()
+    {
+        int days;
+        switch (_election!.GetElectionStatus())
+        {
+            case ElectionStatus.NotStarted:
+                days = (_election.StartDate - DateTime.Now).Days;
+                lblDateInfo.ForeColor = Color.Red;
+                lblDateInfo.Text = $"Election starts in {days} days";
+                break;
+            case ElectionStatus.InProgress:
+                days = (_election.EndDate - DateTime.Now).Days;
+                lblDateInfo.ForeColor = Color.Green;
+                lblDateInfo.Text = $"Election ends in {days} days";
+                break;
+            case ElectionStatus.Completed:
+                days = (DateTime.Now - _election.EndDate).Days;
+                lblDateInfo.ForeColor = Color.Black;
+                lblDateInfo.Text = $"Election ended {days} days ago";
+                break;
+            default:
+                break;
+        }
     }
 
     /// <summary>
@@ -61,27 +85,27 @@ public partial class ctrManageElectionPanelItem : UserControl
 
     private void btnViewResults_Click(object sender, EventArgs e)
     {
-        try
-        {
-            frmCreateElection frm = new frmCreateElection(_election!, _dbService!, _userService!);
-            frm.ShowDialog();
-        }
-        catch
-        {
-            return;
-        }
+        //try
+        //{
+        //    frmCreateElection frm = new frmCreateElection(_election!, _dbService!, _userService!);
+        //    frm.ShowDialog();
+        //}
+        //catch
+        //{
+        //    return;
+        //}
     }
 
     private void btnElectionDetails_Click(object sender, EventArgs e)
     {
-        try
-        {
-            frmViewElectionResults frm = new(_election!, _dbService!, _userService!);
-            frm.ShowDialog();
-        }
-        catch
-        {
-            return;
-        }
+        //try
+        //{
+        //    frmViewElectionResults frm = new(_election!, _dbService!, _userService!);
+        //    frm.ShowDialog();
+        //}
+        //catch
+        //{
+        //    return;
+        //}
     }
 }
