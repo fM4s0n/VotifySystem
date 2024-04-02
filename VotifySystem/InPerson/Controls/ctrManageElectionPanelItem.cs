@@ -2,6 +2,8 @@
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
+using VotifySystem.Forms;
+using VotifySystem.InPerson.Forms;
 
 namespace VotifySystem.InPerson.Controls;
 
@@ -85,27 +87,27 @@ public partial class ctrManageElectionPanelItem : UserControl
 
     private void btnViewResults_Click(object sender, EventArgs e)
     {
-        //try
-        //{
-        //    frmCreateElection frm = new frmCreateElection(_election!, _dbService!, _userService!);
-        //    frm.ShowDialog();
-        //}
-        //catch
-        //{
-        //    return;
-        //}
+        try
+        {
+            frmViewElectionResults frm = new(_election!, _dbService!, _userService!);
+            frm.ShowDialog();
+        }
+        catch
+        {
+            return;
+        }
     }
 
     private void btnElectionDetails_Click(object sender, EventArgs e)
     {
-        //try
-        //{
-        //    frmViewElectionResults frm = new(_election!, _dbService!, _userService!);
-        //    frm.ShowDialog();
-        //}
-        //catch
-        //{
-        //    return;
-        //}
+        try
+        {
+            frmCreateElection frm = new(_userService!, _dbService!, _election!, false);
+            frm.ShowDialog();
+        }
+        catch
+        {
+            return;
+        }
     }
 }
