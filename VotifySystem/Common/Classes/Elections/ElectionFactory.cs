@@ -21,7 +21,8 @@ public static class ElectionFactory
             {
                 ElectionId = Guid.NewGuid().ToString(),
                 Country = country
-            }
+            },
+            _ => throw new NotImplementedException()
         };
     }
 
@@ -46,7 +47,8 @@ public static class ElectionFactory
                 StartDate = startDate,
                 EndDate = endDate,
                 ElectionAdministratorId = userId
-            }
+            },
+            _ => throw new NotImplementedException()
         };           
     }
 }

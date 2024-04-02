@@ -11,8 +11,8 @@ namespace VotifySystem.InPerson.Forms;
 /// </summary>
 public partial class frmPostalVote : Form
 {
-    private readonly IUserService _userService;
-    private readonly IDbService _dbService;
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
 
     private List<Election> _elections = [];
     private List<Candidate> _candidates = [];
@@ -32,7 +32,7 @@ public partial class frmPostalVote : Form
 
     private void Init()
     {
-        if (_userService.GetCurrentUserLevel() != UserLevel.Administrator)
+        if (_userService!.GetCurrentUserLevel() != UserLevel.Administrator)
         {
             MessageBox.Show("You do not have permission to access this page");
             Close();
@@ -50,7 +50,16 @@ public partial class frmPostalVote : Form
         if (cmbCountry.SelectedIndex == -1)
             return;
 
-        _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == (Country)cmbCountry.SelectedItem).ToList();
+        if (cmbCountry.SelectedItem is Country selectedCountry)        
+        { 
+            _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == selectedCountry).ToList(); 
+        }
+        else
+        {
+            cmbCountry.SelectedIndex = -1;
+            MessageBox.Show("Error selecting Country, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
 
         if (_elections.Count == 0)
         {
@@ -139,7 +148,7 @@ public partial class frmPostalVote : Form
         if (ValidateVoteInput())
         {
             candidate.AddVotes(int.Parse(cmbCandidate.Text));
-            _dbService.UpdateEntity(candidate);
+            _dbService!.UpdateEntity(candidate);
 
             MessageBox.Show($"{cmbCandidate.Text} votes added for {candidate.FullName}", "Votes added", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();

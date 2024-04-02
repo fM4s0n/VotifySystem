@@ -38,14 +38,14 @@ public partial class ctrLogin : UserControl
         txtLoginCode.KeyDown += (sender, e) =>
         {
             if (e.KeyCode == Keys.Enter)            
-                btnSubmitLoginCode_Click(sender, e);            
+                btnSubmitLoginCode_Click(sender!, e);            
         };
 
         // Listen for enter key press on password textbox
         txtPassword.KeyDown += (sender, e) =>
         {
-            if (e.KeyCode == Keys.Enter)            
-                btnLogin_Click(sender, e);            
+            if (e !=null && e.KeyCode == Keys.Enter)            
+                btnLogin_Click(sender!, e);            
         };
     }
 

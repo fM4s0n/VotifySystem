@@ -10,14 +10,14 @@ namespace VotifySystem.Common.Controls;
 /// </summary>
 public partial class ctrFPTPVote : UserControl
 {
-    private IDbService _dbService;
+    private IDbService? _dbService;
     private Election? _election;
     private List<Candidate> _candidates = [];
     private List<Party> _parties = [];
     List<ComboBoxCandidate> _comboBoxCandidates = [];
 
     public delegate void VoteCompletedEventHandler(object sender, EventArgs e);
-    public event VoteCompletedEventHandler VoteCompleted;
+    public event VoteCompletedEventHandler? VoteCompleted;
 
     public ctrFPTPVote()
     {
@@ -90,7 +90,7 @@ public partial class ctrFPTPVote : UserControl
         }
 
         candidate.AddVotes(1);
-        _dbService.UpdateEntity(candidate);
+        _dbService!.UpdateEntity(candidate);
 
         OnVoteCompleted();
     }

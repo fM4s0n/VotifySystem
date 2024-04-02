@@ -98,8 +98,18 @@ public partial class frmVote : Form
             return;
         }
 
-        Election? election = _validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue);
-
+        Election election;
+        if (cmbSelectElection.SelectedValue is string electionId)
+        {
+            election = _validElections.First(e => e.ElectionId == electionId);
+        }
+        else
+        {
+            MessageBox.Show("Error Loading Election, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            cmbSelectElection.SelectedIndex = -1;
+            return;
+        }
+        
         if (election != null)
         {
             lblElectionName.Text = election.Description;
@@ -125,16 +135,19 @@ public partial class frmVote : Form
     /// <param name="electionVoteMechanism">Mode to set the form to</param>
     private void SetMode(ElectionVoteMechanism electionVoteMechanism)
     {
-        switch (electionVoteMechanism)
+        if (cmbSelectElection.SelectedIndex == -1 && cmbSelectElection.SelectedValue is string electionId)
         {
-            case ElectionVoteMechanism.FPTP:
-                ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == cmbSelectElection.SelectedValue), _dbService!);
-                ctrFPTPVote.Visible = true;
-                break;
-            case ElectionVoteMechanism.STV:
-                break;
-            default:
-                break;
+            switch (electionVoteMechanism)
+            {
+                case ElectionVoteMechanism.FPTP:
+                    ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == electionId), _dbService!);
+                    ctrFPTPVote.Visible = true;
+                    break;
+                case ElectionVoteMechanism.STV:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

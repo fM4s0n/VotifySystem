@@ -82,6 +82,9 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void InitCandidateComboBoxes()
     {
+        if (cmbCountry.SelectedItem == null)
+            return;
+
         cmbCandidateParty.DisplayMember = "Name";
         cmbCandidateParty.ValueMember = "PartyId";
         cmbCandidateParty.DataSource = _allParties.Where(p => p.Country == (Country)cmbCountry.SelectedItem).ToList();
@@ -315,7 +318,7 @@ public partial class frmCreateElection : Form
     /// <returns>string of constituencyId of the selected constituency</returns>
     private string GetSelectedConstituencyId()
     {
-        return _constituencies.First(c => c.ConstituencyId == cmbCandidateConstituency.SelectedValue).ConstituencyId;
+        return _constituencies.First(c => c.ConstituencyId == cmbCandidateConstituency.SelectedValue.ToString()).ConstituencyId;
     }
 
     /// <summary>
