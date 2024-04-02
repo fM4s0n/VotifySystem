@@ -25,7 +25,6 @@ internal class DbService(VotifyDatabaseContext dbContext, IUserService userServi
         }   
     }
 
-
     //<inheritdoc/>
     public void InsertRange<T>(IEnumerable<T> entities) where T : class
     {

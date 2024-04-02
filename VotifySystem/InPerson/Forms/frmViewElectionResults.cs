@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace VotifySystem.InPerson.Forms;
-public partial class frmVoteInPerson : Form
+public partial class frmViewElectionResults : Form
 {
-    public frmVoteInPerson()
+    public frmViewElectionResults()
     {
         InitializeComponent();
     }

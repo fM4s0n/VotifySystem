@@ -20,6 +20,21 @@ public static class LocalisationHelper
         { Country.UK, "en-GB" },
         { Country.France, "fr-FR" }
     };
+
+    /// <summary>
+    /// Returns a freindly name for the enum value of a country
+    /// </summary>
+    /// <param name="country">Country Type</param>
+    /// <returns></returns>
+    public static string GetCountryName(Country country)
+    {
+        return country switch
+        {
+            Country.UK => "United Kingdom",
+            Country.France => "France",
+            _ => throw new ArgumentOutOfRangeException(nameof(country), country, "Country not found")
+        };
+    }
 }
 
 public enum Country

@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using VotifySystem.Common.BusinessLogic.Helpers;
 
 namespace VotifySystem.Common.Classes.Elections;
 
@@ -14,7 +15,23 @@ public abstract class Election
     public string ElectionAdministratorId { get; set; } = string.Empty;
     public Country Country { get; set; } = Country.UK;
 
+    public ElectionStatus GetElectionStatus()
+    {
+        if (DateTime.Now < StartDate)
+            return ElectionStatus.NotStarted;
+        if (DateTime.Now > EndDate)
+            return ElectionStatus.Completed;
+        return ElectionStatus.InProgress;
+    }
+
     public Election() { }
+}
+
+public enum ElectionStatus
+{
+    NotStarted,
+    InProgress,
+    Completed
 }
 
 /// <summary>

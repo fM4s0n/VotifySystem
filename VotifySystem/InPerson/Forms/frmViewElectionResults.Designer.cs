@@ -1,6 +1,6 @@
 ﻿namespace VotifySystem.InPerson.Forms;
 
-partial class frmVoteInPerson
+partial class frmViewElectionResults
 {
     /// <summary>
     /// Required designer variable.
@@ -28,16 +28,10 @@ partial class frmVoteInPerson
     /// </summary>
     private void InitializeComponent()
     {
-        SuspendLayout();
-        // 
-        // frmVoteInPerson
-        // 
-        AutoScaleDimensions = new SizeF(8F, 20F);
-        AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(982, 553);
-        Name = "frmVoteInPerson";
-        Text = "Vote in-person";
-        ResumeLayout(false);
+        this.components = new System.ComponentModel.Container();
+        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        this.ClientSize = new System.Drawing.Size(800, 450);
+        this.Text = "frmViewElectionResults";
     }
 
     #endregion

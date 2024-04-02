@@ -19,19 +19,23 @@ public partial class frmCreateElection : Form
     private readonly List<Candidate> _candidates = [];
     private readonly List<Constituency> _constituencies = [];
     private List<Party> _allParties = [];
+    
+    // Create mode is true when the form is in create mode, false when in edit mode
+    private bool _createMode;
 
-    public frmCreateElection(IUserService userService, IDbService dbService)
+    public frmCreateElection(IUserService userService, IDbService dbService, bool createMode = true)
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        //Listen to form.show event
-        this.Load += (sender, e) => { Init(); };
-
+        _createMode = createMode;
         _userService = userService;
         _dbService = dbService;
+
+        //Listen to form.show event
+        this.Load += (sender, e) => { Init(); };
     }
 
 
@@ -117,17 +121,13 @@ public partial class frmCreateElection : Form
 
         _dbService!.InsertEntity(_newElection);
 
-        //insert all candidates
-        foreach (Candidate candidate in _candidates)
-        {
-            _dbService.InsertEntity(candidate);
-        }
+        // insert all candidates
+        foreach (Candidate candidate in _candidates)        
+            _dbService.InsertEntity(candidate);        
 
-        //insert all constituencies
-        foreach (Constituency constituency in _constituencies)
-        {
-            _dbService.InsertEntity(constituency);
-        }
+        // insert all constituencies
+        foreach (Constituency constituency in _constituencies)        
+            _dbService.InsertEntity(constituency);        
     }
 
     /// <summary>
