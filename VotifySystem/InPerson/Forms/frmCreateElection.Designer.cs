@@ -45,7 +45,7 @@ partial class frmCreateElection
         lvConstituencies = new ListView();
         cmbVoteMechanism = new ComboBox();
         lblVoteMechanism = new Label();
-        label1 = new Label();
+        lblFormTitle = new Label();
         grpConstituencies = new GroupBox();
         btnRemoveConstituency = new Button();
         btnAddConstituency = new Button();
@@ -98,6 +98,7 @@ partial class frmCreateElection
         // lvCandidates
         // 
         lvCandidates.Enabled = false;
+        lvCandidates.GridLines = true;
         lvCandidates.Location = new Point(11, 253);
         lvCandidates.Margin = new Padding(3, 2, 3, 2);
         lvCandidates.MultiSelect = false;
@@ -105,7 +106,6 @@ partial class frmCreateElection
         lvCandidates.Size = new Size(460, 354);
         lvCandidates.TabIndex = 2;
         lvCandidates.UseCompatibleStateImageBehavior = false;
-        lvCandidates.GridLines = true;
         // 
         // lblCandidates
         // 
@@ -198,6 +198,7 @@ partial class frmCreateElection
         // lvConstituencies
         // 
         lvConstituencies.Enabled = false;
+        lvConstituencies.GridLines = true;
         lvConstituencies.Location = new Point(5, 119);
         lvConstituencies.Margin = new Padding(3, 2, 3, 2);
         lvConstituencies.MultiSelect = false;
@@ -205,7 +206,6 @@ partial class frmCreateElection
         lvConstituencies.Size = new Size(470, 401);
         lvConstituencies.TabIndex = 8;
         lvConstituencies.UseCompatibleStateImageBehavior = false;
-        lvConstituencies.GridLines = true;
         // 
         // cmbVoteMechanism
         // 
@@ -226,15 +226,15 @@ partial class frmCreateElection
         lblVoteMechanism.TabIndex = 10;
         lblVoteMechanism.Text = "Select Voting Mechanism:";
         // 
-        // label1
+        // lblFormTitle
         // 
-        label1.AutoSize = true;
-        label1.Font = new Font("Segoe UI", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        label1.Location = new Point(344, 9);
-        label1.Name = "label1";
-        label1.Size = new Size(344, 50);
-        label1.TabIndex = 11;
-        label1.Text = "Create new election";
+        lblFormTitle.AutoSize = true;
+        lblFormTitle.Font = new Font("Segoe UI", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblFormTitle.Location = new Point(344, 9);
+        lblFormTitle.Name = "lblFormTitle";
+        lblFormTitle.Size = new Size(344, 50);
+        lblFormTitle.TabIndex = 11;
+        lblFormTitle.Text = "Create new election";
         // 
         // grpConstituencies
         // 
@@ -467,7 +467,7 @@ partial class frmCreateElection
         Controls.Add(btnReset);
         Controls.Add(grpCandidates);
         Controls.Add(grpConstituencies);
-        Controls.Add(label1);
+        Controls.Add(lblFormTitle);
         Controls.Add(grpElectionDates);
         Controls.Add(btnCancel);
         Controls.Add(btnCreate);
@@ -504,7 +504,7 @@ partial class frmCreateElection
     private ListView lvConstituencies;
     private ComboBox cmbVoteMechanism;
     private Label lblVoteMechanism;
-    private Label label1;
+    private Label lblFormTitle;
     private GroupBox grpConstituencies;
     private Button btnAddConstituency;
     private Label lblConstituencies;

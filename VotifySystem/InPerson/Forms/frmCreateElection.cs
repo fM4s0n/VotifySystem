@@ -38,14 +38,10 @@ public partial class frmCreateElection : Form
             _newElection = election;
 
         //Listen to form.show event
-        this.Load += (sender, e) => { if (createMode) InitCreateMode(); else InitEditMode(); };
+        this.Load += (sender, e) => { Init(); };
     }
 
-
-    /// <summary>
-    /// Custom init for Create mode
-    /// </summary>
-    private void InitCreateMode()
+    private void Init()
     {
         _allParties = _dbService!.GetDatabaseContext().Parties.ToList();
 
@@ -55,55 +51,82 @@ public partial class frmCreateElection : Form
             Close();
         }
 
-        ResetDatePickers();
-
-        foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
-            cmbVoteMechanism.Items.Add(voteMechanism.ToString());
-
-        foreach (Country country in Enum.GetValues(typeof(Country)))
-            cmbCountry.Items.Add(country);
+        InitDetailsComboBoxes();
 
         InitLvCandidates();
         InitLvConstituencies();
+
+        if (_createMode)
+            InitCreateMode();
+        else
+            InitEditMode();
+    }
+
+
+    /// <summary>
+    /// Custom init for Create mode
+    /// </summary>
+    private void InitCreateMode()
+    {
+        lblFormTitle.Text = "Create New Election";
+        InitDatePickers();
+
+        EnableDisableFullForm(true);
     }
 
     /// <summary>
     /// Init for edit mode which loads in the election details rather than creating a new election
     /// </summary>
     private void InitEditMode()
-    {
-        if (_newElection == null)
-        {
-            MessageBox.Show("Error loading election details", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Close();
-        }
+    {  
+        lblFormTitle.Text = "Edit an Election";
+        SetLoadedElection();
 
-        // if not started, don't allow editing
+        // Only allow editing if the election has not started
         if (_newElection!.GetElectionStatus() != ElectionStatus.NotStarted)
-        {
             EnableDisableFullForm(false);
-        }
-
-        InitLvConstituencies();
-        LoadElectionDetails();
     }
 
-    private void LoadElectionDetails()
+    private void InitDetailsComboBoxes()
     {
+        foreach (ElectionVoteMechanism voteMechanism in Enum.GetValues(typeof(ElectionVoteMechanism)))
+            cmbVoteMechanism.Items.Add(voteMechanism);
+
+        foreach (Country country in Enum.GetValues(typeof(Country)))
+            cmbCountry.Items.Add(country);
+    }
+
+    /// <summary>
+    /// Sets the form wih the loaded election details
+    /// </summary>
+    private void SetLoadedElection()
+    {
+        // Details
         txtElectionName.Text = _newElection!.Description;
         cmbCountry.SelectedItem = _newElection.Country;
 
+        // Dates
+        dtpElectionStart.Value = _newElection.StartDate;
+        dtpElectionEnd.Value = _newElection.EndDate;
+
+        // vote mechanism
         if (_newElection is FirstPastThePostElection)
             cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.FPTP;
         else
             cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.STV;
 
-        foreach(Constituency c in _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _newElection.ElectionId).ToList())        
+        // List Views
+        foreach(Constituency c in _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _newElection.ElectionId).ToList())
+        {
+            _constituencies.Add(c);
             AddConstituencyToListView(c);
+        }
 
-        foreach(Candidate c in _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _newElection.ElectionId).ToList())        
+        foreach(Candidate c in _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _newElection.ElectionId).ToList())
+        {
+            _candidates.Add(c);
             AddCandidateToListView(c);
-        
+        }            
     }
 
     /// <summary>
@@ -123,7 +146,7 @@ public partial class frmCreateElection : Form
     private void InitLvConstituencies()
     {
         lvConstituencies.View = View.Details;
-        lvConstituencies.Columns.Add("Constituency Name", lvConstituencies.Width);
+        lvConstituencies.Columns.Add("Constituency Name", lvConstituencies.Width);        
     }
 
     /// <summary>
@@ -142,9 +165,9 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// reset the date pickers to standard value
+    /// resets / inits the date pickers to standard value
     /// </summary>
-    private void ResetDatePickers()
+    private void InitDatePickers()
     {
         dtpElectionStart.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 7, 0, 0);
         dtpElectionEnd.Value = new DateTime(DateTime.Now.Year, DateTime.Now.AddMonths(1).Month, DateTime.Now.Day, 21, 0, 0);
@@ -159,13 +182,13 @@ public partial class frmCreateElection : Form
         if (ValidateElection() == false)
             return;
 
-        if (_createMode)
-            CreateElection();
-        else
-            UpdateElection();
+        CreateElectionFromForm();
     }
 
-    private void CreateElection() 
+    /// <summary>
+    /// 
+    /// </summary>
+    private void CreateElectionFromForm() 
     {
         _newElection!.StartDate = dtpElectionStart.Value;
         _newElection.EndDate = dtpElectionEnd.Value;
@@ -181,11 +204,6 @@ public partial class frmCreateElection : Form
         // insert all constituencies
         foreach (Constituency constituency in _constituencies)
             _dbService.InsertEntity(constituency);
-    }
-
-    private void UpdateElection()
-    {
-
     }
 
     /// <summary>
@@ -507,7 +525,7 @@ public partial class frmCreateElection : Form
         foreach (ComboBox cb in new List<ComboBox> { cmbCandidateParty, cmbCandidateConstituency, cmbCountry, cmbVoteMechanism })
             cb.SelectedIndex = -1;
 
-        ResetDatePickers();
+        InitDatePickers();
 
         lvCandidates.Items.Clear();
         lvConstituencies.Items.Clear();
@@ -597,6 +615,7 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void EnableDisableFullForm(bool enabled)
     {
+        txtElectionName.Enabled = enabled;
         txtConstituencyName.Enabled = enabled;
         btnAddConstituency.Enabled = enabled;
         lvConstituencies.Enabled = enabled;
@@ -608,6 +627,11 @@ public partial class frmCreateElection : Form
         btnAddCandidate.Enabled = enabled;
         lvCandidates.Enabled = enabled;
         btnRemoveCandidate.Enabled = enabled;
+        btnCreate.Enabled = enabled;
+        cmbVoteMechanism.Enabled = enabled;
+        cmbCountry.Enabled = enabled;
+        dtpElectionStart.Enabled = enabled;
+        dtpElectionEnd.Enabled = enabled;
     }
 
     /// <summary>

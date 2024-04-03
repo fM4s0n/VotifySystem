@@ -89,8 +89,8 @@ public partial class ctrManageElectionPanelItem : UserControl
     {
         try
         {
-            frmViewElectionResults frm = new(_election!, _dbService!, _userService!);
-            frm.ShowDialog();
+            //frmViewElectionResults frm = new(_election!, _dbService!, _userService!);
+            //frm.ShowDialog();
         }
         catch
         {
