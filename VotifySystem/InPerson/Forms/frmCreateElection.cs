@@ -632,6 +632,7 @@ public partial class frmCreateElection : Form
         cmbCountry.Enabled = enabled;
         dtpElectionStart.Enabled = enabled;
         dtpElectionEnd.Enabled = enabled;
+        btnInitialiseElection.Enabled = enabled;
     }
 
     /// <summary>
