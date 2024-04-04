@@ -22,7 +22,7 @@ public static class LocalisationHelper
     };
 
     /// <summary>
-    /// Returns a freindly name for the enum value of a country
+    /// Returns a friendly name for the enum value of a country
     /// </summary>
     /// <param name="country">Country Type</param>
     /// <returns></returns>

@@ -20,17 +20,17 @@ public partial class frmCreateElection : Form
     private readonly List<Constituency> _constituencies = [];
     private List<Party> _allParties = [];
     
-    // Create mode is true when the form is in create mode, false when in edit mode
-    private bool _createMode;
+    // Create mode is default
+    private readonly CreateElectionFormMode _formMode = CreateElectionFormMode.Create;
 
-    public frmCreateElection(IUserService userService, IDbService dbService, Election? election = null, bool createMode = true)
+    public frmCreateElection(IUserService userService, IDbService dbService, Election? election = null, CreateElectionFormMode createMode = CreateElectionFormMode.Create)
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _createMode = createMode;
+        _formMode = createMode;
         _userService = userService;
         _dbService = dbService;
 
@@ -56,10 +56,10 @@ public partial class frmCreateElection : Form
         InitLvCandidates();
         InitLvConstituencies();
 
-        if (_createMode)
+        if (_formMode == CreateElectionFormMode.Create)
             InitCreateMode();
         else
-            InitEditMode();
+            InitLoadElectionMode();
     }
 
 
@@ -77,14 +77,14 @@ public partial class frmCreateElection : Form
     /// <summary>
     /// Init for edit mode which loads in the election details rather than creating a new election
     /// </summary>
-    private void InitEditMode()
+    private void InitLoadElectionMode()
     {  
         lblFormTitle.Text = "Edit an Election";
         SetLoadedElection();
 
         // Only allow editing if the election has not started
-        if (_newElection!.GetElectionStatus() != ElectionStatus.NotStarted)
-            EnableDisableFullForm(false);
+        bool canEdit = _newElection!.GetElectionStatus() == ElectionStatus.NotStarted;
+        EnableDisableFullForm(canEdit);
     }
 
     private void InitDetailsComboBoxes()
@@ -182,28 +182,42 @@ public partial class frmCreateElection : Form
         if (ValidateElection() == false)
             return;
 
-        CreateElectionFromForm();
+        if (CreateElectionFromForm())
+        {
+            MessageBox.Show("Election created successfully", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
+        }
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private void CreateElectionFromForm() 
+    private bool CreateElectionFromForm() 
     {
-        _newElection!.StartDate = dtpElectionStart.Value;
-        _newElection.EndDate = dtpElectionEnd.Value;
-        _newElection.Description = txtElectionName.Text;
-        _newElection.ElectionAdministratorId = _userService!.GetCurrentUser()!.Id;
+        try
+        {
+            _newElection!.StartDate = dtpElectionStart.Value;
+            _newElection.EndDate = dtpElectionEnd.Value;
+            _newElection.Description = txtElectionName.Text;
+            _newElection.ElectionAdministratorId = _userService!.GetCurrentUser()!.Id;
 
-        _dbService!.InsertEntity(_newElection);
+            _dbService!.InsertEntity(_newElection);
 
-        // insert all candidates
-        foreach (Candidate candidate in _candidates)
-            _dbService.InsertEntity(candidate);
+            // insert all candidates
+            foreach (Candidate candidate in _candidates)
+                _dbService.InsertEntity(candidate);
 
-        // insert all constituencies
-        foreach (Constituency constituency in _constituencies)
-            _dbService.InsertEntity(constituency);
+            // insert all constituencies
+            foreach (Constituency constituency in _constituencies)
+                _dbService.InsertEntity(constituency);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error creating election, please try again - {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        } 
     }
 
     /// <summary>
@@ -372,8 +386,6 @@ public partial class frmCreateElection : Form
         _candidates.Add(candidateToAdd);
 
         AddCandidateToListView(candidateToAdd);
-
-        _dbService!.InsertEntity(candidateToAdd);
 
         // TODO: Add error message if candidate already exists
 
@@ -642,5 +654,16 @@ public partial class frmCreateElection : Form
     {
         cmbCountry.Enabled = false;
         cmbVoteMechanism.Enabled = false;
+    }
+
+    /// <summary>
+    /// enum to set the mode of frmCreateElection
+    /// as can be used to create, edit or view an election
+    /// </summary>
+    public enum CreateElectionFormMode
+    {
+        Create,
+        Edit,
+        View
     }
 }

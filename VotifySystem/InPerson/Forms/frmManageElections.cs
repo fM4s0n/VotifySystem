@@ -40,9 +40,9 @@ public partial class frmManageElections : Form
             return;
         }
 
-        foreach (Election election in _elections)
+        for (int i = 0; i < _elections.Count; i++)
         {
-            ctrManageElectionPanelItem epi = new (election, _dbService, _userService!);
+            ctrManageElectionPanelItem epi = new (_elections[i], _dbService, _userService!, i);
             flpElections.Controls.Add(epi);
         }
     }

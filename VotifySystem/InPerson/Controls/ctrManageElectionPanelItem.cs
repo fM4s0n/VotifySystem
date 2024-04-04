@@ -4,6 +4,7 @@ using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Forms;
 using VotifySystem.InPerson.Forms;
+using static VotifySystem.Forms.frmCreateElection;
 
 namespace VotifySystem.InPerson.Controls;
 
@@ -12,12 +13,12 @@ namespace VotifySystem.InPerson.Controls;
 /// </summary>
 public partial class ctrManageElectionPanelItem : UserControl
 {
-    private IDbService? _dbService;
-    private IUserService? _userService;
+    private readonly IDbService? _dbService;
+    private readonly IUserService? _userService;
+    private readonly int _index;
+    private readonly Election? _election;
 
-    private Election? _election;
-
-    public ctrManageElectionPanelItem(Election election, IDbService dbService, IUserService userService)
+    public ctrManageElectionPanelItem(Election election, IDbService dbService, IUserService userService, int index)
     {
         InitializeComponent();
 
@@ -27,6 +28,7 @@ public partial class ctrManageElectionPanelItem : UserControl
         _election = election;
         _dbService = dbService;
         _userService = userService;
+        _index = index;
 
         if (_election != null)
             InitUI();
@@ -44,8 +46,17 @@ public partial class ctrManageElectionPanelItem : UserControl
         btnViewResults.Enabled = _election.GetElectionStatus() == ElectionStatus.Completed;
         SetStatusLabel();
         SetDateInfoLabel();
+
+        // Alternate row colour
+        if (int.IsEvenInteger(_index))        
+            BackColor = Color.WhiteSmoke;        
     }
 
+    /// <summary>
+    /// sets the date info label based on the election status
+    /// displays the number of days until the election starts, ends or ended
+    /// changes colour of the label based on the status also
+    /// </summary>
     private void SetDateInfoLabel()
     {
         int days;
@@ -102,7 +113,12 @@ public partial class ctrManageElectionPanelItem : UserControl
     {
         try
         {
-            frmCreateElection frm = new(_userService!, _dbService!, _election!, false);
+            CreateElectionFormMode createMode = CreateElectionFormMode.View;
+
+            if (_election!.GetElectionStatus() == ElectionStatus.NotStarted)            
+                createMode = CreateElectionFormMode.Edit;            
+
+            frmCreateElection frm = new(_userService!, _dbService!, _election!, createMode);
             frm.ShowDialog();
         }
         catch
