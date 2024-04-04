@@ -8,7 +8,7 @@ namespace VotifySystem.InPerson.Controls;
 /// <summary>
 /// 
 /// </summary>
-public partial class ctrViewResultsConstituencyPanelItem : UserControl
+public partial class ctrResultsConstituencyPanelItem : UserControl
 {
     private IDbService _dbService;
 
@@ -17,7 +17,7 @@ public partial class ctrViewResultsConstituencyPanelItem : UserControl
     private readonly List<Party> _allParties;
     private List<Candidate> _candidates;
 
-    public ctrViewResultsConstituencyPanelItem(IDbService dbService, Constituency constituency)
+    public ctrResultsConstituencyPanelItem(IDbService dbService, Constituency constituency)
     {
         InitializeComponent();
 

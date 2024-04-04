@@ -1,6 +1,6 @@
 ﻿namespace VotifySystem.InPerson.Controls;
 
-partial class ctrViewResultsConstituencyPanelItem
+partial class ctrResultsConstituencyPanelItem
 {
     /// <summary> 
     /// Required designer variable.

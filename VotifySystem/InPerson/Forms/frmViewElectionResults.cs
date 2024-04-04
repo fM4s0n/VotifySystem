@@ -61,7 +61,7 @@ public partial class frmViewElectionResults : Form
         flpResults.Controls.Clear();
         foreach (Constituency constituency in _electionConstituencies)
         {
-            ctrViewResultsConstituencyPanelItem item = new(_dbService!, constituency);
+            ctrResultsConstituencyPanelItem item = new(_dbService!, constituency);
 
             flpResults.Controls.Add(item);
         }
