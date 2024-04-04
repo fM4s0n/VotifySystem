@@ -6,7 +6,7 @@ using VotifySystem.InPerson.Controls;
 namespace VotifySystem.InPerson.Forms;
 
 /// <summary>
-/// 
+/// Form to view all elections and manage their details or view results
 /// </summary>
 public partial class frmManageElections : Form
 {

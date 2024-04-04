@@ -34,6 +34,7 @@ partial class frmManageElections
         // 
         // flpElections
         // 
+        flpElections.AutoScroll = true;
         flpElections.FlowDirection = FlowDirection.TopDown;
         flpElections.Location = new Point(10, 60);
         flpElections.Name = "flpElections";
@@ -54,7 +55,7 @@ partial class frmManageElections
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(901, 640);
+        ClientSize = new Size(894, 641);
         Controls.Add(lblManageElections);
         Controls.Add(flpElections);
         Name = "frmManageElections";
