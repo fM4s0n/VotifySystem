@@ -80,7 +80,7 @@ public partial class ctrLogin : UserControl
         if (ValidateLoginCodeText(loginCode) == false)
             return;
 
-        LoginCode foundCode = _dbService!.GetDatabaseContext().LoginCodes.First(lc => lc.Code == loginCode);
+        LoginCode? foundCode = _dbService!.GetDatabaseContext().LoginCodes.FirstOrDefault(lc => lc.Code == loginCode) ?? null;
 
         if (foundCode == null) 
         {
@@ -94,7 +94,7 @@ public partial class ctrLogin : UserControl
             return;
         }
 
-        User user = _dbService.GetDatabaseContext().Users.First(u => u.Id == foundCode.UserId);
+        User? user = _dbService.GetDatabaseContext().Users.FirstOrDefault(u => u.Id == foundCode.UserId) ?? null;
 
         if (user == null)
         {
@@ -145,11 +145,18 @@ public partial class ctrLogin : UserControl
             return;           
         }
 
-        User attemptedUser = _dbService!.GetDatabaseContext().Users.First(u => u.Username == txtUsername.Text);
+        User? attemptedUser = _dbService!.GetDatabaseContext().Users.FirstOrDefault(u => u.Username == txtUsername.Text) ?? null;
 
         if (attemptedUser == null)
         {
             MessageBox.Show("Login details not found, please check details and try again or create an account.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            ResetControl();
+            return;
+        }
+
+        if (_loginMode == LoginMode.Online && attemptedUser.UserLevel == UserLevel.Administrator)
+        {
+            MessageBox.Show("Administrators cannot login in online. Please login in person.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 

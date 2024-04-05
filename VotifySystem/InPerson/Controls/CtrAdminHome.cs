@@ -68,7 +68,7 @@ public partial class ctrAdminHome : UserControl
     /// </summary>
     private void btnManageParties_Click(object sender, EventArgs e)
     {
-        frmManageParties form = new(_userService!, _dbService!);
+        frmManageParties form = new(_dbService!);
         form.ShowDialog();
     }
 

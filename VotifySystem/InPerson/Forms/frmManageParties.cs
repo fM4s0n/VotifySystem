@@ -11,19 +11,17 @@ namespace VotifySystem.InPerson.Forms;
 /// </summary>
 public partial class frmManageParties : Form
 {
-    private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
     List<Party> _parties = [];
 
-    public frmManageParties(IUserService userService, IDbService dbService)
+    public frmManageParties(IDbService dbService)
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _userService = userService;
         _dbService = dbService;
 
         Init();
@@ -55,8 +53,8 @@ public partial class frmManageParties : Form
         if (lvParties.SelectedItems.Count == 0)
             return;
 
-        // Multiselect disabled so able to hardcorde lvParties.SelectedItems[0]
-        Party partyToDelete = _parties.First(p => p.Name == lvParties.SelectedItems[0].ToString());
+        // Multiselect disabled so able to hardcode lvParties.SelectedItems[0]
+        Party partyToDelete = _parties.First(p => p.Name == lvParties.SelectedItems[0].Text);
 
         if (ValidatePartyDeletion(partyToDelete) == false)
             return;
@@ -103,7 +101,7 @@ public partial class frmManageParties : Form
     }
 
     /// <summary>
-    /// selects the country and fills out the list with any relevent parties
+    /// selects the country and fills out the list with any relevant parties
     /// </summary>
     private void btnGo_Click(object sender, EventArgs e)
     {
@@ -132,7 +130,6 @@ public partial class frmManageParties : Form
         lvParties.Items.Clear();
         _parties.Clear();
 
-        // TODO: Refactor to not talk to db as much
         if (cmbCountry.SelectedItem != null && cmbCountry.SelectedItem is Country selectedCountry)        
             _parties = _dbService!.GetDatabaseContext().Parties.Where(p => p.Country == selectedCountry).OrderBy(p => p.Name).ToList();
 

@@ -70,6 +70,7 @@ partial class frmPostalVote
         cmbCandidate.Name = "cmbCandidate";
         cmbCandidate.Size = new Size(371, 23);
         cmbCandidate.TabIndex = 3;
+        cmbCandidate.SelectedIndexChanged += cmbCandidate_SelectedIndexChanged;
         // 
         // lblSelectCandidate
         // 
@@ -172,8 +173,8 @@ partial class frmPostalVote
         Controls.Add(cmbElection);
         Controls.Add(lblPostalVotes);
         Name = "frmPostalVote";
-        Text = "frmPostalVote";
         StartPosition = FormStartPosition.CenterScreen;
+        Text = "frmPostalVote";
         ResumeLayout(false);
         PerformLayout();
     }

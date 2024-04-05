@@ -50,9 +50,12 @@ public partial class frmPostalVote : Form
         if (cmbCountry.SelectedIndex == -1)
             return;
 
-        if (cmbCountry.SelectedItem is Country selectedCountry)        
-        { 
-            _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == selectedCountry).ToList(); 
+        if (cmbCountry.SelectedItem is Country selectedCountry)
+        {
+            _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == selectedCountry).ToList();
+
+            // Filter out elections that are not in progress
+            _elections = _elections.Where(e => e.GetElectionStatus() == ElectionStatus.InProgress).ToList();
         }
         else
         {
@@ -70,6 +73,7 @@ public partial class frmPostalVote : Form
         InitElectionComboBox();
 
         cmbCountry.Enabled = false;
+        cmbElection.Enabled = true;
     }
 
     /// <summary>
@@ -85,22 +89,29 @@ public partial class frmPostalVote : Form
         InitCandidateComboBox();
 
         cmbElection.Enabled = false;
+        cmbCandidate.Enabled = true;
     }
 
     private void InitElectionComboBox()
     {
+        cmbElection.SelectedIndexChanged -= cmbElection_SelectedIndexChanged;
         cmbElection.DataSource = null;
         cmbElection.DisplayMember = "Description";
         cmbElection.ValueMember = "ElectionId";
         cmbElection.DataSource = _elections;
+        cmbElection.SelectedIndex = -1;
+        cmbElection.SelectedIndexChanged += cmbElection_SelectedIndexChanged;
     }
 
     private void InitCandidateComboBox()
     {
+        cmbCandidate.SelectedIndexChanged -= cmbCandidate_SelectedIndexChanged;
         cmbCandidate.DataSource = null;
         cmbCandidate.DisplayMember = "FullName";
         cmbCandidate.ValueMember = "Id";
         cmbCandidate.DataSource = _candidates;
+        cmbCandidate.SelectedIndex = -1;
+        cmbCandidate.SelectedIndexChanged += cmbCandidate_SelectedIndexChanged;
     }
 
     private void btnCancel_Click(object sender, EventArgs e)
@@ -125,20 +136,17 @@ public partial class frmPostalVote : Form
         txtVotesToAdd.Text = string.Empty;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void btnSubmit_Click(object sender, EventArgs e)
     {
-        if (cmbCandidate.SelectedIndex != -1)
+        if (cmbCandidate.SelectedIndex == -1)
         {
             MessageBox.Show("Please select a candidate", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return;
         }
 
-        Candidate candidate = _candidates.First(c => c.Id == cmbCandidate.SelectedValue.ToString());
+        Candidate? candidate = _candidates.FirstOrDefault(c => c.Id == cmbCandidate.SelectedValue.ToString()) ?? null;
 
-        if (candidate == null) 
+        if (candidate == null)
         {
             cmbCandidate.SelectedIndex = -1;
             InitCandidateComboBox();
@@ -147,10 +155,10 @@ public partial class frmPostalVote : Form
 
         if (ValidateVoteInput())
         {
-            candidate.AddVotes(int.Parse(cmbCandidate.Text));
+            candidate.AddVotes(int.Parse(txtVotesToAdd.Text));
             _dbService!.UpdateEntity(candidate);
 
-            MessageBox.Show($"{cmbCandidate.Text} votes added for {candidate.FullName}", "Votes added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"{txtVotesToAdd.Text} votes added for {candidate.FullName}", "Votes added", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();
         }
     }
@@ -160,7 +168,7 @@ public partial class frmPostalVote : Form
     /// </summary>
     /// <returns></returns>
     private bool ValidateVoteInput()
-    {        
+    {
         txtVotesToAdd.Text = txtVotesToAdd.Text.Trim();
 
         if (string.IsNullOrWhiteSpace(txtVotesToAdd.Text))
@@ -182,5 +190,14 @@ public partial class frmPostalVote : Form
             MessageBox.Show("Please enter a number", "Add votes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             return false;
         }
+    }
+
+    private void cmbCandidate_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (cmbCandidate.SelectedIndex == -1)
+            return;
+
+        btnSubmit.Enabled = true;
+        txtVotesToAdd.Enabled = true;
     }
 }
