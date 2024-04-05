@@ -8,15 +8,22 @@ namespace VotifySystem.Common.BusinessLogic.Helpers;
 /// TODO: Refactor this whole helper to be OOP - 
 /// should be a factory to produce separate ElectionResult Class based on the election type
 /// </summary>
-internal static class FPTPResultsHelper
+public static class FPTPResultsHelper
 {
     /// <summary>
     /// Order candidates by the number of votes
+    /// sets position of each candidate in the list
+    /// does not handle ties
     /// </summary>
-    /// <param name="candidates">List of candidate</param>
+    /// <param name="candidates">List of candidate ordered by votes with Position property set</param>
     public static List<Candidate> OrderCandidatesByVotes(List<Candidate> candidates)
     { 
-        return candidates.OrderByDescending(c => c.VotesReceived).ToList();
+        candidates = candidates.OrderByDescending(c => c.VotesReceived).ToList();
+
+        for (int i = 0; i < candidates.Count; i++)
+            candidates[i].ElectionPosition = i + 1;
+
+        return candidates;
     }
 
     [Obsolete]

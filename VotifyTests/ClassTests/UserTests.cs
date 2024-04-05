@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using VotifySystem.Common.Classes;
 
 namespace VotifyTests.ClassTests;
 
@@ -9,12 +10,14 @@ internal class UserTests
     public void TestFullName()
     {
         //Arrange
-
+        Voter voter = new();
 
         //Act
-
+        voter.FirstName = "John";
+        voter.LastName = "Doe";
 
         //Assert
-
+        string expected = "John Doe";
+        Assert.AreEqual(expected, voter.FullName);
     }
 }

@@ -171,9 +171,10 @@ public partial class ctrLogin : UserControl
     private bool VerifyUser(User attemptedUser)
     {
         string plainPassword = txtPassword.Text = txtPassword.Text.Trim();
-        string hashedPassword = _userService!.HashPassword(attemptedUser, plainPassword);
 
-        return _userService!.VerifyPassword(hashedPassword, plainPassword, attemptedUser) != PasswordVerificationResult.Failed;
+        PasswordVerificationResult result = _userService!.VerifyPassword(plainPassword, attemptedUser);       
+        
+        return result == PasswordVerificationResult.Success || result == PasswordVerificationResult.SuccessRehashNeeded;
     }
 
     /// <summary>

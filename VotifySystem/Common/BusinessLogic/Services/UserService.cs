@@ -87,14 +87,14 @@ public class UserService : IUserService
     /// <summary>
     /// Verify the user password is correct
     /// </summary>
-    /// <param name="hashedPassword"></param>
-    /// <param name="unhashedPassword"></param>
+    /// <param name="plainPassword"></param>
     /// <param name="user"></param>
     /// <returns>Failed or successful verification of password input </returns>
-    public PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user)
+    public PasswordVerificationResult VerifyPassword(string plainPassword, User user)
     {
         PasswordHasher<User> passwordHasher = new();
-        return passwordHasher.VerifyHashedPassword(user, hashedPassword, unhashedPassword);
+        PasswordVerificationResult result = passwordHasher.VerifyHashedPassword(user, user.Password, plainPassword);
+        return result;
     }
 
     /// <summary>

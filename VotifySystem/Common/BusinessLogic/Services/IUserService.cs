@@ -49,7 +49,7 @@ public interface IUserService
     /// <param name="unhashedPassword"></param>
     /// <param name="user"></param>
     /// <returns></returns>
-    PasswordVerificationResult VerifyPassword(string hashedPassword, string unhashedPassword, User user);
+    PasswordVerificationResult VerifyPassword(string plainPassword, User user);
 
     /// <summary>
     /// 
