@@ -1,4 +1,6 @@
-﻿using VotifySystem.Common.BusinessLogic.Services;
+﻿using System.Linq;
+using VotifySystem.Common.BusinessLogic.Helpers;
+using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
@@ -13,7 +15,8 @@ public partial class frmViewElectionResults : Form
 {
     private readonly IDbService? _dbService;
     private readonly Election? _election;
-    private readonly List<Constituency> _electionConstituencies;
+    private readonly List<Candidate> _candidates;
+    List<Constituency>_electionConstituencies;
 
     public frmViewElectionResults(IDbService dbService, Election election)
     {
@@ -23,9 +26,11 @@ public partial class frmViewElectionResults : Form
             return;
 
         _dbService = dbService;
+        _election = election;        
+        
+        _candidates = _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();
+        _electionConstituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election!.ElectionId).ToList();
 
-        _election = election;
-        _electionConstituencies = _dbService.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election!.ElectionId).ToList();
         Init();
     }
 
@@ -37,6 +42,11 @@ public partial class frmViewElectionResults : Form
         cmbViewMode.SelectedIndex = -1;
     }
 
+    private void CalulateC
+    {
+       
+    }
+
     private void btnSelectViewModeGo_Click(object sender, EventArgs e)
     {
         if (cmbViewMode.SelectedIndex == -1)
@@ -44,13 +54,15 @@ public partial class frmViewElectionResults : Form
 
         if (cmbViewMode.SelectedItem is ViewElectionFormMode mode)
         {
+            flpResults.Controls.Clear();
+
             switch (mode)
             {
                 case ViewElectionFormMode.Constituency:
                     SetConstituencyView();
                     break;
                 case ViewElectionFormMode.Election:
-
+                    SetElectionView();
                     break;
             }
         }
@@ -58,10 +70,35 @@ public partial class frmViewElectionResults : Form
 
     private void SetConstituencyView()
     {
-        flpResults.Controls.Clear();
         foreach (Constituency constituency in _electionConstituencies)
         {
             ctrResultsConstituencyPanelItem item = new(_dbService!, constituency);
+
+            flpResults.Controls.Add(item);
+        }
+    }
+
+    private void SetElectionView()
+    {
+        List<string> candidatePartyIds = _candidates.Select(c => c.PartyId).Distinct().ToList();
+        List<Party> electionParties = _dbService!.GetDatabaseContext().Parties.Where(p => candidatePartyIds.Contains(p.PartyId)).ToList();
+
+        // Calculate total votes per party
+        Dictionary<Party, int> partyTotalVotes = FPTPResultsHelper.CalculateTotalVotesPerParty(electionParties, _candidates!);
+        
+        // Calculate Constituency wins per party
+        Dictionary<Party, List<Constituency>> partyConstituencyWins = FPTPResultsHelper.CalculatePartyConstituencyWinsForElection(electionParties, _candidates, _electionConstituencies);
+
+        foreach (Party party in electionParties)
+        {
+            int totalVotes = partyTotalVotes[party];
+            int totalConstituencyWins = partyConstituencyWins[party].Count;
+
+            int position = electionParties.IndexOf(party) + 1;
+
+            List<Candidate> partyCandidates = _candidates.Where(c => c.PartyId == party.PartyId).ToList();
+
+            ctrResultsPartyPanelItem item = new(party, position, totalConstituencyWins, totalVotes);
 
             flpResults.Controls.Add(item);
         }

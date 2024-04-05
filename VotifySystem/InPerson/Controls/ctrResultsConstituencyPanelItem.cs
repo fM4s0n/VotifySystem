@@ -1,21 +1,21 @@
-﻿using System.Configuration;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
-using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
+using VotifySystem.Common.Classes.UIClasses;
 
 namespace VotifySystem.InPerson.Controls;
 
 /// <summary>
-/// 
+/// Panel item for displaying the results of a constituency in the results view
 /// </summary>
 public partial class ctrResultsConstituencyPanelItem : UserControl
 {
-    private IDbService _dbService;
+    private readonly IDbService? _dbService;
 
-    private List<CandidateDataGridItem> _gridData = [];
+    private List<CandidateDataGridItem>? _gridData = [];
     private readonly Constituency? _constituency;
-    private readonly List<Party> _allParties;
-    private List<Candidate> _candidates;
+    private readonly List<Party>? _allParties;
+    private List<Candidate>? _candidates;
 
     public ctrResultsConstituencyPanelItem(IDbService dbService, Constituency constituency)
     {
@@ -44,9 +44,10 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
     {
         List<CandidateDataGridItem> gridItems = [];
 
-        _candidates = _dbService.GetDatabaseContext().Candidates
-            .Where(ca => ca.ElectionId == _constituency!.ElectionId && ca.ConstituencyId == _constituency.ConstituencyId)
-            .OrderByDescending(c => c.VotesReceived).ToList();
+        _candidates = _dbService!.GetDatabaseContext().Candidates
+            .Where(ca => ca.ElectionId == _constituency!.ElectionId && ca.ConstituencyId == _constituency.ConstituencyId).ToList();
+           
+        _candidates = FPTPResultsHelper.OrderCandidatesByVotes(_candidates);
 
         foreach (Candidate candidate in _candidates)
         {
@@ -57,9 +58,9 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
             gridItems.Add(item);
         }
 
-        gridItems = CheckAndFixTies(gridItems);
+        gridItems = FPTPResultsHelper.CheckAndFixTies(gridItems);
 
-        _gridData.AddRange(gridItems);
+        _gridData!.AddRange(gridItems);
     }
 
     private void InitDataGrid()
@@ -71,40 +72,5 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         dgvCandidates.Columns.Add(new DataGridViewTextBoxColumn { Name = "Votes", DataPropertyName = "Votes" });
 
         dgvCandidates.DataSource = _gridData;
-    }
-
-    /// <summary>
-    /// Checks for any ties in the candidate votes and fixes them by setting the position of the tied candidates to the same position
-    /// </summary>
-    /// <param name="gridItems">list of candidate grid items</param>
-    /// <returns>same list with fixed Position properties</returns>
-    private static List<CandidateDataGridItem> CheckAndFixTies(List<CandidateDataGridItem> gridItems)
-    {  
-        foreach (CandidateDataGridItem item in gridItems)
-        {
-            List<CandidateDataGridItem> ties = gridItems.Where(gi => gi.Votes == item.Votes).ToList();
-
-            if (ties.Count > 0) 
-            {
-                // get the position of the first candidate in the tie list
-                int tiedPosition  = ties.First().Position;
-
-                foreach (CandidateDataGridItem tie in ties)                
-                    gridItems[gridItems.IndexOf(tie)].Position = tiedPosition;                  
-            }
-        }    
-
-        return gridItems;
-    }
-
-    /// <summary>
-    /// Class to hold data for the candidate data grid
-    /// </summary>
-    internal class CandidateDataGridItem(int position, string name, string party, int votes)
-    {
-        public int Position { get; set; } = position;
-        public string Name { get; set; } = name;
-        public string Party { get; set; } = party;
-        public int Votes { get; set; } = votes;
-    }
+    }  
 }

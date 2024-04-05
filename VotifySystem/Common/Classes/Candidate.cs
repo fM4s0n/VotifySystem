@@ -11,6 +11,7 @@ public class Candidate : Person
     public string PartyId { get; set; } = string.Empty;
     public string ElectionId { get; set; } = string.Empty;
     public int VotesReceived { get; private set; } = 0;
+    public int ElectionPosition { get; set; } = 0;
 
     /// <summary>
     /// Default Constructor for EF Core

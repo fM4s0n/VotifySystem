@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 
 namespace VotifySystem.Common.Classes.Elections;
 
