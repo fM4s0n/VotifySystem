@@ -53,6 +53,7 @@ partial class frmRegisterToVote
         cmbElections.Name = "cmbElections";
         cmbElections.Size = new Size(265, 23);
         cmbElections.TabIndex = 1;
+        cmbElections.SelectedIndexChanged += cmbElections_SelectedIndexChanged;
         // 
         // lblSelectElection
         // 
@@ -103,7 +104,7 @@ partial class frmRegisterToVote
         Controls.Add(lblRegisterToVote);
         Name = "frmRegisterToVote";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "frmRegisterToVote";
+        Text = "Votify | Register To Vote";
         ResumeLayout(false);
         PerformLayout();
     }

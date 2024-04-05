@@ -46,7 +46,9 @@ public partial class frmRegisterToVote : Form
 
         _voter = (Voter)_userService!.GetCurrentUser()!;
 
-        _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.StartDate <= DateTime.Now && e.EndDate > DateTime.Now && e.Country == _voter.Country).ToList();
+        _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == _voter.Country).ToList();
+        _elections = _elections.Where(e => e.GetElectionStatus() != ElectionStatus.Completed).ToList();
+
         _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.VoterId == _voter.Id).ToList();
 
         // Remove elections that the voter has already registered for
@@ -59,7 +61,7 @@ public partial class frmRegisterToVote : Form
         if (_elections.Count == 0)
         {
             if (MessageBox.Show("No elections available to register for.", "No elections", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
-            {   
+            {
                 Close();
                 //return;
             }
@@ -68,7 +70,6 @@ public partial class frmRegisterToVote : Form
         _constituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == _voter.Country).ToList();
 
         ResetCmbElections();
-        ResetCmbConstituencies();
     }
 
     /// <summary>
@@ -76,11 +77,13 @@ public partial class frmRegisterToVote : Form
     /// </summary>
     private void ResetCmbElections()
     {
+        cmbElections.SelectedIndexChanged -= cmbElections_SelectedIndexChanged;
         cmbElections.DataSource = null;
         cmbElections.DisplayMember = "Description";
         cmbElections.ValueMember = "ElectionId";
         cmbElections.DataSource = _elections;
         cmbElections.SelectedIndex = -1;
+        cmbElections.SelectedIndexChanged += cmbElections_SelectedIndexChanged;
     }
 
     /// <summary>
@@ -88,11 +91,22 @@ public partial class frmRegisterToVote : Form
     /// </summary>
     private void ResetCmbConstituencies()
     {
+        ResetConstituencyDataSource();
+
         cmbConstituencies.DataSource = null;
         cmbConstituencies.DisplayMember = "ConstituencyName";
         cmbConstituencies.ValueMember = "ConstituencyId";
         cmbConstituencies.DataSource = _constituencies;
         cmbConstituencies.SelectedIndex = -1;
+    }
+
+    /// <summary>
+    /// Resets the constituency data source based on the selected election
+    /// </summary>
+    private void ResetConstituencyDataSource()
+    {
+        _constituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == _voter!.Country).ToList();
+        _constituencies = _constituencies.Where(c => c.ElectionId == cmbElections.SelectedValue!.ToString()!).ToList();
     }
 
     /// <summary>
@@ -119,5 +133,13 @@ public partial class frmRegisterToVote : Form
         MessageBox.Show($"Successfully registered for {electionDescription}.", "Successfully Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
         Close();
         return;
+    }
+
+    private void cmbElections_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (cmbElections.SelectedIndex == -1)
+            return;
+
+        ResetCmbConstituencies();
     }
 }
