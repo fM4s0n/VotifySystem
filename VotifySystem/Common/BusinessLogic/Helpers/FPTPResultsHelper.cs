@@ -15,7 +15,7 @@ internal static class FPTPResultsHelper
     /// <param name="candidates">List of candidate</param>
     public static List<Candidate> OrderCandidatesByVotes(List<Candidate> candidates)
     { 
-        candidates = candidates.OrderByDescending(c => c.VotesReceived).ToList();
+        return candidates.OrderByDescending(c => c.VotesReceived).ToList();
     }
 
     [Obsolete]
@@ -126,23 +126,52 @@ internal static class FPTPResultsHelper
 
                 // randomly select a winner from the tied candidates - simulates lottery done in real elections in UK
                 Random random = new();
-                int randomIndex = random.Next(0, tiedCandidates.Count);
+                int randomIndex = random.Next(1, tiedCandidates.Count);
 
                 Candidate winnerCandidate = tiedCandidates[randomIndex];
 
                 winnerParty = parties.First(p => p.PartyId == winnerCandidate.PartyId);
-                partyConstituencyResults[winnerParty].Add(constituency);
             }
             else
             {
                 // Determine the winner based on votes received
                 winnerParty = parties.First(p => p.PartyId == conCandidates.First().PartyId);
-                partyConstituencyResults[winnerParty].Add(constituency);
             }
-                       
             partyConstituencyResults[winnerParty].Add(constituency);
         }
 
         return partyConstituencyResults;
+    }
+
+    /// <summary>
+    /// code snippet from StackOverflow users 'samjudson' and 'Wai Ha Lee'
+    /// https://stackoverflow.com/questions/20156
+    /// Method to add ordinal suffix to a number
+    /// </summary>
+    /// <param name="num">int to received ordianl suffix</param>
+    /// <returns>string with Ordinal suffix appended to number</returns>
+    public static string AddOrdinal(int num)
+    {
+        if (num <= 0) return num.ToString();
+
+        switch (num % 100)
+        {
+            case 11:
+            case 12:
+            case 13:
+                return num + "th";
+        }
+
+        switch (num % 10)
+        {
+            case 1:
+                return num + "st";
+            case 2:
+                return num + "nd";
+            case 3:
+                return num + "rd";
+            default:
+                return num + "th";
+        }
     }
 }

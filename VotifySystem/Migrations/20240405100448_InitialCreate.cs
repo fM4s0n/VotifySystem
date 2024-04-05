@@ -20,6 +20,7 @@ namespace VotifySystem.Migrations
                     PartyId = table.Column<string>(type: "TEXT", nullable: false),
                     ElectionId = table.Column<string>(type: "TEXT", nullable: false),
                     VotesReceived = table.Column<int>(type: "INTEGER", nullable: false),
+                    ElectionPosition = table.Column<int>(type: "INTEGER", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false)
                 },

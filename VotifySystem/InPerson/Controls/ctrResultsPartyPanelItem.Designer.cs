@@ -33,6 +33,8 @@ partial class ctrResultsPartyPanelItem
         lblConstituenciesWonValue = new Label();
         lblOverallPosition = new Label();
         lblOverallPositionValue = new Label();
+        lblTotalVotesValue = new Label();
+        lblTotalVotes = new Label();
         SuspendLayout();
         // 
         // lblPartyName
@@ -85,10 +87,32 @@ partial class ctrResultsPartyPanelItem
         lblOverallPositionValue.TabIndex = 5;
         lblOverallPositionValue.Text = "0";
         // 
+        // lblTotalVotesValue
+        // 
+        lblTotalVotesValue.AutoSize = true;
+        lblTotalVotesValue.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblTotalVotesValue.Location = new Point(411, 77);
+        lblTotalVotesValue.Name = "lblTotalVotesValue";
+        lblTotalVotesValue.Size = new Size(24, 30);
+        lblTotalVotesValue.TabIndex = 7;
+        lblTotalVotesValue.Text = "0";
+        // 
+        // lblTotalVotes
+        // 
+        lblTotalVotes.AutoSize = true;
+        lblTotalVotes.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+        lblTotalVotes.Location = new Point(286, 77);
+        lblTotalVotes.Name = "lblTotalVotes";
+        lblTotalVotes.Size = new Size(119, 30);
+        lblTotalVotes.TabIndex = 6;
+        lblTotalVotes.Text = "Total Votes:";
+        // 
         // ctrResultsPartyPanelItem
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(lblTotalVotesValue);
+        Controls.Add(lblTotalVotes);
         Controls.Add(lblOverallPositionValue);
         Controls.Add(lblOverallPosition);
         Controls.Add(lblConstituenciesWonValue);
@@ -107,4 +131,6 @@ partial class ctrResultsPartyPanelItem
     private Label lblConstituenciesWonValue;
     private Label lblOverallPosition;
     private Label lblOverallPositionValue;
+    private Label lblTotalVotesValue;
+    private Label lblTotalVotes;
 }

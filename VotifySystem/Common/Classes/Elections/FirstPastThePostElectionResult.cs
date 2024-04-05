@@ -4,15 +4,15 @@
 /// 
 /// </summary>
 /// <param name="election"></param>
-internal class FirstPastThePostElectionResult(Election election) : ElectionResult
-{
-    public Candidate Winner { get; set; } = new Candidate();
+//internal class FirstPastThePostElectionResult(Election election) : ElectionResult
+//{
+//    public Candidate Winner { get; set; } = new Candidate();
 
-    public FirstPastThePostElectionResult(Election election)
-    {
-        Election = election;
-        Candidates = 
-        Winner = Candidates.First();
-    }
+//    //public FirstPastThePostElectionResult(Election election)
+//    //{
+//    //    Election = election;
+//    //    Candidates = 
+//    //    Winner = Candidates.First();
+//    //}
 
-}
+//}

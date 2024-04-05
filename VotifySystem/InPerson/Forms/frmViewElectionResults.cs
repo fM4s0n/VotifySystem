@@ -15,8 +15,8 @@ public partial class frmViewElectionResults : Form
 {
     private readonly IDbService? _dbService;
     private readonly Election? _election;
-    private readonly List<Candidate> _candidates;
-    List<Constituency>_electionConstituencies;
+    private readonly List<Candidate>? _candidates;
+    private readonly List<Constituency>? _electionConstituencies;
 
     public frmViewElectionResults(IDbService dbService, Election election)
     {
@@ -42,11 +42,6 @@ public partial class frmViewElectionResults : Form
         cmbViewMode.SelectedIndex = -1;
     }
 
-    private void CalulateC
-    {
-       
-    }
-
     private void btnSelectViewModeGo_Click(object sender, EventArgs e)
     {
         if (cmbViewMode.SelectedIndex == -1)
@@ -70,7 +65,7 @@ public partial class frmViewElectionResults : Form
 
     private void SetConstituencyView()
     {
-        foreach (Constituency constituency in _electionConstituencies)
+        foreach (Constituency constituency in _electionConstituencies!)
         {
             ctrResultsConstituencyPanelItem item = new(_dbService!, constituency);
 
@@ -80,7 +75,7 @@ public partial class frmViewElectionResults : Form
 
     private void SetElectionView()
     {
-        List<string> candidatePartyIds = _candidates.Select(c => c.PartyId).Distinct().ToList();
+        List<string> candidatePartyIds = _candidates!.Select(c => c.PartyId).Distinct().ToList();
         List<Party> electionParties = _dbService!.GetDatabaseContext().Parties.Where(p => candidatePartyIds.Contains(p.PartyId)).ToList();
 
         // Calculate total votes per party
@@ -96,7 +91,7 @@ public partial class frmViewElectionResults : Form
 
             int position = electionParties.IndexOf(party) + 1;
 
-            List<Candidate> partyCandidates = _candidates.Where(c => c.PartyId == party.PartyId).ToList();
+            List<Candidate>? partyCandidates = _candidates.Where(c => c.PartyId == party.PartyId).ToList();
 
             ctrResultsPartyPanelItem item = new(party, position, totalConstituencyWins, totalVotes);
 
@@ -105,11 +100,11 @@ public partial class frmViewElectionResults : Form
     }
 
     /// <summary>
-    /// 
+    /// enum to represent the different view modes for the election results form
     /// </summary>
     internal enum ViewElectionFormMode
     {
         Constituency,
-        Election,
+        Election
     }
 }

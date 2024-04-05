@@ -12,7 +12,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
 {
     private readonly IDbService? _dbService;
 
-    private List<CandidateDataGridItem>? _gridData = [];
+    private readonly List<CandidateDataGridItem>? _gridData = [];
     private readonly Constituency? _constituency;
     private readonly List<Party>? _allParties;
     private List<Candidate>? _candidates;

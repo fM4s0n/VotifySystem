@@ -11,7 +11,7 @@ using VotifyDataAccess.Database;
 namespace VotifySystem.Migrations
 {
     [DbContext(typeof(VotifyDatabaseContext))]
-    [Migration("20240401114750_InitialCreate")]
+    [Migration("20240405100448_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,6 +32,9 @@ namespace VotifySystem.Migrations
                     b.Property<string>("ElectionId")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("ElectionPosition")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
