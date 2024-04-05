@@ -14,7 +14,12 @@ public partial class frmVote : Form
     // private readonly ElectionVoteMechanism? _electionVoteMechanism;
 
     private List<Election> _validElections = [];
+
+    // electionVoter is to get the specific ElectionVoter object based on the selected election
     private ElectionVoter? _electionVoter;
+
+    // electionVoters is to get all possible elections the user can vote in
+    private List<ElectionVoter> _electionVoters = [];
 
     /// <summary>
     /// Constructor for the frmVote
@@ -44,21 +49,42 @@ public partial class frmVote : Form
             return;
         }
 
-        _electionVoter = _dbService!.GetDatabaseContext().ElectionVoters.FirstOrDefault(ev => ev.VoterId == _userService.GetCurrentUser()!.Id);
+        GetElectionVoters();
 
-        if (_electionVoter == null)
+        if (_electionVoters.Count == 0)
         {
             MessageBox.Show("You are not registered to vote in any elections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
             return;
         }
 
-        _validElections = _dbService.GetDatabaseContext().Elections.Where(e => e.EndDate > DateTime.Now && e.ElectionId == _electionVoter!.ElectionId).ToList();
+        List<string> validElectionIds = _electionVoters.Select(ev => ev.ElectionId).ToList();
+
+        _validElections = _dbService.GetDatabaseContext().Elections
+            .Where(e => validElectionIds.Contains(e.ElectionId)).ToList();
+
+        _validElections = _validElections
+            .Where(e => e.GetElectionStatus() == ElectionStatus.InProgress).ToList();
+
+        if (_validElections.Count == 0)
+        {
+            MessageBox.Show("There are no elections to vote in currently, please retry once an election has commenced.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Close();
+            return;
+        }
 
         InitCmbSelectElection();
 
         // listen to the vote completed event
         ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
+    }
+
+    private void GetElectionVoters()
+    {
+        _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters
+            .Where(ev => ev.VoterId == _userService.GetCurrentUser()!.Id).ToList();
+
+        _electionVoters = _electionVoters.Where(ev => ev.HasVoted == false).ToList();
     }
 
     /// <summary>
@@ -117,6 +143,9 @@ public partial class frmVote : Form
             lblElectionName.Text = election.Description;
             lblElectionName.Visible = true;
 
+            // set the election voter based on the selected election
+            _electionVoter = _electionVoters.First(ev => ev.ElectionId == election.ElectionId);
+
             switch (election)
             {
                 case FirstPastThePostElection _:
@@ -137,7 +166,7 @@ public partial class frmVote : Form
     /// <param name="electionVoteMechanism">Mode to set the form to</param>
     private void SetMode(ElectionVoteMechanism electionVoteMechanism)
     {
-        if (cmbSelectElection.SelectedIndex == -1 && cmbSelectElection.SelectedValue is string electionId)
+        if (cmbSelectElection.SelectedIndex != -1 && cmbSelectElection.SelectedValue is string electionId)
         {
             switch (electionVoteMechanism)
             {

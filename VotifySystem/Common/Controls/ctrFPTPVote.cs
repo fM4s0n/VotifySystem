@@ -63,9 +63,8 @@ public partial class ctrFPTPVote : UserControl
         _comboBoxCandidates = _comboBoxCandidates.OrderBy(c => rnd.Next()).ToList();
 
         cmbSelectCandidate.DataSource = null;
-        //cmbSelectCandidate.DisplayMember = "DisplayText";
-        //cmbSelectCandidate.ValueMember = "CandidateId";
         cmbSelectCandidate.DataSource = _comboBoxCandidates;
+        cmbSelectCandidate.SelectedIndex = -1;
     }
 
     /// <summary>
