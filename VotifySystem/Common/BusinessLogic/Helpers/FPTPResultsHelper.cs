@@ -1,11 +1,12 @@
 ﻿using VotifySystem.Common.Classes;
-using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.Classes.UIClasses;
 
 namespace VotifySystem.Common.BusinessLogic.Helpers;
 
 /// <summary>
 /// Helper class for FPTP Election results
+/// TODO: Refactor this whole helper to be OOP - 
+/// should be a factory to produce separate ElectionResult Class based on the election type
 /// </summary>
 internal static class FPTPResultsHelper
 {
@@ -50,9 +51,9 @@ internal static class FPTPResultsHelper
     /// <returns></returns>
     public static List<Candidate> CheckAndFixTies(List<Candidate> candidates)
     {
-        foreach (Candidate cand in candidates)
+        foreach (Candidate ca in candidates)
         {
-            List<Candidate> ties = candidates.Where(gi => gi.VotesReceived == cand.VotesReceived).ToList();
+            List<Candidate> ties = candidates.Where(gi => gi.VotesReceived == ca.VotesReceived).ToList();
 
             if (ties.Count > 0)
             {
@@ -148,12 +149,13 @@ internal static class FPTPResultsHelper
     /// https://stackoverflow.com/questions/20156
     /// Method to add ordinal suffix to a number
     /// </summary>
-    /// <param name="num">int to received ordianl suffix</param>
+    /// <param name="num">int to received ordinal suffix</param>
     /// <returns>string with Ordinal suffix appended to number</returns>
     public static string AddOrdinal(int num)
     {
         if (num <= 0) return num.ToString();
 
+        // These could be switch cases, but I think this is more readable
         switch (num % 100)
         {
             case 11:

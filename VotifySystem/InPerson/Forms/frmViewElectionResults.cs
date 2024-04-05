@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using VotifySystem.Common.BusinessLogic.Helpers;
-using VotifySystem.Common.BusinessLogic.Services;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
 using VotifySystem.Common.DataAccess.Database;
@@ -82,7 +80,7 @@ public partial class frmViewElectionResults : Form
         Dictionary<Party, int> partyTotalVotes = FPTPResultsHelper.CalculateTotalVotesPerParty(electionParties, _candidates!);
         
         // Calculate Constituency wins per party
-        Dictionary<Party, List<Constituency>> partyConstituencyWins = FPTPResultsHelper.CalculatePartyConstituencyWinsForElection(electionParties, _candidates, _electionConstituencies);
+        Dictionary<Party, List<Constituency>> partyConstituencyWins = FPTPResultsHelper.CalculatePartyConstituencyWinsForElection(electionParties, _candidates!, _electionConstituencies!);
 
         foreach (Party party in electionParties)
         {
@@ -91,7 +89,7 @@ public partial class frmViewElectionResults : Form
 
             int position = electionParties.IndexOf(party) + 1;
 
-            List<Candidate>? partyCandidates = _candidates.Where(c => c.PartyId == party.PartyId).ToList();
+            List<Candidate>? partyCandidates = _candidates!.Where(c => c.PartyId == party.PartyId).ToList();
 
             ctrResultsPartyPanelItem item = new(party, position, totalConstituencyWins, totalVotes);
 

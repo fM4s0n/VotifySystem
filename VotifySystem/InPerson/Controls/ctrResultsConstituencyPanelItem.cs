@@ -52,7 +52,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         foreach (Candidate candidate in _candidates)
         {
             int pos = _candidates.IndexOf(candidate) + 1;
-            string partyName = _allParties.First(p => p.PartyId == candidate.PartyId)?.Name ?? string.Empty;
+            string partyName = _allParties!.First(p => p.PartyId == candidate.PartyId)?.Name ?? string.Empty;
 
             CandidateDataGridItem item = new(pos, candidate.FullName, partyName, candidate.VotesReceived);
             gridItems.Add(item);

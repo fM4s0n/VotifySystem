@@ -32,7 +32,7 @@ internal static class Program
     }
 
     /// <summary>
-    /// Winforms dependency injection code using the following StackOverflow code 
+    /// WinForms dependency injection code using the following StackOverflow code 
     /// https://stackoverflow.com/questions/70475830/how-to-use-dependency-injection-in-winforms
     /// </summary>
     /// <returns></returns>
@@ -47,7 +47,7 @@ internal static class Program
                 services.AddSingleton<IDbService>(provider =>
                 {
                     var dbContext = provider.GetRequiredService<VotifyDatabaseContext>();
-                    var userService = ServiceProvider.GetRequiredService<IUserService>();
+                    var userService = ServiceProvider!.GetRequiredService<IUserService>();
                     return new DbService(dbContext, userService);
                 });
             });

@@ -10,7 +10,8 @@ public partial class frmVote : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
 
-    private readonly ElectionVoteMechanism? _electionVoteMechanism;
+    // TODO: Implement ElectionVoteMechanism for STV
+    // private readonly ElectionVoteMechanism? _electionVoteMechanism;
 
     private List<Election> _validElections = [];
     private ElectionVoter? _electionVoter;
@@ -61,7 +62,8 @@ public partial class frmVote : Form
     }
 
     /// <summary>
-    /// 
+    /// Vote completed event handler
+    /// closes the form after updating the db to record the voter has voted in the election
     /// </summary>
     private void ctrFPTPVote_VoteCompleted(object sender, EventArgs e)
     {
