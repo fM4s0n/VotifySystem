@@ -17,13 +17,15 @@ public partial class ctrVoterHomeOnline : UserControl
     public ctrVoterHomeOnline()
     {
         InitializeComponent();
+
+        if (DesignMode)
+            return;
     }
 
     /// <summary>
-    /// 
+    /// Custom init - must be before the control is shown
+    /// TODO - overload the show method to pass in the services
     /// </summary>
-    /// <param name="userService"></param>
-    /// <param name="dbService"></param>
     public void Init(IUserService userService, IDbService dbService)
     {
         _userService = userService;
@@ -31,10 +33,8 @@ public partial class ctrVoterHomeOnline : UserControl
     }
 
     /// <summary>
-    /// 
+    /// Generates a one-time login code
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void btnGenerateLoginCode_Click(object sender, EventArgs e)
     {
         LoginCode code = _userService!.GenerateLoginCode();
@@ -47,21 +47,21 @@ public partial class ctrVoterHomeOnline : UserControl
         _dbService!.InsertEntity(code);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void btnRegister_Click(object sender, EventArgs e)
     {
         frmRegisterToVote frm = new(_userService!, _dbService!);
         frm.ShowDialog();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void btnVoteOnline_Click(object sender, EventArgs e)
     {
-        frmVote frm = new(_userService!, _dbService!);
-        frm.ShowDialog();
+        try
+        {
+            frmVote frm = new(_userService!, _dbService!);
+            frm.ShowDialog();
+        } catch 
+        { 
+            return; 
+        }
     }
 }

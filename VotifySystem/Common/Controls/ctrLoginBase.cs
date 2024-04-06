@@ -27,13 +27,20 @@ public partial class ctrLoginBase : UserControl
         _loginMode = loginMode;
 
         _userService.LogInEvent += UserService_LogInEvent;
+        userService.LogOutEvent += UserService_LogOutEvent;
 
         ctrLogin.Init(userService, dbService, loginMode);
         ctrLogin.Visible = true;       
     }
 
+    private void UserService_LogOutEvent(object sender, EventArgs e)
+    {
+        //throw new NotImplementedException();
+    }
+
     /// <summary>
     /// Log in event
+    /// hides ctrLogin control
     /// </summary>
     private void UserService_LogInEvent(object sender, EventArgs e)
     {

@@ -15,7 +15,7 @@ public partial class ctrManageElectionPanelItem : UserControl
 {
     private readonly IDbService? _dbService;
     private readonly IUserService? _userService;
-    private readonly int _index;
+    private readonly int _listIndex;
     private readonly Election? _election;
 
     public ctrManageElectionPanelItem(Election election, IDbService dbService, IUserService userService, int index)
@@ -28,7 +28,7 @@ public partial class ctrManageElectionPanelItem : UserControl
         _election = election;
         _dbService = dbService;
         _userService = userService;
-        _index = index;
+        _listIndex = index;
 
         if (_election != null)
             InitUI();
@@ -48,7 +48,7 @@ public partial class ctrManageElectionPanelItem : UserControl
         SetDateInfoLabel();
 
         // Alternate row colour
-        if (int.IsEvenInteger(_index))        
+        if (int.IsEvenInteger(_listIndex))        
             BackColor = Color.WhiteSmoke;        
     }
 

@@ -51,7 +51,7 @@ partial class ctrResultsPartyPanelItem
         // 
         lblConstituenciesWon.AutoSize = true;
         lblConstituenciesWon.Font = new Font("Segoe UI", 15.75F);
-        lblConstituenciesWon.Location = new Point(0, 77);
+        lblConstituenciesWon.Location = new Point(0, 66);
         lblConstituenciesWon.Name = "lblConstituenciesWon";
         lblConstituenciesWon.Size = new Size(202, 30);
         lblConstituenciesWon.TabIndex = 2;
@@ -61,7 +61,7 @@ partial class ctrResultsPartyPanelItem
         // 
         lblConstituenciesWonValue.AutoSize = true;
         lblConstituenciesWonValue.Font = new Font("Segoe UI", 15.75F);
-        lblConstituenciesWonValue.Location = new Point(208, 77);
+        lblConstituenciesWonValue.Location = new Point(208, 66);
         lblConstituenciesWonValue.Name = "lblConstituenciesWonValue";
         lblConstituenciesWonValue.Size = new Size(24, 30);
         lblConstituenciesWonValue.TabIndex = 3;
@@ -71,7 +71,7 @@ partial class ctrResultsPartyPanelItem
         // 
         lblOverallPosition.AutoSize = true;
         lblOverallPosition.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblOverallPosition.Location = new Point(3, 47);
+        lblOverallPosition.Location = new Point(3, 36);
         lblOverallPosition.Name = "lblOverallPosition";
         lblOverallPosition.Size = new Size(162, 30);
         lblOverallPosition.TabIndex = 4;
@@ -81,7 +81,7 @@ partial class ctrResultsPartyPanelItem
         // 
         lblOverallPositionValue.AutoSize = true;
         lblOverallPositionValue.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblOverallPositionValue.Location = new Point(171, 47);
+        lblOverallPositionValue.Location = new Point(171, 36);
         lblOverallPositionValue.Name = "lblOverallPositionValue";
         lblOverallPositionValue.Size = new Size(24, 30);
         lblOverallPositionValue.TabIndex = 5;
@@ -91,7 +91,7 @@ partial class ctrResultsPartyPanelItem
         // 
         lblTotalVotesValue.AutoSize = true;
         lblTotalVotesValue.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblTotalVotesValue.Location = new Point(411, 77);
+        lblTotalVotesValue.Location = new Point(411, 66);
         lblTotalVotesValue.Name = "lblTotalVotesValue";
         lblTotalVotesValue.Size = new Size(24, 30);
         lblTotalVotesValue.TabIndex = 7;
@@ -101,7 +101,7 @@ partial class ctrResultsPartyPanelItem
         // 
         lblTotalVotes.AutoSize = true;
         lblTotalVotes.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblTotalVotes.Location = new Point(286, 77);
+        lblTotalVotes.Location = new Point(286, 66);
         lblTotalVotes.Name = "lblTotalVotes";
         lblTotalVotes.Size = new Size(119, 30);
         lblTotalVotes.TabIndex = 6;
@@ -119,7 +119,7 @@ partial class ctrResultsPartyPanelItem
         Controls.Add(lblConstituenciesWon);
         Controls.Add(lblPartyName);
         Name = "ctrResultsPartyPanelItem";
-        Size = new Size(540, 120);
+        Size = new Size(540, 100);
         ResumeLayout(false);
         PerformLayout();
     }

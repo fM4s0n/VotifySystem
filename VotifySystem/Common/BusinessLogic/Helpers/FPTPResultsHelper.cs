@@ -26,7 +26,7 @@ public static class FPTPResultsHelper
         return candidates;
     }
 
-    [Obsolete]
+    [Obsolete("Now superseded by GenericCheckAndFixTies()")]
     /// <summary>
     /// Checks for any ties in the candidate votes and fixes them by setting the position of the tied candidates to the same position
     /// </summary>
@@ -51,6 +51,32 @@ public static class FPTPResultsHelper
         return gridItems;
     }
 
+    /// <summary>
+    /// Generic method to check for ties in a dictionary of key value pairs and fix them
+    /// </summary>
+    /// <param name="keyValuePairs">key is position, value is votes / similar measurement</param>
+    /// <returns>Dictionary<int, int> of key value pairs to be fixed></returns>
+    public static List<GenericTieFixCheckItem> GenericCheckAndFixTies(List<GenericTieFixCheckItem> items)
+    {
+        items = items.OrderByDescending(i => i.Value).ToList();
+
+        foreach (GenericTieFixCheckItem checkItem in items)
+        {
+            List<GenericTieFixCheckItem> ties = items.Where(ci => ci.Value == checkItem.Value).ToList();
+
+            if (ties.Count > 0)
+            {
+                // get the position of the first candidate in the tie list
+                int tiedPosition = ties.First().Position;
+
+                foreach (GenericTieFixCheckItem tie in ties)
+                    items[items.IndexOf(tie)].Position = tiedPosition;
+            }
+        }
+        return items;
+    }
+
+    [Obsolete("Now superseded by GenericCheckAndFixTies()")]
     /// <summary>
     /// Overload of the CheckAndFixTies method for Candidate objects
     /// </summary>

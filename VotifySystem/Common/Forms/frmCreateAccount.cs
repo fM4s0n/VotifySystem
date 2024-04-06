@@ -40,6 +40,8 @@ internal partial class frmCreateAccount : Form
 
         foreach (Country c in Enum.GetValues(typeof(Country)))
             cmbCountry.Items.Add(c);
+
+        dtpDoB.MaxDate = dtpDoB.Value = DateTime.Today.AddYears(-18);
     }
 
     /// <summary>
@@ -72,8 +74,6 @@ internal partial class frmCreateAccount : Form
     /// Validates all user input and creates a new voter  and 
     /// inserts into db if valid
     /// </summary>
-    /// <param name="sender">Button</param>
-    /// <param name="e">EventArgs</param>
     private void btnSubmit_Click(object sender, EventArgs e)
     {
         if (ValidateAllUserInput())
@@ -163,7 +163,7 @@ internal partial class frmCreateAccount : Form
 
         foreach (ComboBox dropDown in new List<ComboBox> { cmbCountry, cmbVoteMethod })
         {
-            if (string.IsNullOrEmpty(dropDown.SelectedText))
+            if (dropDown.SelectedIndex == -1)
             {
                 dropDown.BackColor = Color.Red;
                 success = false;
@@ -193,12 +193,18 @@ internal partial class frmCreateAccount : Form
         Close();
     }
 
+    /// <summary>
+    /// English language 
+    /// </summary>
     private void lblEn_Click(object sender, EventArgs e)
     {
         _userService!.SetAppLanguage(Country.UK);
         AlternateLanguageLabels();
     }
 
+    /// <summary>
+    /// French language
+    /// </summary>
     private void lblFr_Click(object sender, EventArgs e)
     {
         _userService!.SetAppLanguage(Country.France);

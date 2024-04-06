@@ -120,6 +120,10 @@ public partial class frmMain : Form
 
             case UserLevel.None:
                 ctrMainDefault.Visible = true;
+                ctrVoterHome.Visible = false;
+                ctrVoterHomeOnline.Visible = false;
+                ctrAdminHome.Visible = false;
+                ctrLoginBase.Visible = false;
                 break;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
+using VotifySystem.Common.Classes.UIClasses;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.InPerson.Controls;
 
@@ -82,19 +83,43 @@ public partial class frmViewElectionResults : Form
         // Calculate Constituency wins per party
         Dictionary<Party, List<Constituency>> partyConstituencyWins = FPTPResultsHelper.CalculatePartyConstituencyWinsForElection(electionParties, _candidates!, _electionConstituencies!);
 
-        foreach (Party party in electionParties)
+        List<GenericTieFixCheckItem> tieCheckList = new();
+
+        int partyPosition = 1;
+        foreach (Party party in partyConstituencyWins.Keys)
+        {            
+            tieCheckList.Add(new GenericTieFixCheckItem(party.PartyId, partyPosition, partyConstituencyWins[party].Count)); 
+            partyPosition++;
+        }
+
+        List<GenericTieFixCheckItem> fixedTieCheckList = FPTPResultsHelper.GenericCheckAndFixTies(tieCheckList);
+
+        foreach (Party p in partyConstituencyWins.Keys)
         {
-            int totalVotes = partyTotalVotes[party];
-            int totalConstituencyWins = partyConstituencyWins[party].Count;
+            int totalVotes = partyTotalVotes[p];
+            int totalConstituencyWins = partyConstituencyWins[p].Count;
 
-            int position = electionParties.IndexOf(party) + 1;
+            // don't add 1 as was done before doing tie check
+            int position = fixedTieCheckList.First(t => t.Key == p.PartyId).Position;
 
-            List<Candidate>? partyCandidates = _candidates!.Where(c => c.PartyId == party.PartyId).ToList();
-
-            ctrResultsPartyPanelItem item = new(party, position, totalConstituencyWins, totalVotes);
+            ctrResultsPartyPanelItem item = new(p, position, totalConstituencyWins, totalVotes);
 
             flpResults.Controls.Add(item);
         }
+
+        //foreach (Party party in electionParties)
+        //{
+        //    int totalVotes = partyTotalVotes[party];
+        //    int totalConstituencyWins = partyConstituencyWins[party].Count;
+
+        //    int position = electionParties.IndexOf(party) + 1;
+
+        //    List<Candidate>? partyCandidates = _candidates!.Where(c => c.PartyId == party.PartyId).ToList();
+
+        //    ctrResultsPartyPanelItem item = new(party, position, totalConstituencyWins, totalVotes);
+
+        //    flpResults.Controls.Add(item);
+        //}
     }
 
     /// <summary>

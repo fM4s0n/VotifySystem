@@ -4,11 +4,11 @@ using VotifySystem.Common.Classes;
 namespace VotifySystem.InPerson.Controls;
 
 /// <summary>
-/// 
+/// control for displaying the results of a party, election wide in the results view
 /// </summary>
 public partial class ctrResultsPartyPanelItem : UserControl
 {
-    public ctrResultsPartyPanelItem(Party party, int overallElectionPosition,int totalConstituencyWins, int totalElectionVotes )
+    public ctrResultsPartyPanelItem(Party party, int overallElectionPosition, int totalConstituencyWins, int totalElectionVotes )
     {
         InitializeComponent();
 
