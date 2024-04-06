@@ -13,7 +13,6 @@ public class LoginCode
     public string UserId { get; set; } = string.Empty;
     public bool Used { get; set; } = false;
     public DateTime GeneratedDate { get; set; } = DateTime.Now;
-
     [NotMapped]
     public bool Valid 
     { 

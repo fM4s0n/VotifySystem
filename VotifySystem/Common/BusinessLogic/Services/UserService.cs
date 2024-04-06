@@ -109,14 +109,14 @@ public class UserService : IUserService
     public LoginMode GetLoginMode() => _loginMode;
 
     /// <summary>
-    /// 
+    /// Gets the app-wide language
     /// </summary>
     /// <returns></returns>
     public string GetAppCultureCode() => LocalisationHelper.GetCultureCode(_appCountry);
 
     /// <summary>
-    ///
+    /// Sets the app-wide language
     /// </summary>
-    /// <param name="country"></param>
+    /// <param name="country">Country enum of the language</param>
     public void SetAppLanguage(Country country) { _appCountry = country; }
 }
