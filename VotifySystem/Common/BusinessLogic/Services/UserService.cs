@@ -14,7 +14,6 @@ public class UserService : IUserService
     private LoginMode _loginMode = LoginMode.InPerson;
     private Country _appCountry = Country.UK;
 
-
     // Define the public delegates for login and logout events
     public delegate void LogoutEventHandler(object sender, EventArgs e);
     public delegate void LoginEventHandler(object sender, EventArgs e);
@@ -103,9 +102,21 @@ public class UserService : IUserService
     /// <returns>New object of LoginCode</returns>
     public LoginCode GenerateLoginCode() => new(Guid.NewGuid().ToString()[..6], _currentUser!.Id);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public LoginMode GetLoginMode() => _loginMode;
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public string GetAppCultureCode() => LocalisationHelper.GetCultureCode(_appCountry);
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="country"></param>
     public void SetAppLanguage(Country country) { _appCountry = country; }
 }

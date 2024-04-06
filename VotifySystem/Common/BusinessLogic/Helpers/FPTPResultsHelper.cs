@@ -129,7 +129,7 @@ public static class FPTPResultsHelper
     /// <param name="parties">All parties involved in the election</param>
     /// <param name="candidates">All candidates in the election</param>
     /// <param name="constituencies">All constituencies in the election</param>
-    /// <returns></returns>
+    /// <returns>Dictionary of each party and list containing each constituency they won</returns>
     public static Dictionary<Party, List<Constituency>> CalculatePartyConstituencyWinsForElection(List<Party> parties, List<Candidate>candidates, List<Constituency> constituencies)
     {
         Dictionary<Party, List<Constituency>> partyConstituencyResults = [];

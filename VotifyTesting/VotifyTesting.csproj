@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="DatabaseTests\" />
-    <Folder Include="ServiceTests\" />
   </ItemGroup>
 
 </Project>

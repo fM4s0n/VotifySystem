@@ -5,13 +5,18 @@
 /// </summary>
 public static class VoterHelper
 {
-    /// <summary>
-    /// Convert Vote method to friendly name 
-    /// </summary>
-    public static readonly Dictionary<string, string> VoteMethodFriendlyNames = new()
+    private static readonly Dictionary<string, string> VoteMethodFriendlyNames = new()
     {
         {"Online", "Online" },
         {"Postal", "Postal" },
         {"InPerson", "In Person" }
     };
+
+    /// <summary>
+    /// Convert Vote method to friendly name 
+    /// </summary>
+    public static string GetVoteMethodFriendlyName(string voteMethod)
+    {
+        return VoteMethodFriendlyNames[voteMethod];
+    }
 }

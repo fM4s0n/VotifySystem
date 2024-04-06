@@ -36,7 +36,7 @@ internal partial class frmCreateAccount : Form
         SetLanguage();
 
         foreach (VoteMethod vm in Enum.GetValues(typeof(VoteMethod)))
-            cmbVoteMethod.Items.Add(VoterHelper.VoteMethodFriendlyNames[vm.ToString()]);
+            cmbVoteMethod.Items.Add(VoterHelper.GetVoteMethodFriendlyName(vm.ToString()));
 
         foreach (Country c in Enum.GetValues(typeof(Country)))
             cmbCountry.Items.Add(c);

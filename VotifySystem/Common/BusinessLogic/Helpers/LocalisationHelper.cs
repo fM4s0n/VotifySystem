@@ -6,10 +6,10 @@
 public static class LocalisationHelper
 {
     /// <summary>
-    /// 
+    /// Gets the Microsoft culture code for a given country
     /// </summary>
     /// <param name="country"></param>
-    /// <returns></returns>
+    /// <returns>string of culture code for the country</returns>
     public static string GetCultureCode(Country country)
     {
         return _cultureCodes[country];
@@ -22,10 +22,10 @@ public static class LocalisationHelper
     };
 
     /// <summary>
-    /// Returns a friendly name for the enum value of a country
+    /// gets the friendly name for the enum value of a country
     /// </summary>
     /// <param name="country">Country Type</param>
-    /// <returns></returns>
+    /// <returns>string name of country</returns>
     public static string GetCountryName(Country country)
     {
         return country switch
