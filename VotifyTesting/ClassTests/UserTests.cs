@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VotifySystem.Common.Classes;
 
-namespace VotifyTests.ClassTests;
+namespace VotifyTesting.ClassTests;
 
 [TestClass]
-internal class UserTests
+public class UserTests
 {
     [TestMethod]
     public void TestFullName()

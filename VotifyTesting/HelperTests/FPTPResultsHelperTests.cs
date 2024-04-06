@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 
-namespace VotifyTests.BusinessLogicTests;
+namespace VotifyTesting.HelperTests;
 
-internal class FPTPElectionResultsTests
+[TestClass]
+public class FPTPResultsHelperTests
 {
     [TestMethod]
-    internal void TestOrderCandidatesByVotes()
+    public void TestOrderCandidatesByVotes()
     {
         //Arrange
         List<Candidate> candidates =
@@ -30,7 +30,7 @@ internal class FPTPElectionResultsTests
         foreach (Candidate candidate in orderedCandidates)
         {
             int index = orderedCandidates.IndexOf(candidate);
-            Assert.AreEqual(index + 1, candidate.ElectionPosition);            
+            Assert.AreEqual(index + 1, candidate.ElectionPosition);
         }
 
         List<int> orderedCandidatesVotes = orderedCandidates.Select(c => c.VotesReceived).ToList();
