@@ -9,11 +9,12 @@ public class UserTests
     public void TestFullName()
     {
         //Arrange
-        Voter voter = new();
-
-        //Act
-        voter.FirstName = "John";
-        voter.LastName = "Doe";
+        Voter voter = new()
+        {
+            //Act
+            FirstName = "John",
+            LastName = "Doe"
+        };
 
         //Assert
         string expected = "John Doe";

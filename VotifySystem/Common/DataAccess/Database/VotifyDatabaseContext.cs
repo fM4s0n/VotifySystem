@@ -5,12 +5,18 @@ using VotifySystem.Common.Classes.Elections;
 namespace VotifyDataAccess.Database;
 
 /// <summary>
-/// EFCore with SqLite
+/// EFCore with SQLite
 /// https://entityframeworkcore.com/providers-sqlite
 /// </summary>
 /// <param name="options">DbContext Options</param>
-public class VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : DbContext(options)
+public class VotifyDatabaseContext : DbContext
 {
+    public VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : base(options)
+    {
+    }
+
+    public VotifyDatabaseContext() { }
+
     public DbSet<User> Users { get; set; }
     public DbSet<Candidate> Candidates { get; set; }
     public DbSet<Constituency> Constituencies { get; set; }

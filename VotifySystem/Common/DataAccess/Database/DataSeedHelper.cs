@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VotifySystem.Common.BusinessLogic.Helpers;
+﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.Classes.Elections;
@@ -9,7 +8,7 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// <summary>
 /// Data Seeder for the database
 /// </summary>
-internal class DataSeedHelper(IUserService userService, IDbService dbService)
+public class DataSeedHelper(IUserService userService, IDbService dbService)
 {
     private readonly IUserService? _userService = userService;
     private readonly IDbService? _dbService = dbService;
@@ -17,7 +16,7 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
     /// <summary>
     /// seeds data if the objects are not already in the database
     /// </summary>
-    internal void SeedDataIfNeeded()
+    public void SeedDataIfNeeded()
     {
         if (_dbService!.GetDatabaseContext().Users.Any(a => a.Username == "DefaultAdmin") == false)
             _dbService.InsertEntity(CreateInitialAdministrator());
@@ -93,7 +92,7 @@ internal class DataSeedHelper(IUserService userService, IDbService dbService)
     /// <summary>
     /// Created example completed election
     /// </summary>
-    /// <returns>Insance of FPTP election that has finished</returns>
+    /// <returns>Instance of FPTP election that has finished</returns>
     private FirstPastThePostElection CreateExampleCompletedElection()
     {
         string description = "Example Completed Election";

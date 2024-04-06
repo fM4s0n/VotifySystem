@@ -6,7 +6,7 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// <summary>
 /// Database Service
 /// </summary>
-internal class DbService(VotifyDatabaseContext dbContext, IUserService userService) : IDbService
+public class DbService(VotifyDatabaseContext dbContext, IUserService userService) : IDbService
 {
     private readonly VotifyDatabaseContext _dbContext = dbContext;
     private readonly IUserService? _userService = userService;

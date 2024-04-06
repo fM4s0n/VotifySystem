@@ -83,7 +83,7 @@ public partial class frmViewElectionResults : Form
         // Calculate Constituency wins per party
         Dictionary<Party, List<Constituency>> partyConstituencyWins = FPTPResultsHelper.CalculatePartyConstituencyWinsForElection(electionParties, _candidates!, _electionConstituencies!);
 
-        List<GenericTieFixCheckItem> tieCheckList = new();
+        List<GenericTieFixCheckItem> tieCheckList = [];
 
         int partyPosition = 1;
         foreach (Party party in partyConstituencyWins.Keys)
@@ -106,20 +106,6 @@ public partial class frmViewElectionResults : Form
 
             flpResults.Controls.Add(item);
         }
-
-        //foreach (Party party in electionParties)
-        //{
-        //    int totalVotes = partyTotalVotes[party];
-        //    int totalConstituencyWins = partyConstituencyWins[party].Count;
-
-        //    int position = electionParties.IndexOf(party) + 1;
-
-        //    List<Candidate>? partyCandidates = _candidates!.Where(c => c.PartyId == party.PartyId).ToList();
-
-        //    ctrResultsPartyPanelItem item = new(party, position, totalConstituencyWins, totalVotes);
-
-        //    flpResults.Controls.Add(item);
-        //}
     }
 
     /// <summary>
