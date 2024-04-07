@@ -11,8 +11,7 @@ namespace VotifySystem.Online.Controls;
 /// </summary>
 public partial class ctrVoterHomeOnline : UserControl
 {
-    private IUserService? _userService;
-    private IDbService? _dbService;
+    private readonly IUserService? _userService;
 
     public ctrVoterHomeOnline()
     {
@@ -22,7 +21,6 @@ public partial class ctrVoterHomeOnline : UserControl
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     /// <summary>
@@ -37,7 +35,7 @@ public partial class ctrVoterHomeOnline : UserControl
         lblExpiryWarning.Visible = true;
         lblLoginCode.Visible = true;
 
-        _dbService!.InsertEntity(code);
+        _userService!.InsertLoginCode(code);
     }
 
     private void btnRegister_Click(object sender, EventArgs e)

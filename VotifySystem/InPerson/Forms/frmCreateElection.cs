@@ -13,6 +13,7 @@ public partial class frmCreateElection : Form
 {
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
+    private readonly IElectionService? _electionService;
 
     private Election? _newElection;
     private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
@@ -31,8 +32,10 @@ public partial class frmCreateElection : Form
             return;
 
         _formMode = createMode;
+
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         if (election != null)
             _newElection = election;
@@ -201,15 +204,15 @@ public partial class frmCreateElection : Form
             _newElection.Description = txtElectionName.Text;
             _newElection.ElectionAdministratorId = _userService!.GetCurrentUser()!.Id;
 
-            _dbService!.InsertEntity(_newElection);
+            _electionService!.InsertElection(_newElection);
 
             // insert all candidates
             foreach (Candidate candidate in _candidates)
-                _dbService.InsertEntity(candidate);
+                _dbService!.InsertEntity(candidate);
 
             // insert all constituencies
             foreach (Constituency constituency in _constituencies)
-                _dbService.InsertEntity(constituency);
+                _dbService!.InsertEntity(constituency);
 
             return true;
         }
