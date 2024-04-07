@@ -9,9 +9,9 @@ namespace VotifySystem.Common.BusinessLogic.Services;
 /// <summary>
 /// Singleton User Service
 /// </summary>
-public class UserService(IDbService dbService) : IUserService
+public class UserService() : IUserService
 {
-    private readonly IDbService _dbService = dbService;
+    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
     private User? _currentUser = null;
     private LoginMode _loginMode = LoginMode.InPerson;

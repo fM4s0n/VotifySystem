@@ -5,14 +5,20 @@ using VotifySystem.Common.DataAccess.Database;
 namespace VotifySystem.Controls;
 public partial class ctrLoginBase : UserControl
 {
-    private IUserService? _userService;
-    private IDbService? _dbService;
-
-    private LoginMode _loginMode = LoginMode.InPerson;
+    private readonly IUserService? _userService;
+    private readonly IDbService? _dbService;
 
     public ctrLoginBase() 
     { 
         InitializeComponent();
+
+        if (DesignMode)
+            return;
+
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+
+        _userService!.LogInEvent += UserService_LogInEvent;
     }
 
     /// <summary>
@@ -20,22 +26,10 @@ public partial class ctrLoginBase : UserControl
     /// </summary>
     /// <param name="userService"></param>
     /// <param name="loginMode"></param>
-    public void Init(IUserService userService, IDbService dbService,LoginMode loginMode)
+    public void Init(LoginMode loginMode)   
     {
-        _userService = userService;
-        _dbService = dbService;
-        _loginMode = loginMode;
-
-        _userService.LogInEvent += UserService_LogInEvent;
-        userService.LogOutEvent += UserService_LogOutEvent;
-
-        ctrLogin.Init(userService, dbService, loginMode);
+        ctrLogin.Init(loginMode);
         ctrLogin.Visible = true;       
-    }
-
-    private void UserService_LogOutEvent(object sender, EventArgs e)
-    {
-        //throw new NotImplementedException();
     }
 
     /// <summary>

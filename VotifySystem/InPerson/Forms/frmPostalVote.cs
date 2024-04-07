@@ -13,20 +13,21 @@ public partial class frmPostalVote : Form
 {
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
+    private readonly IElectionService? _electionService;
 
-    private List<Election> _elections = [];
-    private List<Candidate> _candidates = [];
+    private List<Election>? _elections = [];
+    private List<Candidate>? _candidates = [];
 
-    public frmPostalVote(IUserService userService, IDbService dbService)
+    public frmPostalVote()
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _userService = userService;
-        _dbService = dbService;
-
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         Init();
     }
 
@@ -52,7 +53,13 @@ public partial class frmPostalVote : Form
 
         if (cmbCountry.SelectedItem is Country selectedCountry)
         {
-            _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == selectedCountry).ToList();
+            _elections = _electionService!.GetElectionsByCountry(selectedCountry);
+
+            if (_elections == null || _elections.Count == 0)
+            {
+                MessageBox.Show("No elections found for this country", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             // Filter out elections that are not in progress
             _elections = _elections.Where(e => e.GetElectionStatus() == ElectionStatus.InProgress).ToList();
@@ -62,12 +69,6 @@ public partial class frmPostalVote : Form
             cmbCountry.SelectedIndex = -1;
             MessageBox.Show("Error selecting Country, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
-        }
-
-        if (_elections.Count == 0)
-        {
-            MessageBox.Show("No elections found for this country", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Close();
         }
 
         InitElectionComboBox();

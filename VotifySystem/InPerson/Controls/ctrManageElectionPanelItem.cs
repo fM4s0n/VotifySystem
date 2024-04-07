@@ -26,8 +26,8 @@ public partial class ctrManageElectionPanelItem : UserControl
             return;
 
         _election = election;
-        _dbService = dbService;
-        _userService = userService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _listIndex = index;
 
         if (_election != null)
@@ -118,7 +118,7 @@ public partial class ctrManageElectionPanelItem : UserControl
             if (_election!.GetElectionStatus() == ElectionStatus.NotStarted)            
                 createMode = CreateElectionFormMode.Edit;            
 
-            frmCreateElection frm = new(_userService!, _dbService!, _election!, createMode);
+            frmCreateElection frm = new(_election!, createMode);
             frm.ShowDialog();
         }
         catch

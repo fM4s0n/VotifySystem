@@ -8,11 +8,11 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// <summary>
 /// Data Seeder for the database
 /// </summary>
-public class DataSeedHelper(IUserService userService, IDbService dbService)
+public class DataSeedHelper()
 {
-    private readonly IUserService? _userService = userService;
-    private readonly IDbService? _dbService = dbService;
-
+    private readonly IUserService? _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    
     /// <summary>
     /// seeds data if the objects are not already in the database
     /// </summary>
@@ -98,7 +98,7 @@ public class DataSeedHelper(IUserService userService, IDbService dbService)
         string description = "Example Completed Election";
         DateTime start = new(2024, 3, 1, 9, 0, 0);
         DateTime end = new(2024, 4, 1, 21, 0, 0);
-        string userId = _userService.GetAllAdministrators().FirstOrDefault(u => u.Username == "DefaultAdmin").Id;
+        string? userId = _userService!.GetAllAdministrators()?.FirstOrDefault(u => u.Username == "DefaultAdmin").Id;
 
         Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId);
 
@@ -106,7 +106,7 @@ public class DataSeedHelper(IUserService userService, IDbService dbService)
         Constituency york = new("York", election.ElectionId, Country.UK);
         Constituency newcastle = new("newcastle", election.ElectionId, Country.UK);
 
-        _dbService.InsertRange(new List<Constituency> { york, newcastle });
+        _dbService!.InsertRange(new List<Constituency> { york, newcastle });
 
         // Create Candidates
         Candidate redCandidateYork = new("Red Candidate", "york", york.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);

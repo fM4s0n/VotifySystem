@@ -13,16 +13,22 @@ public partial class frmManageElections : Form
     private readonly IDbService? _dbService;
     private readonly IUserService? _userService;
     private List<Election>? _elections;
+    private readonly IElectionService? _electionService;
 
-    public frmManageElections(IUserService userService, IDbService dbService)
+    public frmManageElections()
     {
         InitializeComponent();
 
         if (DesignMode) 
             return;
 
-        _dbService = dbService;
-        _userService = userService;
+        IServiceProvider serviceProvider = Program.ServiceProvider!;
+
+        _userService = serviceProvider!.GetService(typeof(IUserService)) as IUserService;
+
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         Load += frmManageElections_Load;
     }
@@ -30,11 +36,11 @@ public partial class frmManageElections : Form
     private void frmManageElections_Load(object? sender, EventArgs e)
     {
         // load all election that are ongoing, future and completed within last month
-        _elections = _dbService!.GetDatabaseContext().Elections
+        _elections = _electionService!.GetAllElections()?
             .Where(e => e.EndDate >= DateTime.Now.AddMonths(-1))
             .ToList();
 
-        if (_elections.Count == 0)
+        if (_elections == null ||_elections.Count == 0)
         {
             MessageBox.Show("No elections found", "No Elections", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;

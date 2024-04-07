@@ -3,7 +3,6 @@ using System.Resources;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
-using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.Common.Forms;
 
@@ -13,17 +12,15 @@ namespace VotifySystem.Common.Forms;
 internal partial class frmCreateAccount : Form
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
     
-    internal frmCreateAccount(IUserService userService, IDbService dbService)
+    internal frmCreateAccount(IUserService userService)
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _userService = userService;
-        _dbService = dbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
 
         Init();
     }

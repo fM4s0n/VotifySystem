@@ -16,25 +16,20 @@ public partial class ctrAdminHome : UserControl
     public ctrAdminHome()
     {
         InitializeComponent();
-    }
 
-    /// <summary>
-    /// Init the control with the required services
-    /// </summary>
-    /// <param name="userService"></param>
-    /// <param name="dbService"></param>
-    public void Init(IUserService userService, IDbService dbService)
-    {
-        _userService = userService;
-        _dbService = dbService;
+        if (DesignMode)
+            return;
+
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     /// <summary>
     /// Show Create Election Form
     /// </summary>
-    private void BtnCreateElection_Click(object sender, EventArgs e)
+    private void btnCreateElection_Click(object sender, EventArgs e)
     {
-        frmCreateElection form = new(_userService!, _dbService!);
+        frmCreateElection form = new();
         form.Show();
     }
 
@@ -45,7 +40,7 @@ public partial class ctrAdminHome : UserControl
     {
         try
         {
-            frmManageElections form = new(_userService!, _dbService!);
+            frmManageElections form = new();
             form.Show();
         }
         catch
@@ -77,7 +72,7 @@ public partial class ctrAdminHome : UserControl
     /// </summary>
     private void btnPostalVote_Click(object sender, EventArgs e)
     {
-        frmPostalVote frm = new(_userService!, _dbService!);
+        frmPostalVote frm = new();
         frm.ShowDialog();
     }
 }

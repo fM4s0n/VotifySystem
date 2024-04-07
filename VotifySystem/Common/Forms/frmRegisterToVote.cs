@@ -13,21 +13,23 @@ public partial class frmRegisterToVote : Form
 {
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
+    private readonly IElectionService? _electionService;
 
-    private List<Election> _elections = [];
-    private List<Constituency> _constituencies = [];
+    private List<Election>? _elections = [];
+    private List<Constituency>? _constituencies = [];
     private Voter? _voter;
-    private List<ElectionVoter> _electionVoters = [];
+    private List<ElectionVoter>? _electionVoters = [];
 
-    public frmRegisterToVote(IUserService userService, IDbService dbService)
+    public frmRegisterToVote()
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _userService = userService;
-        _dbService = dbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         Init();
     }
@@ -46,8 +48,18 @@ public partial class frmRegisterToVote : Form
 
         _voter = (Voter)_userService!.GetCurrentUser()!;
 
-        _elections = _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == _voter.Country).ToList();
-        _elections = _elections.Where(e => e.GetElectionStatus() != ElectionStatus.Completed).ToList();
+        _elections = _electionService!.GetElectionsByCountry(_voter.Country);
+
+        if (_elections == null || _elections.Count == 0)
+        {
+            if (MessageBox.Show("No elections available to register for.", "No elections", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
+            {
+                Close();
+                return;
+            }
+        }
+
+        _elections = _elections!.Where(e => e.GetElectionStatus() != ElectionStatus.Completed).ToList();
 
         _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.VoterId == _voter.Id).ToList();
 
@@ -63,7 +75,7 @@ public partial class frmRegisterToVote : Form
             if (MessageBox.Show("No elections available to register for.", "No elections", MessageBoxButtons.OK, MessageBoxIcon.Warning) == DialogResult.OK)
             {
                 Close();
-                //return;
+                return;
             }
         }
 
@@ -129,7 +141,7 @@ public partial class frmRegisterToVote : Form
 
         _dbService!.InsertEntity(electionVoter);
 
-        string electionDescription = _elections.First(e => e.ElectionId == electionId).Description;
+        string electionDescription = _elections!.First(e => e.ElectionId == electionId).Description;
         MessageBox.Show($"Successfully registered for {electionDescription}.", "Successfully Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
         Close();
         return;

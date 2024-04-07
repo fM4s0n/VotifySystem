@@ -21,15 +21,15 @@ public partial class frmMain : Form
     private UserLevel _userLevelMode = UserLevel.None;
     private LoginMode _loginMode = LoginMode.InPerson;
 
-    public frmMain(IUserService userService, IDbService dbService)
+    public frmMain()
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _userService = userService;
-        _dbService = dbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
         Init();
     }
@@ -53,10 +53,9 @@ public partial class frmMain : Form
     /// <summary>
     /// Custom show method
     /// </summary>
-    /// <param name="userService"></param>
-    internal static void ShowForm(IUserService userService, IDbService dbService)
+    internal static void ShowForm()
     {
-        _instance = new frmMain(userService, dbService);
+        _instance = new frmMain();
         Application.Run(_instance);
     }
 
@@ -96,7 +95,6 @@ public partial class frmMain : Form
             case UserLevel.Administrator:
                 ctrMainDefault.Visible = false;
                 ctrLoginBase.Visible = false;
-                ctrAdminHome.Init(_userService!, _dbService!);
                 ctrAdminHome.Visible = true;
                 ctrAdminHome.Show();
                 break;
@@ -106,13 +104,11 @@ public partial class frmMain : Form
                 ctrLoginBase.Visible = false;
                 if (_loginMode == LoginMode.InPerson)
                 {
-                    ctrVoterHome.Init(_userService!, _dbService!);
                     ctrVoterHome.Visible = true;
                     ctrVoterHome.Show();
                 }
                 else
                 {
-                    ctrVoterHomeOnline.Init(_userService!, _dbService!);
                     ctrVoterHomeOnline.Visible = true;
                     ctrVoterHomeOnline.Show();
                 }
@@ -144,7 +140,7 @@ public partial class frmMain : Form
     /// </summary>
     internal void ShowInPersonLogin()
     {
-        ctrLoginBase.Init(_userService!, _dbService!, LoginMode.InPerson);
+        ctrLoginBase.Init(LoginMode.InPerson);
         ctrLoginBase.Show();
         ctrMainDefault.Visible = false;
     }
@@ -154,7 +150,7 @@ public partial class frmMain : Form
     /// </summary>
     internal void ShowOnlineLogin()
     {
-        ctrLoginBase.Init(_userService!, _dbService!, LoginMode.Online);
+        ctrLoginBase.Init(LoginMode.Online);
         ctrLoginBase.Show();
         ctrMainDefault.Visible = false;
     }

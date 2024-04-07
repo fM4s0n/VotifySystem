@@ -13,23 +13,23 @@ namespace VotifySystem.Common.Controls.Login;
 public partial class ctrLogin : UserControl
 {
     private IUserService? _userService;
-    private IDbService? _dbService;
     private LoginMode _loginMode = LoginMode.InPerson;
 
     public ctrLogin()
     {
         InitializeComponent();
+
+        if (DesignMode)
+            return;
+
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
     }
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="userService"></param>
-    /// <param name="dbService"></param>
-    public void Init(IUserService userService, IDbService dbService, LoginMode loginMode)
+    public void Init(LoginMode loginMode)    
     {
-        _userService = userService;
-        _dbService = dbService;
         _loginMode = loginMode;
 
         SetMode();
@@ -103,7 +103,7 @@ public partial class ctrLogin : UserControl
         }
 
         foundCode.Used = true;
-        _dbService.UpdateEntity(foundCode);
+        _userService.InsertLoginCode(foundCode);
 
         _userService!.LogInUser(user, LoginMode.InPerson);
     }
@@ -130,7 +130,7 @@ public partial class ctrLogin : UserControl
     /// </summary>
     private void btnCreateAccount_Click(object sender, EventArgs e)
     {
-        frmCreateAccount frmCreateAccount = new(_userService!, _dbService!);
+        frmCreateAccount frmCreateAccount = new(_userService!);
         frmCreateAccount.ShowDialog();
     }
 

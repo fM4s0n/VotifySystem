@@ -18,7 +18,6 @@ namespace VotifyTesting.DatabaseTests;
 public class DBServiceTests
 {
     private VotifyDatabaseContext? _dbContext;
-    private IUserService? _userService;
     private DbService? _dbService;
 
     [TestInitialize]
@@ -26,8 +25,7 @@ public class DBServiceTests
     {
         // Mock the DbContext and IUserService
         _dbContext = Substitute.For<VotifyDatabaseContext>();
-        _userService = Substitute.For<IUserService>();
-        _dbService = new DbService(_dbContext, _userService);
+        _dbService = new DbService(_dbContext);
     }
 
     [TestMethod]
@@ -113,7 +111,6 @@ public class DBServiceTests
     public void TearDown()
     {
         _dbContext = null;
-        _userService = null;
         _dbService = null;
     }
 }

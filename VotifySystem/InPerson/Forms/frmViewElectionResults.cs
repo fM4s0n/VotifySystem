@@ -24,7 +24,7 @@ public partial class frmViewElectionResults : Form
         if (DesignMode)
             return;
 
-        _dbService = dbService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _election = election;        
         
         _candidates = _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();

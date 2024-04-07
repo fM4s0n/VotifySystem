@@ -24,7 +24,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         if (DesignMode)
             return;
         
-        _dbService = dbService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _constituency = constituency;
         _allParties = _dbService.GetDatabaseContext().Parties.ToList();
 

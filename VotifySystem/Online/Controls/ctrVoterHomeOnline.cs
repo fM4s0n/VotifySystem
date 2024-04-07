@@ -20,16 +20,9 @@ public partial class ctrVoterHomeOnline : UserControl
 
         if (DesignMode)
             return;
-    }
 
-    /// <summary>
-    /// Custom init - must be before the control is shown
-    /// TODO - overload the show method to pass in the services
-    /// </summary>
-    public void Init(IUserService userService, IDbService dbService)
-    {
-        _userService = userService;
-        _dbService = dbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     /// <summary>
@@ -49,7 +42,7 @@ public partial class ctrVoterHomeOnline : UserControl
 
     private void btnRegister_Click(object sender, EventArgs e)
     {
-        frmRegisterToVote frm = new(_userService!, _dbService!);
+        frmRegisterToVote frm = new();
         frm.ShowDialog();
     }
 
@@ -57,7 +50,7 @@ public partial class ctrVoterHomeOnline : UserControl
     {
         try
         {
-            frmVote frm = new(_userService!, _dbService!);
+            frmVote frm = new();
             frm.ShowDialog();
         } catch 
         { 

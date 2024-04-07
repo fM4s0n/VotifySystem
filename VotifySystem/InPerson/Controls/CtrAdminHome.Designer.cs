@@ -45,7 +45,7 @@ partial class ctrAdminHome
         btnCreateElection.TabIndex = 1;
         btnCreateElection.Text = "Create New Election";
         btnCreateElection.UseVisualStyleBackColor = true;
-        btnCreateElection.Click += BtnCreateElection_Click;
+        btnCreateElection.Click += btnCreateElection_Click;
         // 
         // btnManageElection
         // 

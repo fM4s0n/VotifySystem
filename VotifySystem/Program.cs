@@ -24,10 +24,7 @@ internal static class Program
         var host = CreateHostBuilder().Build();
         ServiceProvider = host.Services;
 
-        var userService = ServiceProvider.GetRequiredService<IUserService>();
-        var dbService = ServiceProvider.GetRequiredService<IDbService>();
-
-        frmMain.ShowForm(userService, dbService);
+        frmMain.ShowForm();
     }
 
     /// <summary>
@@ -40,14 +37,14 @@ internal static class Program
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
                 services.AddSingleton<IUserService, UserService>();
+                services.AddSingleton<IElectionService, ElectionService>();
                 services.AddSingleton<frmMain>();
                 services.AddDbContext<VotifyDatabaseContext>(options =>
                     options.UseSqlite("Data Source=VotifyDB.db"));
                 services.AddSingleton<IDbService>(provider =>
                 {
                     var dbContext = provider.GetRequiredService<VotifyDatabaseContext>();
-                    var userService = ServiceProvider!.GetRequiredService<IUserService>();
-                    return new DbService(dbContext, userService);
+                    return new DbService(dbContext);
                 });
             });
     }

@@ -16,17 +16,12 @@ public partial class ctrVoterHome : UserControl
     public ctrVoterHome()
     {
         InitializeComponent();
-    }
 
-    /// <summary>
-    /// Custom init
-    /// </summary>
-    /// <param name="userService">User service</param>
-    /// <param name="dbService">dbService</param>
-    internal void Init(IUserService userService, IDbService dbService)
-    {
-        _userService = userService;
-        _dbService = dbService;
+        if (DesignMode)
+            return;
+
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     /// <summary>
@@ -36,7 +31,7 @@ public partial class ctrVoterHome : UserControl
     {
         try
         {
-            frmRegisterToVote frm = new(_userService!, _dbService!);
+            frmRegisterToVote frm = new();
 
             //TODO: work out why this doesn't work - ObjectDisposedException on this line on internally called Close() TEMP solution is to wrap in try catch
             frm.Show(); 
@@ -55,7 +50,7 @@ public partial class ctrVoterHome : UserControl
     {
         try
         {
-            frmVote frmVote = new(_userService!, _dbService!);
+            frmVote frmVote = new();
             frmVote.ShowDialog();
         }
         catch 

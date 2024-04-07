@@ -11,9 +11,7 @@ namespace VotifyDataAccess.Database;
 /// <param name="options">DbContext Options</param>
 public class VotifyDatabaseContext : DbContext
 {
-    public VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : base(options)
-    {
-    }
+    public VotifyDatabaseContext(DbContextOptions<VotifyDatabaseContext> options) : base(options) { }
 
     public VotifyDatabaseContext() { }
 

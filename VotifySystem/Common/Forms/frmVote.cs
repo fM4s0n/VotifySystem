@@ -9,11 +9,12 @@ public partial class frmVote : Form
 {
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
+    private readonly IElectionService? _electionService;
 
     // TODO: Implement ElectionVoteMechanism for STV
     // private readonly ElectionVoteMechanism? _electionVoteMechanism;
 
-    private List<Election> _validElections = [];
+    private List<Election>? _validElections = [];
 
     // electionVoter is to get the specific ElectionVoter object based on the selected election
     private ElectionVoter? _electionVoter;
@@ -24,15 +25,16 @@ public partial class frmVote : Form
     /// <summary>
     /// Constructor for the frmVote
     /// </summary>
-    public frmVote(IUserService userService, IDbService dbService)
+    public frmVote()
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
 
-        _userService = userService;
-        _dbService = dbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         Init();
     }
@@ -60,23 +62,30 @@ public partial class frmVote : Form
 
         List<string> validElectionIds = _electionVoters.Select(ev => ev.ElectionId).ToList();
 
-        _validElections = _dbService.GetDatabaseContext().Elections
-            .Where(e => validElectionIds.Contains(e.ElectionId)).ToList();
+        _validElections = _electionService!.GetAllElections();
+        CheckElectionCount();
+
+        _validElections = _validElections!.Where(e => validElectionIds.Contains(e.ElectionId)).ToList();
+        CheckElectionCount();
 
         _validElections = _validElections
             .Where(e => e.GetElectionStatus() == ElectionStatus.InProgress).ToList();
-
-        if (_validElections.Count == 0)
-        {
-            MessageBox.Show("There are no elections to vote in currently, please retry once an election has commenced.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Close();
-            return;
-        }
+        CheckElectionCount();
 
         InitCmbSelectElection();
 
         // listen to the vote completed event
         ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
+    }
+
+    private void CheckElectionCount()
+    {
+        if (_validElections == null || _validElections.Count == 0)
+        {
+            MessageBox.Show("There are no elections to vote in currently, please retry once an election has commenced.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Close();
+            return;
+        }
     }
 
     private void GetElectionVoters()

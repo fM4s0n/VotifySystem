@@ -23,7 +23,7 @@ public partial class frmCreateElection : Form
     // Create mode is default
     private readonly CreateElectionFormMode _formMode = CreateElectionFormMode.Create;
 
-    public frmCreateElection(IUserService userService, IDbService dbService, Election? election = null, CreateElectionFormMode createMode = CreateElectionFormMode.Create)
+    public frmCreateElection(Election? election = null, CreateElectionFormMode createMode = CreateElectionFormMode.Create)
     {
         InitializeComponent();
 
@@ -31,8 +31,8 @@ public partial class frmCreateElection : Form
             return;
 
         _formMode = createMode;
-        _userService = userService;
-        _dbService = dbService;
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
         if (election != null)
             _newElection = election;

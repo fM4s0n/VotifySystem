@@ -33,7 +33,7 @@ public partial class ctrFPTPVote : UserControl
     public void Init(Election election, IDbService dbService)
     {
         _election = election;
-        _dbService = dbService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
         _candidates = _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();
         _parties = _dbService.GetDatabaseContext().Parties.ToList();

@@ -6,10 +6,9 @@ namespace VotifySystem.Common.DataAccess.Database;
 /// <summary>
 /// Database Service
 /// </summary>
-public class DbService(VotifyDatabaseContext dbContext, IUserService userService) : IDbService
+public class DbService(VotifyDatabaseContext dbContext) : IDbService
 {
     private readonly VotifyDatabaseContext _dbContext = dbContext;
-    private readonly IUserService? _userService = userService;
 
     //<inheritdoc/>
     public void InsertEntity<T>(T entity) where T : class
@@ -75,7 +74,7 @@ public class DbService(VotifyDatabaseContext dbContext, IUserService userService
     {
         try
         {
-            DataSeedHelper dataSeeder = new(_userService!, this);
+            DataSeedHelper dataSeeder = new();
             dataSeeder.SeedDataIfNeeded();
         }
         catch (Exception ex)

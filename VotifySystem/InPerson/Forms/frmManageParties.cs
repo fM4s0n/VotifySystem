@@ -12,6 +12,7 @@ namespace VotifySystem.InPerson.Forms;
 public partial class frmManageParties : Form
 {
     private readonly IDbService? _dbService;
+    private readonly IElectionService? _electionService;
 
     List<Party> _parties = [];
 
@@ -22,7 +23,8 @@ public partial class frmManageParties : Form
         if (DesignMode)
             return;
 
-        _dbService = dbService;
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         Init();
     }
@@ -73,18 +75,20 @@ public partial class frmManageParties : Form
     private bool ValidatePartyDeletion(Party partyToDelete)
     {
         // Get candidates whose partyId is the same as partyToDelete
-        List<Candidate> candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.PartyId == partyToDelete.PartyId).ToList();
+        List<Candidate>? candidates = _dbService!.GetDatabaseContext().Candidates
+            .Where(c => c.PartyId == partyToDelete.PartyId).ToList();
 
         // Get elections that are either ongoing or planned for future who contain candidates impacted by partyToDelete
-        List<Election> elections = _dbService.GetDatabaseContext().Elections
-                                                                  .Where(e => e.EndDate > DateTime.Now && candidates.Select(c => c.ElectionId).Contains(e.ElectionId)).ToList();
+        List<Election>? elections = _electionService!.GetAllElections()?
+            .Where(e => e.EndDate > DateTime.Now && candidates.Select(c => c.ElectionId)
+                    .Contains(e.ElectionId)).ToList();
 
-        if (elections.Count > 0)
+        if (elections?.Count > 0)
         {
             MessageBox.Show($"Warning - this party is has {candidates} candidates associated with this Party. These candidates are not part of {elections.Count} ongoing or planned elections. Deleteing this party will also delete these candidates. The deletion will not be performed.", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             return false;
         }
-        else if (elections.Count == 0 && candidates.Count > 0)
+        else if ((elections == null || elections.Count == 0) && (candidates == null || candidates.Count > 0))
         {
             DialogResult dr = MessageBox.Show($"Warning - this party is has {candidates} candidates associated with this Party. These candidates are not part of any ongoing or planned elections. Deleteing this party will also delete these candidates. Do you wish to continue", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             
