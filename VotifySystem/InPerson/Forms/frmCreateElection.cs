@@ -12,10 +12,10 @@ namespace VotifySystem.Forms;
 public partial class frmCreateElection : Form
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
     private readonly ICandidateService? _candidateService;
     private readonly IConstituencyService? _constituencyService;
+    private readonly IPartyService? _partyService;
 
     private Election? _newElection;
     private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
@@ -36,9 +36,10 @@ public partial class frmCreateElection : Form
         _formMode = createMode;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+        _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
+        _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
 
         if (election != null)
             _newElection = election;
@@ -49,7 +50,7 @@ public partial class frmCreateElection : Form
 
     private void Init()
     {
-        _allParties = _dbService!.GetDatabaseContext().Parties.ToList();
+        _allParties = _partyService!.GetAllParties() ?? [];
 
         if (_allParties.Count == 0)
         {

@@ -13,6 +13,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
 {
     private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
+    private readonly IPartyService? _partyService;
 
     private readonly List<CandidateDataGridItem>? _gridData = [];
     private readonly Constituency? _constituency;
@@ -28,9 +29,10 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+        _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
 
         _constituency = constituency;
-        _allParties = _dbService!.GetDatabaseContext().Parties.ToList();
+        _allParties = _partyService!.GetAllParties();
 
         InitUI();
 

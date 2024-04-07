@@ -14,8 +14,9 @@ public partial class frmManageParties : Form
     private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
     private readonly ICandidateService? _candidateService;
+    private readonly IPartyService? _partyService;
 
-    List<Party> _parties = [];
+    List<Party>? _parties = [];
 
     public frmManageParties()
     {
@@ -27,6 +28,7 @@ public partial class frmManageParties : Form
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+        _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
 
         Init();
     }
@@ -66,7 +68,7 @@ public partial class frmManageParties : Form
         lvParties.Items.Remove(lvParties.SelectedItems[0]);
         _parties.Remove(partyToDelete);
 
-        _dbService!.DeleteEntity(partyToDelete);
+        _partyService!.DeleteParty(partyToDelete);
     }
 
     /// <summary>
@@ -136,10 +138,13 @@ public partial class frmManageParties : Form
     private void RefreshParties()
     {
         lvParties.Items.Clear();
-        _parties.Clear();
+        _parties!.Clear();
 
         if (cmbCountry.SelectedItem != null && cmbCountry.SelectedItem is Country selectedCountry)        
-            _parties = _dbService!.GetDatabaseContext().Parties.Where(p => p.Country == selectedCountry).OrderBy(p => p.Name).ToList();
+            _parties = _partyService!.GetPartiesByCountry(selectedCountry)?.OrderBy(p => p.Name).ToList() ?? null;
+
+        if (_parties == null)
+            return;
 
         foreach (Party p in _parties)        
             lvParties.Items.Add(p.Name);
@@ -158,9 +163,9 @@ public partial class frmManageParties : Form
             txtPartyName.Text = txtPartyName.Text.Trim();
 
             Party party = new(txtPartyName.Text, selectedCountry);
-            _parties.Add(party);
+            _parties!.Add(party);
 
-            _dbService!.InsertEntity(party);
+            _partyService!.InsertParty(party);
 
             RefreshParties();
             txtPartyName.Clear();

@@ -13,6 +13,7 @@ public partial class ctrFPTPVote : UserControl
     private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
     private readonly IFPTPVoteService? _fptpVoteService;
+    private readonly IPartyService? _partyService;
 
     private readonly Election? _election;
     private List<Candidate> _candidates = [];
@@ -34,6 +35,7 @@ public partial class ctrFPTPVote : UserControl
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+        _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
 
         Init();
     }
@@ -41,7 +43,7 @@ public partial class ctrFPTPVote : UserControl
     public void Init()
     {
         _candidates = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId)!;
-        _parties = _dbService.GetDatabaseContext().Parties.ToList();
+        _parties = _partyService!.GetAllParties()!;
 
         InitComboBoxDataSource();
     }

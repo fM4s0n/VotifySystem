@@ -82,5 +82,4 @@ public class DbService(VotifyDatabaseContext dbContext) : IDbService
             return;
         }
     }
-
 }

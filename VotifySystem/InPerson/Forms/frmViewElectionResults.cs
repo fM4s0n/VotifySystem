@@ -16,6 +16,7 @@ public partial class frmViewElectionResults : Form
     private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
     private readonly IConstituencyService? _constituencyService;
+    private readonly IPartyService? _partyService;
 
     private readonly Election? _election;
     private List<Candidate>? _candidates;
@@ -31,6 +32,7 @@ public partial class frmViewElectionResults : Form
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
+        _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
 
         _election = election;       
         
@@ -82,7 +84,10 @@ public partial class frmViewElectionResults : Form
     private void SetElectionView()
     {
         List<string> candidatePartyIds = _candidates!.Select(c => c.PartyId).Distinct().ToList();
-        List<Party> electionParties = _dbService!.GetDatabaseContext().Parties.Where(p => candidatePartyIds.Contains(p.PartyId)).ToList();
+        List<Party>? electionParties = _partyService!.GetAllParties()?.Where(p => candidatePartyIds.Contains(p.PartyId)).ToList() ?? null;
+
+        if (electionParties == null)
+            return;
 
         // Calculate total votes per party
         Dictionary<Party, int> partyTotalVotes = FPTPResultsHelper.CalculateTotalVotesPerParty(electionParties, _candidates!);
