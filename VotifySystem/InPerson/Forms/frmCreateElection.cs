@@ -15,6 +15,7 @@ public partial class frmCreateElection : Form
     private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
     private readonly ICandidateService? _candidateService;
+    private readonly IConstituencyService? _constituencyService;
 
     private Election? _newElection;
     private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
@@ -128,15 +129,37 @@ public partial class frmCreateElection : Form
                 break;
             default:
                 break;
-        }            
+        }
 
         // List Views
-        foreach(Constituency c in _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _newElection.ElectionId).ToList())
+        LoadConstituencies();
+        LoadCandidates();        
+    }
+
+    /// <summary>
+    /// Loads constituencies from the database
+    /// </summary>
+    private void LoadConstituencies()
+    {
+        List<Constituency>? constituencies = _constituencyService!.GetConstituenciesByElectionId(_newElection!.ElectionId) ?? null;
+        if (constituencies == null)
+        {
+            MessageBox.Show("Error loading constituencies, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        foreach (Constituency c in constituencies)
         {
             _constituencies.Add(c);
             AddConstituencyToListView(c);
         }
+    }
 
+    /// <summary>
+    /// Loads candidates from the database
+    /// </summary>
+    private void LoadCandidates()
+    {
         List<Candidate>? candidates = _candidateService!.GetCandidatesByElectionId(_newElection.ElectionId) ?? null;
         if (candidates == null)
         {
@@ -148,7 +171,7 @@ public partial class frmCreateElection : Form
         {
             _candidates.Add(c);
             AddCandidateToListView(c);
-        }            
+        }
     }
 
     /// <summary>
@@ -231,7 +254,7 @@ public partial class frmCreateElection : Form
 
             // insert all constituencies
             foreach (Constituency constituency in _constituencies)
-                _dbService!.InsertEntity(constituency);
+                _constituencyService!.InsertConstituency(constituency);
 
             return true;
         }

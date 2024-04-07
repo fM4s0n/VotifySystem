@@ -14,6 +14,7 @@ public partial class frmRegisterToVote : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
+    private readonly IConstituencyService? _constituencyService;
 
     private List<Election>? _elections = [];
     private List<Constituency>? _constituencies = [];
@@ -30,6 +31,7 @@ public partial class frmRegisterToVote : Form
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
+        _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
 
         Init();
     }
@@ -79,7 +81,7 @@ public partial class frmRegisterToVote : Form
             }
         }
 
-        _constituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == _voter.Country).ToList();
+        _constituencies = _constituencyService!.GetConstituenciesByCountry(_voter.Country);
 
         ResetCmbElections();
     }
@@ -117,8 +119,10 @@ public partial class frmRegisterToVote : Form
     /// </summary>
     private void ResetConstituencyDataSource()
     {
-        _constituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == _voter!.Country).ToList();
-        _constituencies = _constituencies.Where(c => c.ElectionId == cmbElections.SelectedValue!.ToString()!).ToList();
+        _constituencies = _constituencyService!.GetConstituenciesByCountry(_voter!.Country);
+
+        if (_constituencies != null && cmbElections.SelectedIndex != -1)
+            _constituencies = _constituencies.Where(c => c.ElectionId == cmbElections.SelectedValue!.ToString()!).ToList();
     }
 
     /// <summary>

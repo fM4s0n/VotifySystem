@@ -15,6 +15,7 @@ public partial class frmViewElectionResults : Form
 {
     private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
+    private readonly IConstituencyService? _constituencyService;
 
     private readonly Election? _election;
     private List<Candidate>? _candidates;
@@ -29,6 +30,7 @@ public partial class frmViewElectionResults : Form
 
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+        _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
 
         _election = election;       
         
@@ -38,7 +40,7 @@ public partial class frmViewElectionResults : Form
     private void Init()
     {
         _candidates = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId);
-        _electionConstituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election!.ElectionId).ToList();
+        _electionConstituencies = _constituencyService!.GetConstituenciesByElectionId(_election!.ElectionId);
 
         foreach (ViewElectionFormMode mode in Enum.GetValues(typeof(ViewElectionFormMode)))                   
             cmbViewMode.Items.Add(mode);

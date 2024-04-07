@@ -39,6 +39,10 @@ internal static class Program
             .ConfigureServices((context, services) => {
                 services.AddSingleton<IUserService, UserService>();
                 services.AddSingleton<IElectionService, ElectionService>();
+                services.AddSingleton<ICandidateService, CandidateService>();
+                services.AddSingleton<IFPTPVoteService, FPTPVoteService>();
+                services.AddSingleton<IPreferentialVoteService, PreferentialVoteService>();
+                services.AddSingleton<IConstituencyService, ConstituencyService>();
                 services.AddSingleton<frmMain>();
                 services.AddDbContext<VotifyDatabaseContext>(options =>
                     options.UseSqlite("Data Source=VotifyDB.db"));
