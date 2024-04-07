@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using NSubstitute;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Classes;
+using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Controls;
 
 namespace VotifyTesting.ServiceTests;
@@ -9,16 +11,24 @@ namespace VotifyTesting.ServiceTests;
 [TestClass]
 public class UserServiceTests
 {
+    UserService? _userService;
+    [TestInitialize]
+    public void SetUp()
+    {
+        // substitute the IDbService
+        IDbService dbService = Substitute.For<IDbService>();
+        _userService = new UserService(dbService, false);
+    }
+
     [TestMethod]
     public void TestGetCurrentUserAndLogInUser()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1" };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
 
         // Act
-        User? result = userService.GetCurrentUser();
+        User? result = _userService.GetCurrentUser();
 
         // Assert
         Assert.AreEqual(voter, result);
@@ -28,12 +38,11 @@ public class UserServiceTests
     public void TestGetCurrentUserLevel()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1", UserLevel = UserLevel.Voter };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
 
         // Act
-        UserLevel result = userService.GetCurrentUserLevel();
+        UserLevel result = _userService.GetCurrentUserLevel();
 
         // Assert
         Assert.AreEqual(UserLevel.Voter, result);
@@ -43,13 +52,12 @@ public class UserServiceTests
     public void TestLogOutUser()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1" };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
 
         // Act
-        userService.LogOutUser();
-        User? result = userService.GetCurrentUser();
+        _userService.LogOutUser();
+        User? result = _userService.GetCurrentUser();
 
         // Assert
         Assert.IsNull(result);
@@ -59,14 +67,13 @@ public class UserServiceTests
     public void TestLogInEvent()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1" };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
         bool eventFired = false;
-        userService.LogInEvent += (sender, e) => eventFired = true;
+        _userService.LogInEvent += (sender, e) => eventFired = true;
 
         // Act
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService.LogInUser(voter, LoginMode.InPerson);
 
         // Assert
         Assert.IsTrue(eventFired);
@@ -76,14 +83,13 @@ public class UserServiceTests
     public void TestLogOutEvent()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1" };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
         bool eventFired = false;
-        userService.LogOutEvent += (sender, e) => eventFired = true;
+        _userService.LogOutEvent += (sender, e) => eventFired = true;
 
         // Act
-        userService.LogOutUser();
+        _userService.LogOutUser();
 
         // Assert
         Assert.IsTrue(eventFired);
@@ -93,13 +99,12 @@ public class UserServiceTests
     public void TestHashPassword()
     {
         // Arrange
-        UserService userService = new();
         string plainTextPassword1 = "password";
         string plainTextPassword2 = "password";
 
         // Act
-        string hashedPassword1 = userService.HashPassword(new Voter(), plainTextPassword1);
-        string hashedPassword2 = userService.HashPassword(new Voter(), plainTextPassword2);
+        string hashedPassword1 = _userService!.HashPassword(new Voter(), plainTextPassword1);
+        string hashedPassword2 = _userService.HashPassword(new Voter(), plainTextPassword2);
 
         // Assert
         Assert.AreNotEqual(plainTextPassword1, hashedPassword1);
@@ -114,12 +119,11 @@ public class UserServiceTests
     public void TestVerifyPasswordValidDetails()
     {
         // Arrange
-        UserService userService = new();
-        string hashedPassword = userService.HashPassword(new Voter(), "password");
+        string hashedPassword = _userService!.HashPassword(new Voter(), "password");
         Voter voter = new() { Id = "1", Password = hashedPassword };
 
         // Act
-        PasswordVerificationResult result = userService.VerifyPassword("password", voter);
+        PasswordVerificationResult result = _userService.VerifyPassword("password", voter);
 
         // Assert
         Assert.AreEqual(PasswordVerificationResult.Success, result);
@@ -129,12 +133,11 @@ public class UserServiceTests
     public void TestVerifyPasswordInvalidDetails()
     {
         // Arrange
-        UserService userService = new();
-        string hashedPassword = userService.HashPassword(new Voter(), "password");
+        string hashedPassword = _userService!.HashPassword(new Voter(), "password");
         Voter voter = new() { Id = "1", Password = hashedPassword };
 
         // Act
-        PasswordVerificationResult result = userService.VerifyPassword("WrongPassword", voter);
+        PasswordVerificationResult result = _userService.VerifyPassword("WrongPassword", voter);
 
         // Assert
         Assert.AreEqual(PasswordVerificationResult.Failed, result);
@@ -144,12 +147,11 @@ public class UserServiceTests
     public void TestGenerateLoginCode()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1" };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
 
         // Act
-        LoginCode result = userService.GenerateLoginCode();
+        LoginCode result = _userService.GenerateLoginCode();
 
         // Assert
         Assert.IsNotNull(result);
@@ -164,12 +166,11 @@ public class UserServiceTests
     public void TestGetLoginMode()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1" };
-        userService.LogInUser(voter, LoginMode.InPerson);
+        _userService!.LogInUser(voter, LoginMode.InPerson);
 
         // Act
-        LoginMode result = userService.GetLoginMode();
+        LoginMode result = _userService.GetLoginMode();
 
         // Assert
         Assert.AreEqual(LoginMode.InPerson, result);
@@ -179,13 +180,12 @@ public class UserServiceTests
     public void TestGetAppCultureCode()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1", Country = Country.UK };
         string expected = "en-GB";
 
         // Act
-        userService.LogInUser(voter, LoginMode.InPerson);
-        string result = userService.GetAppCultureCode();
+        _userService!.LogInUser(voter, LoginMode.InPerson);
+        string result = _userService.GetAppCultureCode();
 
         // Assert
         Assert.AreEqual(expected, result);
@@ -195,13 +195,12 @@ public class UserServiceTests
     public void TestSetAppCultureCode()
     {
         // Arrange
-        UserService userService = new();
         Voter voter = new() { Id = "1", Country = Country.UK };
         string expected = "en-GB";
 
         // Act
-        userService.LogInUser(voter, LoginMode.InPerson);
-        string result = userService.GetAppCultureCode();
+        _userService!.LogInUser(voter, LoginMode.InPerson);
+        string result = _userService.GetAppCultureCode();
 
         // Assert
         Assert.AreEqual(expected, result);

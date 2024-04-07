@@ -12,7 +12,7 @@ namespace VotifySystem.Common.Controls.Login;
 /// </summary>
 public partial class ctrLogin : UserControl
 {
-    private IUserService? _userService;
+    private readonly IUserService? _userService;
     private LoginMode _loginMode = LoginMode.InPerson;
 
     public ctrLogin()

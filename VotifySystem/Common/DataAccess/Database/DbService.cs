@@ -1,5 +1,4 @@
 ﻿using VotifyDataAccess.Database;
-using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem.Common.DataAccess.Database;
 

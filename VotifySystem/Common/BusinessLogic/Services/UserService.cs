@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.DataAccess.Database;
@@ -11,7 +12,13 @@ namespace VotifySystem.Common.BusinessLogic.Services;
 /// </summary>
 public class UserService() : IUserService
 {
-    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IDbService? _dbService;
+
+    // Constructor
+    public UserService(IDbService? dbService = null, bool isForApp = true) : this()
+    {
+        _dbService = isForApp ? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService : dbService;
+    }
 
     private User? _currentUser = null;
     private LoginMode _loginMode = LoginMode.InPerson;
