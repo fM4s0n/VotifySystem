@@ -1,5 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
-using VotifySystem.Common.Classes.Elections;
+using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.InPerson.Controls;
 

@@ -1,6 +1,6 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
 
-namespace VotifySystem.Common.Classes;
+namespace VotifySystem.Common.Models;
 
 /// <summary>
 /// Constituency class

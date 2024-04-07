@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Classes.Elections;
+﻿namespace VotifySystem.Common.Models.Elections;
 
 /// <summary>
 /// Class to represent a single voter in an election

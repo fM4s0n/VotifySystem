@@ -1,6 +1,6 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
 
-namespace VotifySystem.Common.Classes.Elections;
+namespace VotifySystem.Common.Models.Elections;
 
 /// <summary>
 /// Factory for FPTP-type election

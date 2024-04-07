@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Classes;
+﻿namespace VotifySystem.Common.Models;
 
 /// <summary>
 /// Parent class for all users

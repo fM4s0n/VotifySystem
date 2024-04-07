@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using VotifySystem.Common.BusinessLogic.Helpers;
-using VotifySystem.Common.Classes;
+using VotifySystem.Common.Models;
 using VotifySystem.Controls;
 
 namespace VotifySystem.Common.BusinessLogic.Services;

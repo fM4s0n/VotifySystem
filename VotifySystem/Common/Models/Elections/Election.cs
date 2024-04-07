@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using VotifySystem.Common.BusinessLogic.Helpers;
 
-namespace VotifySystem.Common.Classes.Elections;
+namespace VotifySystem.Common.Models.Elections;
 
 /// <summary>
 /// Election class
@@ -42,5 +42,6 @@ public enum ElectionVoteMechanism
     //First Past The Post
     FPTP,
     //Single Transferrable Vote
-    STV
+    STV,
+    Preferential
 }

@@ -1,5 +1,5 @@
-﻿using VotifySystem.Common.Classes;
-using VotifySystem.Common.Classes.UIClasses;
+﻿using VotifySystem.Common.Models;
+using VotifySystem.Common.Models.UIClasses;
 
 namespace VotifySystem.Common.BusinessLogic.Helpers;
 

@@ -1,4 +1,4 @@
-using VotifySystem.Common.Classes;
+using VotifySystem.Common.Models;
 
 namespace VotifyTesting.ClassTests;
 

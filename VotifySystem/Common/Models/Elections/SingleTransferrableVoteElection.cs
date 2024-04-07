@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Classes.Elections;
+﻿namespace VotifySystem.Common.Models.Elections;
 
 /// <summary>
 /// Single Transferrable Vote Election

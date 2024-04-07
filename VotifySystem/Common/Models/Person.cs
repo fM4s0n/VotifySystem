@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace VotifySystem.Common.Classes;
+namespace VotifySystem.Common.Models;
 
 public abstract class Person
 {

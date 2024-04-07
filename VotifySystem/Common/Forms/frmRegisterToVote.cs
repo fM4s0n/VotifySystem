@@ -1,6 +1,6 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
-using VotifySystem.Common.Classes;
-using VotifySystem.Common.Classes.Elections;
+using VotifySystem.Common.Models;
+using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.InPerson.Forms;

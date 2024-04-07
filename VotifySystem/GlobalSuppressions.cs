@@ -7,4 +7,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "Collection initialization is not simplified for readability purposes")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Click event methods can use camelCase as they are named directly after controls named in camelCase")]
-[assembly: SuppressMessage("Style", "IDE0066:Convert switch statement to expression", Justification = "Readability", Scope = "member", Target = "~M:VotifySystem.Common.BusinessLogic.Helpers.FPTPResultsHelper.AddOrdinal(System.Int32)~System.String")]
+[assembly: SuppressMessage("Style", "IDE0066:Convert switch statement to expression", Justification = "Readability")]

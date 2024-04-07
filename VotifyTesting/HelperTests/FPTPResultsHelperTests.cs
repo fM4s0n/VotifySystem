@@ -1,6 +1,6 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
-using VotifySystem.Common.Classes;
-using VotifySystem.Common.Classes.UIClasses;
+using VotifySystem.Common.Models;
+using VotifySystem.Common.Models.UIClasses;
 
 namespace VotifyTesting.HelperTests;
 

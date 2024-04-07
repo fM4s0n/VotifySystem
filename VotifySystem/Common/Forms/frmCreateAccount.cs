@@ -2,7 +2,7 @@
 using System.Resources;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
-using VotifySystem.Common.Classes;
+using VotifySystem.Common.Models;
 
 namespace VotifySystem.Common.Forms;
 
