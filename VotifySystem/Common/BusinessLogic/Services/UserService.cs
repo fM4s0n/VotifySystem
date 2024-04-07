@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
 using VotifySystem.Common.DataAccess.Database;
@@ -14,7 +13,11 @@ public class UserService() : IUserService
 {
     private readonly IDbService? _dbService;
 
-    // Constructor
+    /// <summary>
+    /// Constructor which handles being passed db service for testing only
+    /// </summary>
+    /// <param name="dbService">Mocked db service for testing</param>
+    /// <param name="isForApp">true by default, false used for unit tests</param>
     public UserService(IDbService? dbService = null, bool isForApp = true) : this()
     {
         _dbService = isForApp ? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService : dbService;
@@ -99,57 +102,57 @@ public class UserService() : IUserService
     //<inheritdoc/>
     public User? GetUserByUsername(string username)
     {
-        return _dbService.GetDatabaseContext().Users.FirstOrDefault(u => u.Username == username) ?? null;
+        return _dbService!.GetDatabaseContext().Users.FirstOrDefault(u => u.Username == username) ?? null;
     }
 
     //<inheritdoc/>
     public User? GetUserById(string id)
     {
-        return _dbService.GetDatabaseContext().Users.FirstOrDefault(u => u.Id == id) ?? null;
+        return _dbService!.GetDatabaseContext().Users.FirstOrDefault(u => u.Id == id) ?? null;
     }
 
     //<inheritdoc/>
     public List<User>? GetAllUsers()
     {
-        return _dbService.GetDatabaseContext().Users.ToList() ?? null;
+        return _dbService!.GetDatabaseContext().Users.ToList() ?? null;
     }
 
     //<inheritdoc/>
     public List<User>? GetAllVoters()
     {
-        return _dbService.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Voter).ToList();
+        return _dbService!.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Voter).ToList();
     }
 
     //<inheritdoc/>
     public List<User>? GetAllAdministrators()
     {
-        return _dbService.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Administrator).ToList();
+        return _dbService!.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Administrator).ToList();
     }
 
     //<inheritdoc/>
-    public void InsertUser(User user) => _dbService.InsertEntity(user);    
+    public void InsertUser(User user) => _dbService!.InsertEntity(user);    
 
     //<inheritdoc/>
-    public void UpdateUser(User user) => _dbService.UpdateEntity(user);    
+    public void UpdateUser(User user) => _dbService!.UpdateEntity(user);    
 
     //<inheritdoc/>
-    public void DeleteUser(User user) => _dbService.DeleteEntity(user);
+    public void DeleteUser(User user) => _dbService!.DeleteEntity(user);
 
     //<inheritdoc/>
     public List<LoginCode>? GetAllLoginCodes()
     {
-        return _dbService.GetDatabaseContext().LoginCodes.ToList() ?? null;
+        return _dbService!.GetDatabaseContext().LoginCodes.ToList() ?? null;
     }
 
     //<inheritdoc/>
     public LoginCode? GetLoginCodeByCode(string code)
     {
-        return _dbService.GetDatabaseContext().LoginCodes.FirstOrDefault(lc => lc.Code == code) ?? null;
+        return _dbService!.GetDatabaseContext().LoginCodes.FirstOrDefault(lc => lc.Code == code) ?? null;
     }
 
     //<inheritdoc/>
     public void InsertLoginCode(LoginCode loginCode)
     {
-        _dbService.InsertEntity(loginCode);
+        _dbService!.InsertEntity(loginCode);
     }
 }

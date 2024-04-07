@@ -128,13 +128,13 @@ public interface IUserService
     /// <summary>
     /// Gets all login codes in the database
     /// </summary>
-    List<LoginCode> GetAllLoginCodes();
+    List<LoginCode>? GetAllLoginCodes();
 
     /// <summary>
     /// gets a login code by its code
     /// </summary>
     /// <param name="code"></param>
-    LoginCode GetLoginCodeByCode(string code);
+    LoginCode? GetLoginCodeByCode(string code);
     
     /// <summary>
     /// adds a login code to the database
