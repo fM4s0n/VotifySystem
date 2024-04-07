@@ -2,7 +2,7 @@
 using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.DataAccess.Database;
 
-namespace VotifySystem.Common.BusinessLogic.Services;
+namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
 internal class ElectionService() : IElectionService
 {

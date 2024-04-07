@@ -4,7 +4,7 @@ using VotifySystem.Common.Models;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Controls;
 
-namespace VotifySystem.Common.BusinessLogic.Services;
+namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
 /// <summary>
 /// Singleton User Service
@@ -130,10 +130,10 @@ public class UserService() : IUserService
     }
 
     //<inheritdoc/>
-    public void InsertUser(User user) => _dbService!.InsertEntity(user);    
+    public void InsertUser(User user) => _dbService!.InsertEntity(user);
 
     //<inheritdoc/>
-    public void UpdateUser(User user) => _dbService!.UpdateEntity(user);    
+    public void UpdateUser(User user) => _dbService!.UpdateEntity(user);
 
     //<inheritdoc/>
     public void DeleteUser(User user) => _dbService!.DeleteEntity(user);

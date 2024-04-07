@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.BusinessLogic.Services.Implementations;
 using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem;

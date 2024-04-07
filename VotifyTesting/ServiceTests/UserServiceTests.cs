@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using NSubstitute;
 using VotifySystem.Common.BusinessLogic.Helpers;
-using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Controls;
+using VotifySystem.Common.BusinessLogic.Services.Implementations;
 
 namespace VotifyTesting.ServiceTests;
 

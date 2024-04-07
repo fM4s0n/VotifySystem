@@ -1,7 +1,7 @@
 ﻿using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Models.Elections;
 
-namespace VotifySystem.Common.BusinessLogic.Services;
+namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
 internal class PreferentialVoteService : IPreferentialVoteService
 {
@@ -10,7 +10,7 @@ internal class PreferentialVoteService : IPreferentialVoteService
     //<inheritdoc/>
     public void InsertVote(PreferentialElectionVote vote)
     {
-        _dbService!.InsertEntity(vote); 
+        _dbService!.InsertEntity(vote);
     }
 
     //<inheritdoc/>

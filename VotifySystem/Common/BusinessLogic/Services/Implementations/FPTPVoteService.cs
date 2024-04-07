@@ -1,7 +1,7 @@
 ﻿using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Models.Elections;
 
-namespace VotifySystem.Common.BusinessLogic.Services;
+namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 public class FPTPVoteService : IFPTPVoteService
 {
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
@@ -34,7 +34,7 @@ public class FPTPVoteService : IFPTPVoteService
     public List<FPTPElectionVote>? GetFPTPVotesByCandidateId(string candidateId)
     {
         List<FPTPElectionVote>? votes = _dbService!.GetDatabaseContext().Votes
-                        .Where(v => (v as FPTPElectionVote) != null && ((FPTPElectionVote)v).CandidateId == candidateId)
+                        .Where(v => v as FPTPElectionVote != null && ((FPTPElectionVote)v).CandidateId == candidateId)
                         .Cast<FPTPElectionVote>()
                         .ToList();
 
@@ -45,7 +45,7 @@ public class FPTPVoteService : IFPTPVoteService
     public List<FPTPElectionVote>? GetFPTPVotesByElectionId(string electionId)
     {
         List<FPTPElectionVote>? votes = _dbService!.GetDatabaseContext().Votes
-                        .Where(v => (v as FPTPElectionVote) != null && v.ElectionId == electionId)
+                        .Where(v => v as FPTPElectionVote != null && v.ElectionId == electionId)
                         .Cast<FPTPElectionVote>()
                         .ToList();
 
