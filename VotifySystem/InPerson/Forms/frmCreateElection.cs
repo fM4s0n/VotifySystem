@@ -14,6 +14,7 @@ public partial class frmCreateElection : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
+    private readonly ICandidateService? _candidateService;
 
     private Election? _newElection;
     private ElectionVoteMechanism _currentVoteMechanism = ElectionVoteMechanism.FPTP;
@@ -36,6 +37,7 @@ public partial class frmCreateElection : Form
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
+        _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
 
         if (election != null)
             _newElection = election;
@@ -113,10 +115,20 @@ public partial class frmCreateElection : Form
         dtpElectionEnd.Value = _newElection.EndDate;
 
         // vote mechanism
-        if (_newElection is FirstPastThePostElection)
-            cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.FPTP;
-        else
-            cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.STV;
+        switch (_newElection)
+        {
+            case FirstPastThePostElection:
+                cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.FPTP;
+                break;
+            case SingleTransferrableVoteElection:
+                cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.STV;
+                break;
+            case PreferentialElection:
+                cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.Preferential;
+                break;
+            default:
+                break;
+        }            
 
         // List Views
         foreach(Constituency c in _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _newElection.ElectionId).ToList())
@@ -125,7 +137,14 @@ public partial class frmCreateElection : Form
             AddConstituencyToListView(c);
         }
 
-        foreach(Candidate c in _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _newElection.ElectionId).ToList())
+        List<Candidate>? candidates = _candidateService!.GetCandidatesByElectionId(_newElection.ElectionId) ?? null;
+        if (candidates == null)
+        {
+            MessageBox.Show("Error loading candidates, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        foreach (Candidate c in candidates)
         {
             _candidates.Add(c);
             AddCandidateToListView(c);
@@ -193,7 +212,7 @@ public partial class frmCreateElection : Form
     }
 
     /// <summary>
-    /// 
+    /// Creates a new election form the form fields
     /// </summary>
     private bool CreateElectionFromForm() 
     {
@@ -208,7 +227,7 @@ public partial class frmCreateElection : Form
 
             // insert all candidates
             foreach (Candidate candidate in _candidates)
-                _dbService!.InsertEntity(candidate);
+                _candidateService!.InsertCandidate(candidate);
 
             // insert all constituencies
             foreach (Constituency constituency in _constituencies)

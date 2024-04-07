@@ -1,7 +1,6 @@
 ﻿using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.DataAccess.Database;
-using static VotifySystem.Common.Controls.ctrFPTPVote;
 using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem.Common.Controls;
@@ -12,6 +11,7 @@ namespace VotifySystem.Common.Controls;
 public partial class ctrFPTPVote : UserControl
 {
     private readonly IDbService? _dbService;
+    private readonly ICandidateService? _candidateService;
     private readonly IFPTPVoteService? _fptpVoteService;
 
     private readonly Election? _election;
@@ -33,13 +33,14 @@ public partial class ctrFPTPVote : UserControl
 
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+        _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
 
         Init();
     }
 
     public void Init()
     {
-        _candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election!.ElectionId).ToList();
+        _candidates = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId)!;
         _parties = _dbService.GetDatabaseContext().Parties.ToList();
 
         InitComboBoxDataSource();

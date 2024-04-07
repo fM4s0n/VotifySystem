@@ -12,8 +12,9 @@ namespace VotifySystem.InPerson.Forms;
 public partial class frmPostalVote : Form
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
+    private readonly ICandidateService? _candidateService;
+    private readonly IFPTPVoteService? _fptpVoteService;
 
     private List<Election>? _elections = [];
     private List<Candidate>? _candidates = [];
@@ -26,8 +27,9 @@ public partial class frmPostalVote : Form
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
+        _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+
         Init();
     }
 
@@ -85,7 +87,8 @@ public partial class frmPostalVote : Form
         if (cmbElection.SelectedIndex == -1)
             return;
 
-        _candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == cmbElection.SelectedValue.ToString()).ToList();
+        if (cmbElection.SelectedItem is Election selectedElection)
+            _candidates = _candidateService!.GetCandidatesByElectionId(selectedElection.ElectionId);
 
         InitCandidateComboBox();
 
@@ -127,8 +130,8 @@ public partial class frmPostalVote : Form
 
     private void ResetForm()
     {
-        _elections.Clear();
-        _candidates.Clear();
+        _elections!.Clear();
+        _candidates!.Clear();
         cmbCountry.SelectedIndex = -1;
         cmbElection.DataSource = null;
         cmbElection.SelectedIndex = -1;
@@ -145,7 +148,7 @@ public partial class frmPostalVote : Form
             return;
         }
 
-        Candidate? candidate = _candidates.FirstOrDefault(c => c.Id == cmbCandidate.SelectedValue.ToString()) ?? null;
+        Candidate? candidate = _candidates!.FirstOrDefault(c => c.Id == cmbCandidate.SelectedValue.ToString()) ?? null;
 
         if (candidate == null)
         {
@@ -156,8 +159,18 @@ public partial class frmPostalVote : Form
 
         if (ValidateVoteInput())
         {
-            candidate.AddVotes(int.Parse(txtVotesToAdd.Text));
-            _dbService!.UpdateEntity(candidate);
+            int votesToAdd = int.Parse(txtVotesToAdd.Text);
+
+            if (candidate.ElectionVoteMechanism == ElectionVoteMechanism.FPTP)
+            {
+                for (int i = 0; i < votesToAdd; i++)
+                {
+                    FPTPElectionVote? vote = VoteFactory.CreateVote(candidate.ElectionId, candidate.ElectionVoteMechanism) as FPTPElectionVote;
+                    _fptpVoteService!.InsertFPTPVote(vote!);
+                }
+            }
+
+            //TODO: Add other vote mechanisms here
 
             MessageBox.Show($"{txtVotesToAdd.Text} votes added for {candidate.FullName}", "Votes added", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Close();

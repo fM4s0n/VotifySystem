@@ -2,6 +2,7 @@
 using VotifySystem.Common.Models;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Models.UIClasses;
+using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem.InPerson.Controls;
 
@@ -11,6 +12,7 @@ namespace VotifySystem.InPerson.Controls;
 public partial class ctrResultsConstituencyPanelItem : UserControl
 {
     private readonly IDbService? _dbService;
+    private readonly ICandidateService? _candidateService;
 
     private readonly List<CandidateDataGridItem>? _gridData = [];
     private readonly Constituency? _constituency;
@@ -25,6 +27,8 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
             return;
         
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+
         _constituency = constituency;
         _allParties = _dbService!.GetDatabaseContext().Parties.ToList();
 
@@ -44,8 +48,14 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
     {
         List<CandidateDataGridItem> gridItems = [];
 
-        _candidates = _dbService!.GetDatabaseContext().Candidates
-            .Where(ca => ca.ElectionId == _constituency!.ElectionId && ca.ConstituencyId == _constituency.ConstituencyId).ToList();
+        _candidates = _candidateService!.GetCandidatesByElectionId(_constituency!.ElectionId)?
+            .Where(ca => ca.ConstituencyId == _constituency.ConstituencyId).ToList() ?? null;
+
+        if (_candidates == null)
+        {
+            MessageBox.Show("No candidates found for this constituency", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
            
         _candidates = FPTPResultsHelper.OrderCandidatesByVotes(_candidates);
 

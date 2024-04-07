@@ -4,6 +4,7 @@ using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.Models.UIClasses;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.InPerson.Controls;
+using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem.InPerson.Forms;
 
@@ -13,9 +14,11 @@ namespace VotifySystem.InPerson.Forms;
 public partial class frmViewElectionResults : Form
 {
     private readonly IDbService? _dbService;
+    private readonly ICandidateService? _candidateService;
+
     private readonly Election? _election;
-    private readonly List<Candidate>? _candidates;
-    private readonly List<Constituency>? _electionConstituencies;
+    private List<Candidate>? _candidates;
+    private List<Constituency>? _electionConstituencies;
 
     public frmViewElectionResults(Election election)
     {
@@ -25,16 +28,18 @@ public partial class frmViewElectionResults : Form
             return;
 
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-        _election = election;        
-        
-        _candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();
-        _electionConstituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election!.ElectionId).ToList();
+        _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
 
+        _election = election;       
+        
         Init();
     }
 
     private void Init()
     {
+        _candidates = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId);
+        _electionConstituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election!.ElectionId).ToList();
+
         foreach (ViewElectionFormMode mode in Enum.GetValues(typeof(ViewElectionFormMode)))                   
             cmbViewMode.Items.Add(mode);
 

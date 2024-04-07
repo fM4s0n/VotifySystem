@@ -4,7 +4,7 @@ using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Forms;
 using VotifySystem.InPerson.Forms;
-using static VotifySystem.Forms.frmCreateElection;
+using static VotifySystem.Forms.frmCreateElection; //TODO: make enums class
 
 namespace VotifySystem.InPerson.Controls;
 
@@ -14,6 +14,8 @@ namespace VotifySystem.InPerson.Controls;
 public partial class ctrManageElectionPanelItem : UserControl
 {
     private readonly IDbService? _dbService;
+    private readonly ICandidateService? _candidateService;
+
     private readonly int _listIndex;
     private readonly Election? _election;
 
@@ -24,10 +26,11 @@ public partial class ctrManageElectionPanelItem : UserControl
         if (DesignMode)
             return;
 
-        _election = election;
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
 
         _listIndex = index;
+        _election = election;
 
         if (_election != null)
             InitUI();
@@ -39,7 +42,7 @@ public partial class ctrManageElectionPanelItem : UserControl
     {
         lblElectionDescription.Text = _election!.Description;
         lblElectionCountry.Text = LocalisationHelper.GetCountryName(_election.Country);
-        lblRegisteredCandidatesValue.Text =_dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList().Count.ToString();
+        lblRegisteredCandidatesValue.Text = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId)?.Count.ToString() ?? "0";
         lblTotalConstituenciesValue.Text = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election.ElectionId).ToList().Count.ToString();
         lblRegisteredVotersValue.Text = _dbService!.GetDatabaseContext().ElectionVoters.Where(v => v.ElectionId == _election.ElectionId).ToList().Count.ToString();
         btnViewResults.Enabled = _election.GetElectionStatus() == ElectionStatus.Completed;
