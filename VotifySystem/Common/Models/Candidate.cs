@@ -1,4 +1,8 @@
-﻿namespace VotifySystem.Common.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.Models.Elections;
+
+namespace VotifySystem.Common.Models;
 
 /// <summary>
 /// Candidate Class
@@ -10,8 +14,22 @@ public class Candidate : Person
     public string ConstituencyId { get; set; } = string.Empty;
     public string PartyId { get; set; } = string.Empty;
     public string ElectionId { get; set; } = string.Empty;
-    public int VotesReceived { get; private set; } = 0;
     public int ElectionPosition { get; set; } = 0;
+    public ElectionVoteMechanism ElectionVoteMechanism { get; set; } = ElectionVoteMechanism.FPTP;
+
+    public int GetVotesReceived()
+    {
+        int votes = 0;
+        if (ElectionVoteMechanism == ElectionVoteMechanism.FPTP)
+        {
+            IFPTPVoteService? voteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+            votes = voteService!.GetFPTPVotesCountByCandidateId(Id);
+        }
+
+        // TODO: Add other voting mechanisms here
+
+        return votes;
+    }
 
     /// <summary>
     /// Default Constructor for EF Core
@@ -26,15 +44,5 @@ public class Candidate : Person
         PartyId = partyId;
         ElectionId = electionId;
         Id = Guid.NewGuid().ToString();
-    }
-
-    /// <summary>
-    /// Add or remove votes for an electionCandidate
-    /// TODO: Refactor to use a Vote object and vote table to allow for multiple votes concurrently
-    /// </summary>
-    /// <param name="votesReceived">Votes to add. Can be positive or negative if required</param>
-    public void AddVotes(int votesReceived)
-    {
-        VotesReceived += votesReceived;
     }
 }

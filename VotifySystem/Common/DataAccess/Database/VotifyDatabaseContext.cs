@@ -23,6 +23,7 @@ public class VotifyDatabaseContext : DbContext
     public DbSet<Election> Elections { get; set; }
     public DbSet<LoginCode> LoginCodes { get; set; }
     public DbSet<Vote> Votes { get; set; }
+    public DbSet<PreferentialVotePreference> PreferentialVotePreferences { get; set; }
 
     /// <summary>
     /// Required for EFCore to create the database
@@ -45,6 +46,7 @@ public class VotifyDatabaseContext : DbContext
             .HasDiscriminator<string>("vote_type")
             .HasValue<FPTPElectionVote>("FPTP")
             .HasValue<PreferentialElectionVote>("Preferential");
+        modelBuilder.Entity<PreferentialVotePreference>().ToTable("PreferentialVotePreference");
 
         base.OnModelCreating(modelBuilder);
     }

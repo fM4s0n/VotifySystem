@@ -2,6 +2,7 @@
 using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.DataAccess.Database;
 using static VotifySystem.Common.Controls.ctrFPTPVote;
+using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem.Common.Controls;
 
@@ -10,8 +11,10 @@ namespace VotifySystem.Common.Controls;
 /// </summary>
 public partial class ctrFPTPVote : UserControl
 {
-    private IDbService? _dbService;
-    private Election? _election;
+    private readonly IDbService? _dbService;
+    private readonly IFPTPVoteService? _fptpVoteService;
+
+    private readonly Election? _election;
     private List<Candidate> _candidates = [];
     private List<Party> _parties = [];
     List<ComboBoxCandidate> _comboBoxCandidates = [];
@@ -19,23 +22,24 @@ public partial class ctrFPTPVote : UserControl
     public delegate void VoteCompletedEventHandler(object sender, EventArgs e);
     public event VoteCompletedEventHandler? VoteCompleted;
 
-    public ctrFPTPVote()
+    public ctrFPTPVote(Election election)
     {
         InitializeComponent();
+
+        if (DesignMode) 
+            return;
+
+        _election = election;
+
+        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+
+        Init();
     }
 
-    /// <summary>
-    /// Custom init 
-    /// </summary>
-    /// <param name="election"></param>
-    /// <param name="dbService"></param>
-    /// <param name="electionVoter"></param>
-    public void Init(Election election, IDbService dbService)
+    public void Init()
     {
-        _election = election;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-
-        _candidates = _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();
+        _candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election!.ElectionId).ToList();
         _parties = _dbService.GetDatabaseContext().Parties.ToList();
 
         InitComboBoxDataSource();
@@ -88,8 +92,10 @@ public partial class ctrFPTPVote : UserControl
             return;
         }
 
-        candidate.AddVotes(1);
-        _dbService!.UpdateEntity(candidate);
+        FPTPElectionVote? vote = VoteFactory.CreateVote(_election!.ElectionId, ElectionVoteMechanism.FPTP) as FPTPElectionVote;
+        vote!.CastVote(candidate.Id);
+
+        _fptpVoteService!.InsertFPTPVote(vote);
 
         OnVoteCompleted();
     }

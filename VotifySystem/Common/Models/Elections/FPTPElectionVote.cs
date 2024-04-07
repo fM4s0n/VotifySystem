@@ -5,7 +5,7 @@
 /// </summary>
 public class FPTPElectionVote : Vote
 {
-    private string _candidateId = string.Empty;
+    public string CandidateId { get; set; } = string.Empty;
 
     // constructor for ef core
     public FPTPElectionVote() { }
@@ -24,13 +24,7 @@ public class FPTPElectionVote : Vote
     /// <returns>FPTPElectionVote object</returns>
     public FPTPElectionVote CastVote(string candidateId)
     {
-        _candidateId = candidateId;
+        CandidateId = candidateId;
         return this;
-    }
-
-    /// <summary>
-    /// Get the candidate id for the vote.
-    /// </summary>
-    /// <returns>string of the candidateId voted for</returns>
-    public string GetCandidateId() => _candidateId;    
+    }   
 }

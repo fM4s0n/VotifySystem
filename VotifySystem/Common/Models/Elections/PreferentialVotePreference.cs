@@ -4,11 +4,24 @@
 /// Preference class for a preferential vote.
 /// Only to be used in the context of a preferential vote.
 /// </summary>
-public class PreferentialVotePreference(string electionId, string voteId, int rank, string candidateId)
+public class PreferentialVotePreference
 {
-    public string ElectionId { get; set; } = electionId;
+    // constructor for ef core
+    public PreferentialVotePreference() { }
+
+    public PreferentialVotePreference(string electionId, string voteId, int rank, string candidateId)
+    {
+        PreferenceId = Guid.NewGuid().ToString();
+        ElectionId = electionId;
+        VoteId = voteId;
+        Rank = rank;
+        CandidateId = candidateId;
+
+    }
+
     public string PreferenceId { get; set; } = Guid.NewGuid().ToString();
-    public string CandidateId { get; set; } = candidateId;
-    public string VoteId { get; set; } = voteId;
-    public int Rank { get; set; } = rank;
+    public string ElectionId { get; set; } = string.Empty;
+    public string CandidateId { get; set; } = string.Empty;
+    public string VoteId { get; set; } = string.Empty;
+    public int Rank { get; set; }
 }

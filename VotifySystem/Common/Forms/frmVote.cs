@@ -138,7 +138,7 @@ public partial class frmVote : Form
         Election election;
         if (cmbSelectElection.SelectedValue is string electionId)
         {
-            election = _validElections.First(e => e.ElectionId == electionId);
+            election = _validElections!.First(e => e.ElectionId == electionId);
         }
         else
         {
@@ -175,12 +175,11 @@ public partial class frmVote : Form
     /// <param name="electionVoteMechanism">Mode to set the form to</param>
     private void SetMode(ElectionVoteMechanism electionVoteMechanism)
     {
-        if (cmbSelectElection.SelectedIndex != -1 && cmbSelectElection.SelectedValue is string electionId)
+        if (cmbSelectElection.SelectedIndex != -1 && cmbSelectElection.SelectedValue is string)
         {
             switch (electionVoteMechanism)
             {
                 case ElectionVoteMechanism.FPTP:
-                    ctrFPTPVote.Init(_validElections.First(e => e.ElectionId == electionId), _dbService!);
                     ctrFPTPVote.Visible = true;
                     break;
                 case ElectionVoteMechanism.STV:
