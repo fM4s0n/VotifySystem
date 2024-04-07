@@ -12,9 +12,9 @@ namespace VotifySystem.InPerson.Forms;
 public partial class frmRegisterToVote : Form
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
     private readonly IConstituencyService? _constituencyService;
+    private readonly IElectionVoterService? _electionVoterService;
 
     private List<Election>? _elections = [];
     private List<Constituency>? _constituencies = [];
@@ -29,9 +29,9 @@ public partial class frmRegisterToVote : Form
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
+        _electionVoterService = Program.ServiceProvider!.GetService(typeof(IElectionVoterService)) as IElectionVoterService;
 
         Init();
     }
@@ -63,7 +63,10 @@ public partial class frmRegisterToVote : Form
 
         _elections = _elections!.Where(e => e.GetElectionStatus() != ElectionStatus.Completed).ToList();
 
-        _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.VoterId == _voter.Id).ToList();
+        _electionVoters = _electionVoterService!.GetElectionVotersByVoterId(_voter.Id);
+
+        if (_electionVoters == null)
+            return;
 
         // Remove elections that the voter has already registered for
         foreach (ElectionVoter ev in _electionVoters)
@@ -143,7 +146,7 @@ public partial class frmRegisterToVote : Form
 
         ElectionVoter electionVoter = new(electionId, voterId, constituencyId);
 
-        _dbService!.InsertEntity(electionVoter);
+        _electionVoterService!.InsertElectionVoter(electionVoter);
 
         string electionDescription = _elections!.First(e => e.ElectionId == electionId).Description;
         MessageBox.Show($"Successfully registered for {electionDescription}.", "Successfully Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);

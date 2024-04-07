@@ -10,6 +10,7 @@ public partial class frmVote : Form
     private readonly IUserService? _userService;
     private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
+    private readonly IElectionVoterService? _electionVoterService;
 
     // TODO: Implement ElectionVoteMechanism for STV
     // private readonly ElectionVoteMechanism? _electionVoteMechanism;
@@ -20,7 +21,7 @@ public partial class frmVote : Form
     private ElectionVoter? _electionVoter;
 
     // electionVoters is to get all possible elections the user can vote in
-    private List<ElectionVoter> _electionVoters = [];
+    private List<ElectionVoter>? _electionVoters = [];
 
     /// <summary>
     /// Constructor for the frmVote
@@ -35,6 +36,7 @@ public partial class frmVote : Form
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
+        _electionVoterService = Program.ServiceProvider!.GetService(typeof(IElectionVoterService)) as IElectionVoterService;
 
         Init();
     }
@@ -53,7 +55,7 @@ public partial class frmVote : Form
 
         GetElectionVoters();
 
-        if (_electionVoters.Count == 0)
+        if (_electionVoters!.Count == 0)
         {
             MessageBox.Show("You are not registered to vote in any elections", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Close();
@@ -90,8 +92,14 @@ public partial class frmVote : Form
 
     private void GetElectionVoters()
     {
-        _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters
-            .Where(ev => ev.VoterId == _userService!.GetCurrentUser()!.Id).ToList();
+        _electionVoters = _electionVoterService!.GetElectionVotersByVoterId(_userService!.GetCurrentUser()!.Id) ?? null;
+
+        if (_electionVoters == null)
+        {
+            MessageBox.Show("Error loading elections, please try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Close();
+            return;
+        }
 
         _electionVoters = _electionVoters.Where(ev => ev.HasVoted == false).ToList();
     }
@@ -106,7 +114,7 @@ public partial class frmVote : Form
 
         // update the election voter to show that the user has voted
         _electionVoter!.HasVoted = true;
-        _dbService!.UpdateEntity(_electionVoter);
+        _electionVoterService!.UpdateElectionVoter(_electionVoter);
 
         Close();
     }
@@ -153,7 +161,7 @@ public partial class frmVote : Form
             lblElectionName.Visible = true;
 
             // set the election voter based on the selected election
-            _electionVoter = _electionVoters.First(ev => ev.ElectionId == election.ElectionId);
+            _electionVoter = _electionVoters!.First(ev => ev.ElectionId == election.ElectionId);
 
             switch (election)
             {

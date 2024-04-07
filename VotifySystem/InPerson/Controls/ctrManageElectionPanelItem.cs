@@ -13,9 +13,9 @@ namespace VotifySystem.InPerson.Controls;
 /// </summary>
 public partial class ctrManageElectionPanelItem : UserControl
 {
-    private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
     private readonly IConstituencyService? _constituencyService;
+    private readonly IElectionVoterService? _electionVoterService;
 
     private readonly int _listIndex;
     private readonly Election? _election;
@@ -27,9 +27,9 @@ public partial class ctrManageElectionPanelItem : UserControl
         if (DesignMode)
             return;
 
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
+        _electionVoterService = Program.ServiceProvider!.GetService(typeof(IElectionVoterService)) as IElectionVoterService;
 
         _listIndex = index;
         _election = election;
@@ -46,7 +46,7 @@ public partial class ctrManageElectionPanelItem : UserControl
         lblElectionCountry.Text = LocalisationHelper.GetCountryName(_election.Country);
         lblRegisteredCandidatesValue.Text = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId)?.Count.ToString() ?? "0";
         lblTotalConstituenciesValue.Text = _constituencyService!.GetConstituenciesByElectionId(_election.ElectionId)?.Count.ToString() ?? "0";
-        lblRegisteredVotersValue.Text = _dbService!.GetDatabaseContext().ElectionVoters.Where(v => v.ElectionId == _election.ElectionId).ToList().Count.ToString();
+        lblRegisteredVotersValue.Text = _electionVoterService!.GetElectionVotersByElectionId(_election.ElectionId)?.Count.ToString() ?? "0";
         btnViewResults.Enabled = _election.GetElectionStatus() == ElectionStatus.Completed;
         SetStatusLabel();
         SetDateInfoLabel();

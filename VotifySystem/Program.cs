@@ -44,6 +44,7 @@ internal static class Program
                 services.AddSingleton<IPreferentialVoteService, PreferentialVoteService>();
                 services.AddSingleton<IConstituencyService, ConstituencyService>();
                 services.AddSingleton<IPartyService, PartyService>();
+                services.AddSingleton<IElectionVoterService, ElectionVoterService>();
                 services.AddSingleton<frmMain>();
                 services.AddDbContext<VotifyDatabaseContext>(options =>
                     options.UseSqlite("Data Source=VotifyDB.db"));
