@@ -80,7 +80,7 @@ public partial class ctrLogin : UserControl
         if (ValidateLoginCodeText(loginCode) == false)
             return;
 
-        LoginCode? foundCode = _dbService!.GetDatabaseContext().LoginCodes.FirstOrDefault(lc => lc.Code == loginCode) ?? null;
+        LoginCode? foundCode = _userService!.GetLoginCodeByCode(loginCode) ?? null;
 
         if (foundCode == null) 
         {
@@ -94,7 +94,7 @@ public partial class ctrLogin : UserControl
             return;
         }
 
-        User? user = _dbService.GetDatabaseContext().Users.FirstOrDefault(u => u.Id == foundCode.UserId) ?? null;
+        User? user = _userService!.GetUserById(foundCode.UserId);
 
         if (user == null)
         {
@@ -145,7 +145,7 @@ public partial class ctrLogin : UserControl
             return;           
         }
 
-        User? attemptedUser = _dbService!.GetDatabaseContext().Users.FirstOrDefault(u => u.Username == txtUsername.Text) ?? null;
+        User? attemptedUser = _userService!.GetUserByUsername(txtUsername.Text);
 
         if (attemptedUser == null)
         {

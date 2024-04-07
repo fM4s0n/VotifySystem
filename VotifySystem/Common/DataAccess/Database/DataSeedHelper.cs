@@ -98,7 +98,7 @@ public class DataSeedHelper(IUserService userService, IDbService dbService)
         string description = "Example Completed Election";
         DateTime start = new(2024, 3, 1, 9, 0, 0);
         DateTime end = new(2024, 4, 1, 21, 0, 0);
-        string userId = _dbService!.GetDatabaseContext().Users.First(u => u.Username == "DefaultAdmin").Id;
+        string userId = _userService.GetAllAdministrators().FirstOrDefault(u => u.Username == "DefaultAdmin").Id;
 
         Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId);
 

@@ -76,7 +76,7 @@ public class DBServiceTests
         _dbContext!.Set<Voter>().Returns(dbSetMock);
 
         // Act
-        _dbService!.DeleteRecord(entity);
+        _dbService!.DeleteEntity(entity);
 
         // Assert
         dbSetMock.Received(1).Remove(entity);

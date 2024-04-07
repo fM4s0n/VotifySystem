@@ -62,7 +62,7 @@ public partial class frmManageParties : Form
         lvParties.Items.Remove(lvParties.SelectedItems[0]);
         _parties.Remove(partyToDelete);
 
-        _dbService!.DeleteRecord(partyToDelete);
+        _dbService!.DeleteEntity(partyToDelete);
     }
 
     /// <summary>

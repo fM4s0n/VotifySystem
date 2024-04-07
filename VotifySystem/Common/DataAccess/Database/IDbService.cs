@@ -9,7 +9,7 @@ public interface IDbService
     /// </summary>
     /// <typeparam name="T">Type of the object</typeparam>
     /// <param name="entity">the object to be deleted</param>
-    void DeleteRecord<T>(T entity) where T : class;
+    void DeleteEntity<T>(T entity) where T : class;
 
     /// <summary>
     /// Generic insert statement to insert a new entity into the Db

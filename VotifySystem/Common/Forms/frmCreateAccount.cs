@@ -91,7 +91,7 @@ internal partial class frmCreateAccount : Form
             Voter newVoter = new(txtFirstName.Text, txtLastName.Text, txtEmail.Text, voteMethod, txtAddress.Text, dtpDoB.Value, country);
             newVoter.Password = _userService!.HashPassword(newVoter, txtPassword.Text);
 
-            _dbService!.InsertEntity(newVoter);
+            _userService!.InsertUser(newVoter);
 
             Close();
         }

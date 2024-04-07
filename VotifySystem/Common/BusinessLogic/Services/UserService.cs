@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Classes;
+using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Controls;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
@@ -8,8 +9,10 @@ namespace VotifySystem.Common.BusinessLogic.Services;
 /// <summary>
 /// Singleton User Service
 /// </summary>
-public class UserService : IUserService
+public class UserService(IDbService dbService) : IUserService
 {
+    private readonly IDbService _dbService = dbService;
+
     private User? _currentUser = null;
     private LoginMode _loginMode = LoginMode.InPerson;
     private Country _appCountry = Country.UK;
@@ -22,16 +25,10 @@ public class UserService : IUserService
     public event LogoutEventHandler? LogOutEvent;
     public event LoginEventHandler? LogInEvent;
 
-    /// <summary>
-    /// Get the current user
-    /// </summary>
-    /// <returns>User object of the current user</returns>
+    //<inheritdoc/>
     public User? GetCurrentUser() => _currentUser;
 
-    /// <summary>
-    /// Get Current user's UserLevel
-    /// </summary>
-    /// <returns>UserLevel of current user</returns>
+    //<inheritdoc/>
     public UserLevel GetCurrentUserLevel()
     {
         if (_currentUser == null)
@@ -40,21 +37,15 @@ public class UserService : IUserService
         return _currentUser.UserLevel;
     }
 
-    /// <summary>
-    /// Log in the user and set the login mode
-    /// </summary>
-    /// <param name="user">User that has logged in</param>
-    /// <param name="loginMode">InPerson or Online</param>
-    public void LogInUser(User user, LoginMode loginMode) 
-    { 
+    //<inheritdoc/>
+    public void LogInUser(User user, LoginMode loginMode)
+    {
         _loginMode = loginMode;
-        _currentUser = user; 
+        _currentUser = user;
         OnLogin();
     }
 
-    /// <summary>
-    /// Logout event
-    /// </summary>
+    //<inheritdoc/>
     public void LogOutUser()
     {
         _currentUser = null;
@@ -71,24 +62,14 @@ public class UserService : IUserService
     /// </summary>
     public void OnLogout() => LogOutEvent?.Invoke(this, EventArgs.Empty);
 
-    /// <summary>
-    /// Hash password 
-    /// </summary>
-    /// <param name="user"></param>
-    /// <param name="password"></param>
-    /// <returns>string of hashed plaintext password</returns>
+    //<inheritdoc/>
     public string HashPassword(User user, string password)
     {
         PasswordHasher<User> passwordHasher = new();
         return passwordHasher.HashPassword(user, password);
     }
 
-    /// <summary>
-    /// Verify the user password is correct
-    /// </summary>
-    /// <param name="plainPassword"></param>
-    /// <param name="user"></param>
-    /// <returns>Failed or successful verification of password input </returns>
+    //<inheritdoc/>
     public PasswordVerificationResult VerifyPassword(string plainPassword, User user)
     {
         PasswordHasher<User> passwordHasher = new();
@@ -96,27 +77,72 @@ public class UserService : IUserService
         return result;
     }
 
-    /// <summary>
-    /// Generates a random 6 digit login code
-    /// </summary>
-    /// <returns>New object of LoginCode</returns>
+    //<inheritdoc/>
     public LoginCode GenerateLoginCode() => new(Guid.NewGuid().ToString()[..6], _currentUser!.Id);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
+    //<inheritdoc/>
     public LoginMode GetLoginMode() => _loginMode;
 
-    /// <summary>
-    /// Gets the app-wide language
-    /// </summary>
-    /// <returns></returns>
+    //<inheritdoc/>
     public string GetAppCultureCode() => LocalisationHelper.GetCultureCode(_appCountry);
 
-    /// <summary>
-    /// Sets the app-wide language
-    /// </summary>
-    /// <param name="country">Country enum of the language</param>
+    //<inheritdoc/>
     public void SetAppLanguage(Country country) { _appCountry = country; }
+
+    //<inheritdoc/>
+    public User? GetUserByUsername(string username)
+    {
+        return _dbService.GetDatabaseContext().Users.FirstOrDefault(u => u.Username == username) ?? null;
+    }
+
+    //<inheritdoc/>
+    public User? GetUserById(string id)
+    {
+        return _dbService.GetDatabaseContext().Users.FirstOrDefault(u => u.Id == id) ?? null;
+    }
+
+    //<inheritdoc/>
+    public List<User>? GetAllUsers()
+    {
+        return _dbService.GetDatabaseContext().Users.ToList() ?? null;
+    }
+
+    //<inheritdoc/>
+    public List<User>? GetAllVoters()
+    {
+        return _dbService.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Voter).ToList();
+    }
+
+    //<inheritdoc/>
+    public List<User>? GetAllAdministrators()
+    {
+        return _dbService.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Administrator).ToList();
+    }
+
+    //<inheritdoc/>
+    public void InsertUser(User user) => _dbService.InsertEntity(user);    
+
+    //<inheritdoc/>
+    public void UpdateUser(User user) => _dbService.UpdateEntity(user);    
+
+    //<inheritdoc/>
+    public void DeleteUser(User user) => _dbService.DeleteEntity(user);
+
+    //<inheritdoc/>
+    public List<LoginCode>? GetAllLoginCodes()
+    {
+        return _dbService.GetDatabaseContext().LoginCodes.ToList() ?? null;
+    }
+
+    //<inheritdoc/>
+    public LoginCode? GetLoginCodeByCode(string code)
+    {
+        return _dbService.GetDatabaseContext().LoginCodes.FirstOrDefault(lc => lc.Code == code) ?? null;
+    }
+
+    //<inheritdoc/>
+    public void InsertLoginCode(LoginCode loginCode)
+    {
+        _dbService.InsertEntity(loginCode);
+    }
 }

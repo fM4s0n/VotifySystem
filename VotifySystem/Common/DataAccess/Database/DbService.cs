@@ -40,7 +40,7 @@ public class DbService(VotifyDatabaseContext dbContext, IUserService userService
     }
 
     //<inheritdoc/>
-    public void DeleteRecord<T>(T entity) where T : class
+    public void DeleteEntity<T>(T entity) where T : class
     {
         try
         {
