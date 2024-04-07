@@ -11,7 +11,7 @@ using VotifyDataAccess.Database;
 namespace VotifySystem.Migrations
 {
     [DbContext(typeof(VotifyDatabaseContext))]
-    [Migration("20240405100448_InitialCreate")]
+    [Migration("20240407202749_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace VotifySystem.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Candidate", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Candidate", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -56,7 +56,7 @@ namespace VotifySystem.Migrations
                     b.ToTable("Candidate", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Constituency", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Constituency", b =>
                 {
                     b.Property<string>("ConstituencyId")
                         .HasColumnType("TEXT");
@@ -77,7 +77,7 @@ namespace VotifySystem.Migrations
                     b.ToTable("Constituency", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Elections.Election", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.Election", b =>
                 {
                     b.Property<string>("ElectionId")
                         .HasColumnType("TEXT");
@@ -113,7 +113,7 @@ namespace VotifySystem.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Elections.ElectionVoter", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.ElectionVoter", b =>
                 {
                     b.Property<string>("ElectionId")
                         .HasColumnType("TEXT");
@@ -133,7 +133,33 @@ namespace VotifySystem.Migrations
                     b.ToTable("ElectionVoter", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.LoginCode", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.Vote", b =>
+                {
+                    b.Property<string>("VoteId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ElectionId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ElectionVoteMechanism")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("vote_type")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("VoteId");
+
+                    b.ToTable("Vote", (string)null);
+
+                    b.HasDiscriminator<string>("vote_type").HasValue("Vote");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("VotifySystem.Common.Models.LoginCode", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -157,7 +183,7 @@ namespace VotifySystem.Migrations
                     b.ToTable("LoginCode", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Party", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Party", b =>
                 {
                     b.Property<string>("PartyId")
                         .HasColumnType("TEXT");
@@ -174,7 +200,7 @@ namespace VotifySystem.Migrations
                     b.ToTable("Party", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.User", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("TEXT");
@@ -205,30 +231,44 @@ namespace VotifySystem.Migrations
                     b.UseTptMappingStrategy();
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Elections.FirstPastThePostElection", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.FirstPastThePostElection", b =>
                 {
-                    b.HasBaseType("VotifySystem.Common.Classes.Elections.Election");
+                    b.HasBaseType("VotifySystem.Common.Models.Elections.Election");
 
                     b.HasDiscriminator().HasValue("FPTP_Election");
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Elections.SingleTransferrableVoteElection", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.SingleTransferrableVoteElection", b =>
                 {
-                    b.HasBaseType("VotifySystem.Common.Classes.Elections.Election");
+                    b.HasBaseType("VotifySystem.Common.Models.Elections.Election");
 
                     b.HasDiscriminator().HasValue("STV_Election");
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Administrator", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.FPTPElectionVote", b =>
                 {
-                    b.HasBaseType("VotifySystem.Common.Classes.User");
+                    b.HasBaseType("VotifySystem.Common.Models.Elections.Vote");
+
+                    b.HasDiscriminator().HasValue("FPTP");
+                });
+
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.PreferentialElectionVote", b =>
+                {
+                    b.HasBaseType("VotifySystem.Common.Models.Elections.Vote");
+
+                    b.HasDiscriminator().HasValue("Preferential");
+                });
+
+            modelBuilder.Entity("VotifySystem.Common.Models.Administrator", b =>
+                {
+                    b.HasBaseType("VotifySystem.Common.Models.User");
 
                     b.ToTable("Administrator", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Voter", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Voter", b =>
                 {
-                    b.HasBaseType("VotifySystem.Common.Classes.User");
+                    b.HasBaseType("VotifySystem.Common.Models.User");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -243,20 +283,20 @@ namespace VotifySystem.Migrations
                     b.ToTable("Voter", (string)null);
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Administrator", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Administrator", b =>
                 {
-                    b.HasOne("VotifySystem.Common.Classes.User", null)
+                    b.HasOne("VotifySystem.Common.Models.User", null)
                         .WithOne()
-                        .HasForeignKey("VotifySystem.Common.Classes.Administrator", "Id")
+                        .HasForeignKey("VotifySystem.Common.Models.Administrator", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("VotifySystem.Common.Classes.Voter", b =>
+            modelBuilder.Entity("VotifySystem.Common.Models.Voter", b =>
                 {
-                    b.HasOne("VotifySystem.Common.Classes.User", null)
+                    b.HasOne("VotifySystem.Common.Models.User", null)
                         .WithOne()
-                        .HasForeignKey("VotifySystem.Common.Classes.Voter", "Id")
+                        .HasForeignKey("VotifySystem.Common.Models.Voter", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

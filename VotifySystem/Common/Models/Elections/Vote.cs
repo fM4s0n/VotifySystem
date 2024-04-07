@@ -3,27 +3,22 @@
 /// <summary>
 /// Abstract class for a vote in an election.
 /// </summary>
-public abstract class Vote(string electionId, ElectionVoteMechanism electionVoteMechanism)
+public abstract class Vote
 {
     /// <summary>
     /// Unique id for the vote.
     /// </summary>
-    public string VoteId { get; } = Guid.NewGuid().ToString();
+    public string VoteId { get; set; } = string.Empty;
 
     /// <summary>
     /// Id of the election which the vote is cast in.
     /// </summary>
-    public string ElectionId { get; } = electionId;
+    public string ElectionId { get; set; } = string.Empty;
 
     /// <summary>
     /// Vote mechanism of the Vote is for
     /// </summary>
-    public ElectionVoteMechanism ElectionVoteMechanism { get; } = electionVoteMechanism;
+    public ElectionVoteMechanism ElectionVoteMechanism { get; set; }
 
-    /// <summary>
-    /// Cast the vote for a candidate.
-    /// </summary>
-    /// <param name="candidateId">Casts the vote</param>
-    public abstract Vote CastVote(string candidateId);
-
+    public Vote() { } 
 }

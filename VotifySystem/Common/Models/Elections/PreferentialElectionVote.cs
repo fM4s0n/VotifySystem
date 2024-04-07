@@ -1,35 +1,66 @@
-﻿namespace VotifySystem.Common.Models.Elections;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using VotifySystem.Common.BusinessLogic.Services;
+
+namespace VotifySystem.Common.Models.Elections;
 
 /// <summary>
 /// Preferential vote class for an election.
 /// </summary>
 /// <param name="electionId">ElectionId the vote is associated with</param>
-public class PreferentialElectionVote(string electionId) : Vote(electionId, ElectionVoteMechanism.STV)
+public class PreferentialElectionVote : Vote
 {
-    private readonly List<string> _preferences = [];
+    [NotMapped]
+    private List<PreferentialVotePreference> _preferences = [];
 
-    public PreferentialElectionVote AddPreference(string candidateId)
+    private readonly IPreferentialVoteService? _preferentialVoteService = Program.ServiceProvider!.GetService(typeof(IPreferentialVoteService)) as IPreferentialVoteService;
+
+    // constructor for ef core
+    public PreferentialElectionVote() { }
+
+    public PreferentialElectionVote(string electionId) 
     {
-        _preferences.Add(candidateId);
+        VoteId = Guid.NewGuid().ToString();
+        ElectionId = electionId; 
+        ElectionVoteMechanism = ElectionVoteMechanism.Preferential;
+    }
+
+    /// <summary>
+    /// Creates a preferential vote with a list of candidates.
+    /// Candidates are ranked in the order they are passed in.
+    /// </summary>
+    /// <param name="candidates"></param>
+    /// <returns>PreferentialElectionVote object with all candidates ranked</returns>
+    public PreferentialElectionVote CastVote(List<string> candidates)
+    {
+        int nextRank = _preferences.Count + 1;
+
+        foreach (string candidate in candidates)
+        {
+            PreferentialVotePreference? preference = new(ElectionId, VoteId, nextRank, candidate);
+            _preferences.Add(preference);
+            nextRank++;
+        }
+
         return this;
     }
 
-    public override PreferentialElectionVote CastVote(string candidate)
+    public PreferentialVotePreference? GetFirstPreference()
     {
-        if (_preferences.Contains(candidate))
-        {
-            Console.WriteLine($"Vote {VoteId} cast for {candidate} in Preferential system of Election {ElectionId}");
-        }
-        else
-        {
-            Console.WriteLine($"Invalid vote {VoteId} cast for {candidate} in Preferential system of Election {ElectionId}");
-        }
-
-        return this;
+        return _preferences.FirstOrDefault() ?? null;
     }
 
-    public string GetFirstPreference()
+    public PreferentialVotePreference? GetPreferenceByRank(int rank)
     {
-        return _preferences.FirstOrDefault();
+        return _preferences.FirstOrDefault(p => p.Rank == rank) ?? null;
+    }
+
+    public PreferentialVotePreference? GetPreferenceByCandidateId(string candidateId)
+    {
+        return _preferences.FirstOrDefault(p => p.CandidateId == candidateId) ?? null;
+    }
+
+    public void LoadPreferences()
+    {
+        _preferences = _preferentialVoteService!.GetPreferencesByVoteId(VoteId) ?? [];
     }
 }

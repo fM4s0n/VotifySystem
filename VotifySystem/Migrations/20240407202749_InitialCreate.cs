@@ -119,6 +119,20 @@ namespace VotifySystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Vote",
+                columns: table => new
+                {
+                    VoteId = table.Column<string>(type: "TEXT", nullable: false),
+                    ElectionId = table.Column<string>(type: "TEXT", nullable: false),
+                    ElectionVoteMechanism = table.Column<int>(type: "INTEGER", nullable: false),
+                    vote_type = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vote", x => x.VoteId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Administrator",
                 columns: table => new
                 {
@@ -179,6 +193,9 @@ namespace VotifySystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Party");
+
+            migrationBuilder.DropTable(
+                name: "Vote");
 
             migrationBuilder.DropTable(
                 name: "Voter");

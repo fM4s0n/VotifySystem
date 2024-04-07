@@ -22,6 +22,7 @@ public class VotifyDatabaseContext : DbContext
     public DbSet<ElectionVoter> ElectionVoters { get; set; }
     public DbSet<Election> Elections { get; set; }
     public DbSet<LoginCode> LoginCodes { get; set; }
+    public DbSet<Vote> Votes { get; set; }
 
     /// <summary>
     /// Required for EFCore to create the database
@@ -35,12 +36,15 @@ public class VotifyDatabaseContext : DbContext
         modelBuilder.Entity<Constituency>().ToTable("Constituency");
         modelBuilder.Entity<Party>().ToTable("Party");
         modelBuilder.Entity<ElectionVoter>().ToTable("ElectionVoter").HasKey(ev => new { ev.ElectionId, ev.VoterId });
-        modelBuilder.Entity<Election>()
-            .ToTable("Election")
+        modelBuilder.Entity<Election>().ToTable("Election")
             .HasDiscriminator<string>("election_type")
             .HasValue<FirstPastThePostElection>("FPTP_Election")
             .HasValue<SingleTransferrableVoteElection>("STV_Election");
         modelBuilder.Entity<LoginCode>().ToTable("LoginCode");
+        modelBuilder.Entity<Vote>().ToTable("Vote")
+            .HasDiscriminator<string>("vote_type")
+            .HasValue<FPTPElectionVote>("FPTP")
+            .HasValue<PreferentialElectionVote>("Preferential");
 
         base.OnModelCreating(modelBuilder);
     }
