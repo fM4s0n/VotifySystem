@@ -16,7 +16,7 @@ public partial class frmManageParties : Form
 
     List<Party> _parties = [];
 
-    public frmManageParties(IDbService dbService)
+    public frmManageParties()
     {
         InitializeComponent();
 
@@ -85,12 +85,12 @@ public partial class frmManageParties : Form
 
         if (elections?.Count > 0)
         {
-            MessageBox.Show($"Warning - this party is has {candidates} candidates associated with this Party. These candidates are not part of {elections.Count} ongoing or planned elections. Deleteing this party will also delete these candidates. The deletion will not be performed.", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            MessageBox.Show($"Warning - this party is has {candidates} candidates associated with this Party. These candidates are not part of {elections.Count} ongoing or planned elections. Deleting this party will also delete these candidates. The deletion will not be performed.", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             return false;
         }
         else if ((elections == null || elections.Count == 0) && (candidates == null || candidates.Count > 0))
         {
-            DialogResult dr = MessageBox.Show($"Warning - this party is has {candidates} candidates associated with this Party. These candidates are not part of any ongoing or planned elections. Deleteing this party will also delete these candidates. Do you wish to continue", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            DialogResult dr = MessageBox.Show($"Warning - this party is has {candidates} candidates associated with this Party. These candidates are not part of any ongoing or planned elections. Deleting this party will also delete these candidates. Do you wish to continue", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             
             if (dr != DialogResult.OK)
                 return false;

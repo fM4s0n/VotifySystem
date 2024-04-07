@@ -10,8 +10,7 @@ namespace VotifySystem.Controls;
 /// </summary>
 public partial class ctrAdminHome : UserControl
 {
-    private IUserService? _userService;
-    private IDbService? _dbService;
+    private readonly IUserService? _userService;
 
     public ctrAdminHome()
     {
@@ -21,7 +20,6 @@ public partial class ctrAdminHome : UserControl
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     /// <summary>
@@ -63,7 +61,7 @@ public partial class ctrAdminHome : UserControl
     /// </summary>
     private void btnManageParties_Click(object sender, EventArgs e)
     {
-        frmManageParties form = new(_dbService!);
+        frmManageParties form = new();
         form.ShowDialog();
     }
 

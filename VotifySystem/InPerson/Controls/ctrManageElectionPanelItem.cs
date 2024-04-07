@@ -14,11 +14,10 @@ namespace VotifySystem.InPerson.Controls;
 public partial class ctrManageElectionPanelItem : UserControl
 {
     private readonly IDbService? _dbService;
-    private readonly IUserService? _userService;
     private readonly int _listIndex;
     private readonly Election? _election;
 
-    public ctrManageElectionPanelItem(Election election, IDbService dbService, IUserService userService, int index)
+    public ctrManageElectionPanelItem(Election election, int index)
     {
         InitializeComponent();
 
@@ -27,7 +26,7 @@ public partial class ctrManageElectionPanelItem : UserControl
 
         _election = election;
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
+
         _listIndex = index;
 
         if (_election != null)
@@ -100,7 +99,7 @@ public partial class ctrManageElectionPanelItem : UserControl
     {
         try
         {
-            frmViewElectionResults frm = new(_dbService!, _election!);
+            frmViewElectionResults frm = new(_election!);
             frm.ShowDialog();
         }
         catch

@@ -6,7 +6,6 @@ namespace VotifySystem.Controls;
 public partial class ctrLoginBase : UserControl
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
 
     public ctrLoginBase() 
     { 
@@ -16,7 +15,6 @@ public partial class ctrLoginBase : UserControl
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
         _userService!.LogInEvent += UserService_LogInEvent;
     }

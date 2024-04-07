@@ -17,7 +17,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
     private readonly List<Party>? _allParties;
     private List<Candidate>? _candidates;
 
-    public ctrResultsConstituencyPanelItem(IDbService dbService, Constituency constituency)
+    public ctrResultsConstituencyPanelItem(Constituency constituency)
     {
         InitializeComponent();
 
@@ -26,7 +26,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _constituency = constituency;
-        _allParties = _dbService.GetDatabaseContext().Parties.ToList();
+        _allParties = _dbService!.GetDatabaseContext().Parties.ToList();
 
         InitUI();
 
@@ -54,7 +54,7 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
             int pos = _candidates.IndexOf(candidate) + 1;
             string partyName = _allParties!.First(p => p.PartyId == candidate.PartyId)?.Name ?? string.Empty;
 
-            CandidateDataGridItem item = new(pos, candidate.FullName, partyName, candidate.VotesReceived);
+            CandidateDataGridItem item = new(pos, candidate.FullName, partyName, candidate.GetVotesReceived());
             gridItems.Add(item);
         }
 

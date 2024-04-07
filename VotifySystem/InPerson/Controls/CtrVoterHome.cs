@@ -10,18 +10,12 @@ namespace VotifySystem.Controls;
 /// </summary>
 public partial class ctrVoterHome : UserControl
 {
-    private IUserService? _userService;
-    private IDbService? _dbService;
-
     public ctrVoterHome()
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
-
-        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     /// <summary>

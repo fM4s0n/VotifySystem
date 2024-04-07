@@ -13,7 +13,7 @@ internal partial class frmCreateAccount : Form
 {
     private readonly IUserService? _userService;
     
-    internal frmCreateAccount(IUserService userService)
+    internal frmCreateAccount()
     {
         InitializeComponent();
 

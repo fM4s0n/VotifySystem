@@ -17,7 +17,7 @@ public partial class frmViewElectionResults : Form
     private readonly List<Candidate>? _candidates;
     private readonly List<Constituency>? _electionConstituencies;
 
-    public frmViewElectionResults(IDbService dbService, Election election)
+    public frmViewElectionResults(Election election)
     {
         InitializeComponent();
 
@@ -27,7 +27,7 @@ public partial class frmViewElectionResults : Form
         _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _election = election;        
         
-        _candidates = _dbService.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();
+        _candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == _election.ElectionId).ToList();
         _electionConstituencies = _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == _election!.ElectionId).ToList();
 
         Init();
@@ -66,7 +66,7 @@ public partial class frmViewElectionResults : Form
     {
         foreach (Constituency constituency in _electionConstituencies!)
         {
-            ctrResultsConstituencyPanelItem item = new(_dbService!, constituency);
+            ctrResultsConstituencyPanelItem item = new(constituency);
 
             flpResults.Controls.Add(item);
         }

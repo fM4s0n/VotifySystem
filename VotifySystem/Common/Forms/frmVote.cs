@@ -91,7 +91,7 @@ public partial class frmVote : Form
     private void GetElectionVoters()
     {
         _electionVoters = _dbService!.GetDatabaseContext().ElectionVoters
-            .Where(ev => ev.VoterId == _userService.GetCurrentUser()!.Id).ToList();
+            .Where(ev => ev.VoterId == _userService!.GetCurrentUser()!.Id).ToList();
 
         _electionVoters = _electionVoters.Where(ev => ev.HasVoted == false).ToList();
     }
