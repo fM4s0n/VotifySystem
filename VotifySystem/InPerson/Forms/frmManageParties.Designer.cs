@@ -170,7 +170,7 @@ partial class frmManageParties
         Controls.Add(grpAddParty);
         Name = "frmManageParties";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "frmCreateParty";
+        Text = "Votifty | Manage Parties";
         grpAddParty.ResumeLayout(false);
         grpAddParty.PerformLayout();
         grpSelectCountry.ResumeLayout(false);

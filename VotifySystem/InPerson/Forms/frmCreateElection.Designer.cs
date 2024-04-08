@@ -474,7 +474,7 @@ partial class frmCreateElection
         Margin = new Padding(3, 2, 3, 2);
         Name = "frmCreateElection";
         StartPosition = FormStartPosition.CenterScreen;
-        Text = "FrmCreateElection";
+        Text = "Votify | Create Election";
         grpElectionDates.ResumeLayout(false);
         grpElectionDates.PerformLayout();
         grpConstituencies.ResumeLayout(false);
