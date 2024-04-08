@@ -130,7 +130,7 @@ public partial class ctrLogin : UserControl
     /// </summary>
     private void btnCreateAccount_Click(object sender, EventArgs e)
     {
-        frmCreateAccount frmCreateAccount = new(_userService!);
+        frmCreateAccount frmCreateAccount = new();
         frmCreateAccount.ShowDialog();
     }
 

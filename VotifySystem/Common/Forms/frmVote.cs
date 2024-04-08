@@ -8,7 +8,6 @@ namespace VotifySystem.Common.Forms;
 public partial class frmVote : Form
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
     private readonly IElectionVoterService? _electionVoterService;
 
@@ -34,7 +33,6 @@ public partial class frmVote : Form
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _electionVoterService = Program.ServiceProvider!.GetService(typeof(IElectionVoterService)) as IElectionVoterService;
 
@@ -188,6 +186,7 @@ public partial class frmVote : Form
             switch (electionVoteMechanism)
             {
                 case ElectionVoteMechanism.FPTP:
+                    ctrFPTPVote.SetElection(_validElections!.First(e => e.ElectionId == cmbSelectElection.SelectedValue.ToString()));
                     ctrFPTPVote.Visible = true;
                     break;
                 case ElectionVoteMechanism.STV:

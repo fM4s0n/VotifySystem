@@ -11,7 +11,6 @@ namespace VotifySystem.InPerson.Forms;
 /// </summary>
 public partial class frmManageParties : Form
 {
-    private readonly IDbService? _dbService;
     private readonly IElectionService? _electionService;
     private readonly ICandidateService? _candidateService;
     private readonly IPartyService? _partyService;
@@ -25,7 +24,6 @@ public partial class frmManageParties : Form
         if (DesignMode)
             return;
 
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;

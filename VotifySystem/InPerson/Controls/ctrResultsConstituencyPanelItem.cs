@@ -11,7 +11,6 @@ namespace VotifySystem.InPerson.Controls;
 /// </summary>
 public partial class ctrResultsConstituencyPanelItem : UserControl
 {
-    private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
     private readonly IPartyService? _partyService;
 
@@ -27,7 +26,6 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         if (DesignMode)
             return;
         
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
 

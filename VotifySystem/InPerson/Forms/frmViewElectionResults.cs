@@ -13,7 +13,6 @@ namespace VotifySystem.InPerson.Forms;
 /// </summary>
 public partial class frmViewElectionResults : Form
 {
-    private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
     private readonly IConstituencyService? _constituencyService;
     private readonly IPartyService? _partyService;
@@ -29,7 +28,6 @@ public partial class frmViewElectionResults : Form
         if (DesignMode)
             return;
 
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _constituencyService = Program.ServiceProvider!.GetService(typeof(IConstituencyService)) as IConstituencyService;
         _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;

@@ -1,7 +1,6 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models.Elections;
-using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Forms;
 using VotifySystem.InPerson.Forms;
 using static VotifySystem.Forms.frmCreateElection; //TODO: make enums class

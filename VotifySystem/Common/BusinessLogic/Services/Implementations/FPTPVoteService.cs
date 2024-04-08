@@ -7,19 +7,19 @@ public class FPTPVoteService : IFPTPVoteService
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
     //<inheritdoc/>
-    public void InsertFPTPVote(FPTPElectionVote vote)
+    public void InsertVote(FPTPElectionVote vote)
     {
         _dbService!.InsertEntity(vote);
     }
 
     //<inheritdoc/>
-    public void UpdateFPTPVote(FPTPElectionVote vote)
+    public void UpdateVote(FPTPElectionVote vote)
     {
         _dbService!.UpdateEntity(vote);
     }
 
     //<inheritdoc/>
-    public void DeleteFPTPVote(FPTPElectionVote vote)
+    public void DeleteVote(FPTPElectionVote vote)
     {
         _dbService!.DeleteEntity(vote);
     }
@@ -50,5 +50,17 @@ public class FPTPVoteService : IFPTPVoteService
                         .ToList();
 
         return votes.Count > 0 ? votes : null;
+    }
+
+    //<inheritdoc/>
+    public int GetFPTPVotesCountByCandidateId(string candidateId)
+    {
+        int votes = 0;
+        List<FPTPElectionVote>? candidateVotes = GetFPTPVotesByCandidateId(candidateId);
+
+        if (candidateVotes != null)        
+            votes = candidateVotes.Count;
+        
+        return votes;
     }
 }

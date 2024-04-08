@@ -12,6 +12,7 @@ public class DataSeedHelper()
 {
     private readonly IUserService? _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IFPTPVoteService? _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
     
     /// <summary>
     /// seeds data if the objects are not already in the database
@@ -79,10 +80,29 @@ public class DataSeedHelper()
         Candidate redCandidateManchester = new("Red Candidate", "Manchester", manchester.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
         Candidate blueCandidateManchester = new("Blue Candidate", "Manchester", manchester.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
 
-        redCandidateLeeds.AddVotes(100);
-        blueCandidateLeeds.AddVotes(200);
-        redCandidateManchester.AddVotes(300);
-        blueCandidateManchester.AddVotes(400);
+        for (int i = 0; i < 10; i++)
+        {
+            if (VoteFactory.CreateVote(blueCandidateLeeds.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueLeedsVote)
+                _fptpVoteService!.InsertVote(blueLeedsVote);
+        }
+
+        for (int i = 0; i < 20; i++)
+        {
+            if (VoteFactory.CreateVote(redCandidateLeeds.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redLeedsVote)
+                _fptpVoteService!.InsertVote(redLeedsVote);
+        }
+
+        for (int i = 0; i < 30; i++)
+        {
+            if (VoteFactory.CreateVote(blueCandidateManchester.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueManchesterVote)
+                _fptpVoteService!.InsertVote(blueManchesterVote);
+        }
+
+        for (int i = 0; i < 40; i++)
+        {
+            if (VoteFactory.CreateVote(redCandidateManchester.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redManchesterVote)
+                _fptpVoteService!.InsertVote(redManchesterVote);
+        }
 
         _dbService.InsertRange(new List<Candidate> { redCandidateLeeds, blueCandidateLeeds });
 
@@ -115,10 +135,29 @@ public class DataSeedHelper()
         Candidate redCandidateNewcastle = new("Red Candidate", "newcastle", newcastle.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
         Candidate blueCandidateNewcastle = new("Blue Candidate", "newcastle", newcastle.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
 
-        redCandidateYork.AddVotes(100);
-        blueCandidateYork.AddVotes(200);
-        redCandidateNewcastle.AddVotes(300);
-        blueCandidateNewcastle.AddVotes(300);
+        for (int i = 0; i < 10; i++)
+        {
+            if (VoteFactory.CreateVote(redCandidateYork.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redYorkVote)
+                _fptpVoteService!.InsertVote(redYorkVote);
+        }
+
+        for (int i = 0; i < 20; i++)
+        {
+            if (VoteFactory.CreateVote(blueCandidateYork.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueYorkVote)
+                _fptpVoteService!.InsertVote(blueYorkVote);
+        }
+
+        for (int i = 0; i < 30; i++)
+        {
+            if (VoteFactory.CreateVote(redCandidateNewcastle.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redNewcastleVote)
+                _fptpVoteService!.InsertVote(redNewcastleVote);
+        }
+
+        for (int i = 0; i < 30; i++)
+        {
+            if (VoteFactory.CreateVote(blueCandidateNewcastle.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueNewcastleVote)
+                _fptpVoteService!.InsertVote(blueNewcastleVote);
+        }
 
         _dbService.InsertRange(new List<Candidate> { redCandidateYork, blueCandidateYork, redCandidateNewcastle, blueCandidateNewcastle });
 

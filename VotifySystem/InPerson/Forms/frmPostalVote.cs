@@ -166,7 +166,7 @@ public partial class frmPostalVote : Form
                 for (int i = 0; i < votesToAdd; i++)
                 {
                     FPTPElectionVote? vote = VoteFactory.CreateVote(candidate.ElectionId, candidate.ElectionVoteMechanism) as FPTPElectionVote;
-                    _fptpVoteService!.InsertFPTPVote(vote!);
+                    _fptpVoteService!.InsertVote(vote!);
                 }
             }
 

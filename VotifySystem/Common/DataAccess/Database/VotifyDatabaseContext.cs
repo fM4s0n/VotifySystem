@@ -46,7 +46,7 @@ public class VotifyDatabaseContext : DbContext
             .HasDiscriminator<string>("vote_type")
             .HasValue<FPTPElectionVote>("FPTP")
             .HasValue<PreferentialElectionVote>("Preferential");
-        modelBuilder.Entity<PreferentialVotePreference>().ToTable("PreferentialVotePreference");
+        modelBuilder.Entity<PreferentialVotePreference>().ToTable("PreferentialVotePreference").HasKey(p => p.PreferenceId);
 
         base.OnModelCreating(modelBuilder);
     }

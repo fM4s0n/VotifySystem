@@ -11,19 +11,19 @@ public interface IFPTPVoteService
     /// Insert a new FPTP vote into the database
     /// </summary>
     /// <param name="vote">Vote to be inserted</param>
-    void InsertFPTPVote(FPTPElectionVote vote);
+    void InsertVote(FPTPElectionVote vote);
 
     /// <summary>
     /// Update an existing FPTP vote in the database
     /// </summary>
     /// <param name="vote">Vote to be updated</param>
-    void UpdateFPTPVote(FPTPElectionVote vote);
+    void UpdateVote(FPTPElectionVote vote);
 
     /// <summary>
     /// Delete a FPTP vote from the database
     /// </summary>
     /// <param name="vote">Vote to be deleted</param>
-    void DeleteFPTPVote(FPTPElectionVote vote);
+    void DeleteVote(FPTPElectionVote vote);
 
     /// <summary>
     /// Get a FPTP vote by its id

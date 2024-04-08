@@ -1,6 +1,5 @@
 ﻿using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
-using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
 
 namespace VotifySystem.Common.Controls;
@@ -10,12 +9,11 @@ namespace VotifySystem.Common.Controls;
 /// </summary>
 public partial class ctrFPTPVote : UserControl
 {
-    private readonly IDbService? _dbService;
     private readonly ICandidateService? _candidateService;
     private readonly IFPTPVoteService? _fptpVoteService;
     private readonly IPartyService? _partyService;
 
-    private readonly Election? _election;
+    private  Election? _election;
     private List<Candidate> _candidates = [];
     private List<Party> _parties = [];
     List<ComboBoxCandidate> _comboBoxCandidates = [];
@@ -23,20 +21,21 @@ public partial class ctrFPTPVote : UserControl
     public delegate void VoteCompletedEventHandler(object sender, EventArgs e);
     public event VoteCompletedEventHandler? VoteCompleted;
 
-    public ctrFPTPVote(Election election)
+    public ctrFPTPVote()
     {
         InitializeComponent();
 
         if (DesignMode) 
             return;
 
-        _election = election;
-
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
         _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
+    }
 
+    public void SetElection(Election election)
+    {
+        _election = election;
         Init();
     }
 
@@ -98,7 +97,7 @@ public partial class ctrFPTPVote : UserControl
         FPTPElectionVote? vote = VoteFactory.CreateVote(_election!.ElectionId, ElectionVoteMechanism.FPTP) as FPTPElectionVote;
         vote!.CastVote(candidate.Id);
 
-        _fptpVoteService!.InsertFPTPVote(vote);
+        _fptpVoteService!.InsertVote(vote);
 
         OnVoteCompleted();
     }

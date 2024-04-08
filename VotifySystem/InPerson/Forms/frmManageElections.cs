@@ -10,8 +10,6 @@ namespace VotifySystem.InPerson.Forms;
 /// </summary>
 public partial class frmManageElections : Form
 {
-    private readonly IDbService? _dbService;
-    private readonly IUserService? _userService;
     private List<Election>? _elections;
     private readonly IElectionService? _electionService;
 
@@ -24,10 +22,6 @@ public partial class frmManageElections : Form
 
         IServiceProvider serviceProvider = Program.ServiceProvider!;
 
-        _userService = serviceProvider!.GetService(typeof(IUserService)) as IUserService;
-
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         Load += frmManageElections_Load;
@@ -48,7 +42,7 @@ public partial class frmManageElections : Form
 
         for (int i = 0; i < _elections.Count; i++)
         {
-            ctrManageElectionPanelItem epi = new (_elections[i], _dbService, _userService!, i);
+            ctrManageElectionPanelItem epi = new (_elections[i], i);
             flpElections.Controls.Add(epi);
         }
     }
