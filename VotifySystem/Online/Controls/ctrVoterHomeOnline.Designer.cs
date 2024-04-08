@@ -35,6 +35,7 @@ partial class ctrVoterHomeOnline
         grpVoteOnline = new GroupBox();
         btnRegister = new Button();
         btnVoteOnline = new Button();
+        btnCopyCode = new Button();
         grpLoginCode.SuspendLayout();
         grpVoteOnline.SuspendLayout();
         SuspendLayout();
@@ -51,6 +52,7 @@ partial class ctrVoterHomeOnline
         // 
         // grpLoginCode
         // 
+        grpLoginCode.Controls.Add(btnCopyCode);
         grpLoginCode.Controls.Add(lblExpiryWarning);
         grpLoginCode.Controls.Add(lblLoginCode);
         grpLoginCode.Controls.Add(btnGenerateLoginCode);
@@ -76,7 +78,7 @@ partial class ctrVoterHomeOnline
         // 
         lblLoginCode.AutoSize = true;
         lblLoginCode.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblLoginCode.Location = new Point(87, 90);
+        lblLoginCode.Location = new Point(6, 90);
         lblLoginCode.Name = "lblLoginCode";
         lblLoginCode.Size = new Size(177, 37);
         lblLoginCode.TabIndex = 1;
@@ -114,6 +116,16 @@ partial class ctrVoterHomeOnline
         btnVoteOnline.UseVisualStyleBackColor = true;
         btnVoteOnline.Click += btnVoteOnline_Click;
         // 
+        // btnCopyCode
+        // 
+        btnCopyCode.Location = new Point(235, 98);
+        btnCopyCode.Name = "btnCopyCode";
+        btnCopyCode.Size = new Size(121, 23);
+        btnCopyCode.TabIndex = 3;
+        btnCopyCode.Text = "Copy to clipboard";
+        btnCopyCode.UseVisualStyleBackColor = true;
+        btnCopyCode.Click += btnCopyCode_Click;
+        // 
         // ctrVoterHomeOnline
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -137,4 +149,5 @@ partial class ctrVoterHomeOnline
     private GroupBox grpVoteOnline;
     private Button btnVoteOnline;
     private Button btnRegister;
+    private Button btnCopyCode;
 }

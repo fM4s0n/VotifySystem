@@ -50,9 +50,15 @@ public partial class ctrVoterHomeOnline : UserControl
         {
             frmVote frm = new();
             frm.ShowDialog();
-        } catch 
-        { 
-            return; 
+        }
+        catch
+        {
+            return;
         }
     }
+
+    /// <summary>
+    /// Copies the login code to the clipboard
+    /// </summary>
+    private void btnCopyCode_Click(object sender, EventArgs e) => Clipboard.SetText(lblLoginCode.Text);    
 }
