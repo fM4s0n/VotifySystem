@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using VotifySystem.Common.BusinessLogic.Services;
+﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models.Elections;
 
 namespace VotifySystem.Common.Models;

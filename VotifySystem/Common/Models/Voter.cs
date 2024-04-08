@@ -29,22 +29,6 @@ public class Voter : User
         UserLevel = UserLevel.Voter;
         Country = country;
     }
-
-    public static readonly Dictionary<string, string> VoteMethodFriendlyNames = new()
-    {
-        {"Online", "Online" },
-        {"Postal", "Postal" },
-        {"InPerson", "In Person" }
-    };
 }
 
-/// <summary>
-/// enums for different methods of voting
-/// A voter may only have 1 method selected at any time but may change.
-/// </summary>
-public enum VoteMethod
-{
-    Online,
-    Postal,
-    InPerson
-}
+
