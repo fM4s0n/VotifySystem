@@ -29,6 +29,7 @@ public partial class frmPostalVote : Form
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
+        _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
 
         Init();
     }

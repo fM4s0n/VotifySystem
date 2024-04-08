@@ -58,7 +58,7 @@ public partial class frmManageParties : Form
             return;
 
         // Multiselect disabled so able to hardcode lvParties.SelectedItems[0]
-        Party partyToDelete = _parties.First(p => p.Name == lvParties.SelectedItems[0].Text);
+        Party partyToDelete = _parties!.First(p => p.Name == lvParties.SelectedItems[0].Text);
 
         if (ValidatePartyDeletion(partyToDelete) == false)
             return;

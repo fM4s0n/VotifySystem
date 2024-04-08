@@ -120,7 +120,7 @@ public class DataSeedHelper()
         DateTime end = new(2024, 4, 1, 21, 0, 0);
         string? userId = _userService!.GetAllAdministrators()?.FirstOrDefault(u => u.Username == "DefaultAdmin").Id;
 
-        Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId);
+        Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId!);
 
         // Create Constituencies
         Constituency york = new("York", election.ElectionId, Country.UK);
