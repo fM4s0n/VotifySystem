@@ -18,9 +18,9 @@ public class UserService() : IUserService
     /// </summary>
     /// <param name="dbService">Mocked db service for testing</param>
     /// <param name="isForApp">true by default, false used for unit tests</param>
-    public UserService(IDbService? dbService = null, bool isForApp = true) : this()
+    public UserService(IDbService? dbService = null) : this()
     {
-        _dbService = isForApp ? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService : dbService;
+        _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
     }
 
     private User? _currentUser = null;

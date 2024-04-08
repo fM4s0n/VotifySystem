@@ -17,7 +17,7 @@ public class UserServiceTests
     {
         // substitute the IDbService
         IDbService dbService = Substitute.For<IDbService>();
-        _userService = new UserService(dbService, false);
+        _userService = new UserService(dbService);
     }
 
     [TestMethod]
