@@ -3,6 +3,7 @@ using System.Resources;
 using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models;
+using static VotifySystem.Common.BusinessLogic.Helpers.VoterHelper;
 
 namespace VotifySystem.Common.Forms;
 

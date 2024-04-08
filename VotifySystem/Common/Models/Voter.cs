@@ -1,4 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
+using static VotifySystem.Common.BusinessLogic.Helpers.VoterHelper;
 
 namespace VotifySystem.Common.Models;
 

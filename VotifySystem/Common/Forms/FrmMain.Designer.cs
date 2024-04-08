@@ -37,7 +37,7 @@
             // 
             // ctrMainDefault
             // 
-            ctrMainDefault.Location = new Point(22, 12);
+            ctrMainDefault.Location = new Point(114, 51);
             ctrMainDefault.Margin = new Padding(3, 4, 3, 4);
             ctrMainDefault.Name = "ctrMainDefault";
             ctrMainDefault.Size = new Size(750, 425);
@@ -62,7 +62,7 @@
             // 
             // ctrVoterHome
             // 
-            ctrVoterHome.Location = new Point(37, 45);
+            ctrVoterHome.Location = new Point(51, 51);
             ctrVoterHome.Margin = new Padding(3, 2, 3, 2);
             ctrVoterHome.Name = "ctrVoterHome";
             ctrVoterHome.Size = new Size(875, 450);
