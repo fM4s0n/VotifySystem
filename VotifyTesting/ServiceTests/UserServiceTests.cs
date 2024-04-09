@@ -12,6 +12,7 @@ namespace VotifyTesting.ServiceTests;
 public class UserServiceTests
 {
     UserService? _userService;
+
     [TestInitialize]
     public void SetUp()
     {

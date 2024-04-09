@@ -2,10 +2,10 @@
 using VotifySystem.Common.Models;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
-internal class CandidateService : ICandidateService
+public class CandidateService(IDbService? dbService = null, IFPTPElectionVoteService? voteService = null) : ICandidateService
 {
-    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-    private readonly IFPTPElectionVoteService? _voteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
+    private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IFPTPElectionVoteService? _voteService = voteService ?? Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
 
     //<inheritdoc/>
     public void InsertCandidate(Candidate candidate)
