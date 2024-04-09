@@ -29,13 +29,6 @@ public interface ICandidateService
     List<Candidate>? GetAllCandidates();
 
     /// <summary>
-    /// Gets a candidate by their candidate ID.
-    /// </summary>
-    /// <param name="id">The candidate ID to search for.</param>
-    /// <returns>The candidate with the specified ID, null if not found</returns>
-    Candidate? GetCandidateByCandidateId(string id);
-
-    /// <summary>
     /// Gets all candidates in a specific election.
     /// </summary>
     /// <param name="electionId"></param>

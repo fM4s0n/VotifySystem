@@ -13,10 +13,10 @@ public class LoginCode
     public string UserId { get; set; } = string.Empty;
     public bool Used { get; set; } = false;
     public DateTime GeneratedDate { get; set; } = DateTime.Now;
-    [NotMapped]
-    public bool Valid 
+
+    public bool GetValidity() 
     { 
-        get { return Used == false && DateTime.Now < GeneratedDate.AddMinutes(30); } 
+       return Used == false && DateTime.Now < GeneratedDate.AddMinutes(30); 
     }
 
     public LoginCode() { }

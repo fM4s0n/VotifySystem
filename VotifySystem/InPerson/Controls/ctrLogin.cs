@@ -88,7 +88,7 @@ public partial class ctrLogin : UserControl
             return;
         }
 
-        if (foundCode.Valid == false)
+        if (foundCode.GetValidity() == false)
         {
             MessageBox.Show("Login code is invalid or expired", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;

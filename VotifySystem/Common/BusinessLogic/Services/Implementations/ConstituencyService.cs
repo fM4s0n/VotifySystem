@@ -43,10 +43,4 @@ internal class ConstituencyService : IConstituencyService
     {
         return _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == electionId).ToList() ?? null;
     }
-
-    //<inheritdoc/>
-    public Constituency? GetConstituencyByConstituencyId(string constituencyId)
-    {
-        return _dbService!.GetDatabaseContext().Constituencies.FirstOrDefault(c => c.ConstituencyId == constituencyId) ?? null;
-    }
 }

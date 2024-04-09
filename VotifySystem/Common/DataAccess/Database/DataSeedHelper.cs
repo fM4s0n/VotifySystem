@@ -21,10 +21,10 @@ public class DataSeedHelper()
     public void SeedDataIfNeeded()
     {
         if (_dbService!.GetDatabaseContext().Users.Any(a => a.Username == "DefaultAdmin") == false)
-            _dbService.InsertEntity(CreateInitialAdministrator());
+            _dbService.InsertEntity(CreateDefaultAdministrator());
 
         if (_dbService.GetDatabaseContext().Users.Any(v => v.Username == "DefaultVoter") == false)
-            _dbService.InsertEntity(CreateInitialVoter());
+            _dbService.InsertEntity(CreateDefaultVoter());
 
         SeedParties();
 
@@ -181,7 +181,7 @@ public class DataSeedHelper()
     /// Create the default voter for seed data
     /// </summary>
     /// <returns>Instance of the default voter</returns>
-    private Voter CreateInitialVoter()
+    private Voter CreateDefaultVoter()
     {
         DateTime dob = new(year: 1980, 1, 1);
         Voter defaultVoter = new("Default", "Voter", "DefaultVoter", VoteMethod.InPerson, "Default address", dob, Country.UK);
@@ -194,7 +194,7 @@ public class DataSeedHelper()
     /// Create instance of the Default Administrator
     /// </summary>
     /// <returns>Default administrator for seed data</returns>
-    private Administrator CreateInitialAdministrator()
+    private Administrator CreateDefaultAdministrator()
     {
         Administrator defaultAdmin = new("Default", "Admin", "DefaultAdmin");
         defaultAdmin.Password = _userService!.HashPassword(defaultAdmin, "Password");

@@ -5,8 +5,6 @@
 /// </summary>
 public class SingleTransferrableVoteElection : Election
 {
-   public readonly ElectionVoteMechanism VoteMechanism = ElectionVoteMechanism.STV;
-
     public SingleTransferrableVoteElection()
     { 
     }

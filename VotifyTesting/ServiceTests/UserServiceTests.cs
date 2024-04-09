@@ -159,7 +159,7 @@ public class UserServiceTests
         Assert.AreEqual(voter.Id, result.UserId);
         Assert.IsTrue(result.GeneratedDate < DateTime.Now);
         Assert.IsFalse(result.Used);
-        Assert.IsTrue(result.Valid);
+        Assert.IsTrue(result.GetValidity());
     }
 
     [TestMethod]

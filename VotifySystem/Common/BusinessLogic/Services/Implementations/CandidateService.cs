@@ -31,12 +31,6 @@ internal class CandidateService : ICandidateService
     }
 
     //<inheritdoc/>
-    public Candidate? GetCandidateByCandidateId(string id)
-    {
-        return _dbService!.GetDatabaseContext().Candidates.FirstOrDefault(c => c.Id == id) ?? null;
-    }
-
-    //<inheritdoc/>
     public List<Candidate>? GetCandidatesByElectionId(string electionId)
     {
         return _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == electionId).ToList() ?? null;

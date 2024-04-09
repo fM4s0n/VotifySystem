@@ -5,7 +5,7 @@ namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
 internal class PreferentialVoteService : IPreferentialVoteService
 {
-    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;  
 
     //<inheritdoc/>
     public void InsertVote(PreferentialElectionVote vote)

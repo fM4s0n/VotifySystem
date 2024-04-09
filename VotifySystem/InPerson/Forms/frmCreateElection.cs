@@ -125,7 +125,7 @@ public partial class frmCreateElection : Form
             case SingleTransferrableVoteElection:
                 cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.STV;
                 break;
-            case PreferentialElection:
+            case PreferentialVoteElection:
                 cmbVoteMechanism.SelectedItem = ElectionVoteMechanism.Preferential;
                 break;
             default:

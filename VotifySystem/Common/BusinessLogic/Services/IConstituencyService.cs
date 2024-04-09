@@ -33,13 +33,6 @@ internal interface IConstituencyService
     List<Constituency>? GetAllConstituencies();
 
     /// <summary>
-    /// Gets a constituency by its id.
-    /// </summary>
-    /// <param name="id">Id of the constituency</param>
-    /// <returns>A constituency object if found, null if not</returns>
-    Constituency? GetConstituencyByConstituencyId(string constituencyId);
-
-    /// <summary>
     /// Gets all constituencies by country.
     /// </summary>
     /// <param name="country">Country enum</param>

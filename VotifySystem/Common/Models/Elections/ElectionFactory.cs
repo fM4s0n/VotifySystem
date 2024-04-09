@@ -19,18 +19,21 @@ public static class ElectionFactory
                 return new FirstPastThePostElection
                 {
                     Country = country,
+                    VoteMechanism = ElectionVoteMechanism.FPTP,
                     ElectionId = Guid.NewGuid().ToString()
                 };
             case ElectionVoteMechanism.STV:
                 return new SingleTransferrableVoteElection
                 {
                     Country = country,
+                    VoteMechanism = ElectionVoteMechanism.STV,
                     ElectionId = Guid.NewGuid().ToString()
                 };
             case ElectionVoteMechanism.Preferential:
-                return new PreferentialElection
+                return new PreferentialVoteElection
                 {
                     Country = country,
+                    VoteMechanism = ElectionVoteMechanism.Preferential,
                     ElectionId = Guid.NewGuid().ToString()
                 };
             default:
@@ -67,7 +70,7 @@ public static class ElectionFactory
                     ElectionAdministratorId = userId
                 };
             case ElectionVoteMechanism.Preferential:
-                return new PreferentialElection
+                return new PreferentialVoteElection
                 {
                     Country = country,
                     ElectionId = Guid.NewGuid().ToString(),

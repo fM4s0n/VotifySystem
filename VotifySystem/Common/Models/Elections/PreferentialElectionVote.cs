@@ -28,13 +28,13 @@ public class PreferentialElectionVote : Vote
     /// Creates a preferential vote with a list of candidates.
     /// Candidates are ranked in the order they are passed in.
     /// </summary>
-    /// <param name="candidates"></param>
+    /// <param name="candidateIds"></param>
     /// <returns>PreferentialElectionVote object with all candidates ranked</returns>
-    public PreferentialElectionVote CastVote(List<string> candidates)
+    public PreferentialElectionVote CastVote(List<string> candidateIds)
     {
         int nextRank = _preferences.Count + 1;
 
-        foreach (string candidate in candidates)
+        foreach (string candidate in candidateIds)
         {
             PreferentialVotePreference? preference = new(ElectionId, VoteId, nextRank, candidate);
             _preferences.Add(preference);
