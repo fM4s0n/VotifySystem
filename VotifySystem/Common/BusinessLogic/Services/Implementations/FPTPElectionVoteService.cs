@@ -13,18 +13,6 @@ public class FPTPElectionVoteService : IFPTPElectionVoteService
     }
 
     //<inheritdoc/>
-    public void UpdateVote(FPTPElectionVote vote)
-    {
-        _dbService!.UpdateEntity(vote);
-    }
-
-    //<inheritdoc/>
-    public void DeleteVote(FPTPElectionVote vote)
-    {
-        _dbService!.DeleteEntity(vote);
-    }
-
-    //<inheritdoc/>
     public FPTPElectionVote? GetFPTPVoteById(string voteId)
     {
         return _dbService!.GetDatabaseContext().Votes.FirstOrDefault(v => v.VoteId == voteId) as FPTPElectionVote ?? null;

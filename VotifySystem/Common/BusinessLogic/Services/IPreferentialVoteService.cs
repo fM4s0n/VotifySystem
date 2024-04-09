@@ -14,18 +14,6 @@ public interface IPreferentialVoteService
     void InsertVote(PreferentialElectionVote vote);
 
     /// <summary>
-    /// Updates a vote in the database.
-    /// </summary>
-    /// <param name="vote">Vote to be updated</param>
-    void UpdateVote(PreferentialElectionVote vote);
-
-    /// <summary>
-    /// Deletes a vote from the database.
-    /// </summary>
-    /// <param name="vote">Vote to be deleted</param>
-    void DeleteVote(PreferentialElectionVote vote);
-
-    /// <summary>
     /// Gets a vote by its voteId.
     /// </summary>
     /// <param name="voteId">voteId</param>

@@ -7,6 +7,6 @@ public class CandidateDataGridItem(int position, string name, string party, int 
 {
     public int Position { get; set; } = position;
     public string Name { get; set; } = name;
-    public string Party { get; set; } = party;
+    public string PartyId { get; set; } = party;
     public int Votes { get; set; } = votes;
 }

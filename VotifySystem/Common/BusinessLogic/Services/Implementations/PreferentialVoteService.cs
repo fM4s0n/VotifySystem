@@ -14,18 +14,6 @@ internal class PreferentialVoteService : IPreferentialVoteService
     }
 
     //<inheritdoc/>
-    public void UpdateVote(PreferentialElectionVote vote)
-    {
-        _dbService!.UpdateEntity(vote);
-    }
-
-    //<inheritdoc/>
-    public void DeleteVote(PreferentialElectionVote vote)
-    {
-        _dbService!.DeleteEntity(vote);
-    }
-
-    //<inheritdoc/>
     public List<PreferentialVotePreference>? GetPreferencesByElectionId(string electionId)
     {
         return _dbService!.GetDatabaseContext().PreferentialVotePreferences.Where(p => p.ElectionId == electionId).ToList() ?? null;
@@ -37,9 +25,4 @@ internal class PreferentialVoteService : IPreferentialVoteService
         return _dbService!.GetDatabaseContext().PreferentialVotePreferences.Where(p => p.VoteId == voteId).ToList() ?? null;
     }
 
-    //<inheritdoc/>
-    public PreferentialElectionVote? GetVoteByVoteId(string voteId)
-    {
-        return _dbService!.GetDatabaseContext().Votes.FirstOrDefault(v => v.VoteId == voteId) as PreferentialElectionVote ?? null;
-    }
 }

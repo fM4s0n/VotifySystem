@@ -14,25 +14,6 @@ public interface IFPTPElectionVoteService
     void InsertVote(FPTPElectionVote vote);
 
     /// <summary>
-    /// Update an existing FPTP vote in the database
-    /// </summary>
-    /// <param name="vote">Vote to be updated</param>
-    void UpdateVote(FPTPElectionVote vote);
-
-    /// <summary>
-    /// Delete a FPTP vote from the database
-    /// </summary>
-    /// <param name="vote">Vote to be deleted</param>
-    void DeleteVote(FPTPElectionVote vote);
-
-    /// <summary>
-    /// Get a FPTP vote by its id
-    /// </summary>
-    /// <param name="voteId">voteId</param>
-    /// <returns>Vote object if found, null if not</returns>
-    FPTPElectionVote? GetFPTPVoteById(string voteId);
-
-    /// <summary>
     /// Get all FPTP votes for an election
     /// </summary>
     /// <param name="electionId">ElectionId</param>
