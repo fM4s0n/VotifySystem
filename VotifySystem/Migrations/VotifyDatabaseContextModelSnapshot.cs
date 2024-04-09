@@ -48,6 +48,9 @@ namespace VotifySystem.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("VotesReceived")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("Candidate", (string)null);
@@ -95,6 +98,9 @@ namespace VotifySystem.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("VoteMechanism")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("election_type")
                         .IsRequired()

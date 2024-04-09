@@ -16,40 +16,30 @@ public class FPTPResultsHelperTests
         string electionId = "1";
 
         // Arrange
-        //List<Candidate> candidates =
-        //[
-        //    Substitute.For<Candidate>(),
-        //    Substitute.For<Candidate>(),
-        //    Substitute.For<Candidate>(),
-        //    Substitute.For<Candidate>(),
-        //    Substitute.For<Candidate>()
-        //];
-
-        var candidate1 = Substitute.For<Candidate>();
-        candidate1.VotesReceived.Returns(x => 10);
-
-        // Substitute the GetVotesReceived() method for each candidate
-        //candidates[0].GetVotesReceived().Returns(10);
-        //candidates[1].GetVotesReceived().Returns(10);
-        //candidates[2].GetVotesReceived().Returns(30);
-        //candidates[3].GetVotesReceived().Returns(40);
-        //candidates[4].GetVotesReceived().Returns(40);
+        List<Candidate> candidates =
+        [
+            new Candidate { Id = "1", ElectionId = electionId, VotesReceived = 10 },
+            new Candidate { Id = "2", ElectionId = electionId, VotesReceived = 10 },
+            new Candidate { Id = "3", ElectionId = electionId, VotesReceived = 30 },
+            new Candidate { Id = "4", ElectionId = electionId, VotesReceived = 40 },
+            new Candidate { Id = "5", ElectionId = electionId, VotesReceived = 40 }
+        ];
 
         //Act
-        Assert.AreEqual(10, candidate1.VotesReceived);
+
         //Assert
-        //    List<Candidate> orderedCandidates = FPTPResultsHelper.OrderCandidatesByVotes(candidates);
+        List<Candidate> orderedCandidates = FPTPResultsHelper.OrderCandidatesByVotes(candidates);
 
-        //    foreach (Candidate candidate in orderedCandidates)
-        //    {
-        //        int index = orderedCandidates.IndexOf(candidate);
-        //        Assert.AreEqual(index + 1, candidate.ElectionPosition);
-        //    }
+        foreach (Candidate candidate in orderedCandidates)
+        {
+            int index = orderedCandidates.IndexOf(candidate);
+            Assert.AreEqual(index + 1, candidate.ElectionPosition);
+        }
 
-        //    List<int> orderedCandidatesVotes = orderedCandidates.Select(c => c.GetVotesReceived()).ToList();
+        List<int> orderedCandidatesVotes = orderedCandidates.Select(c => c.VotesReceived).ToList();
 
-        //    //check if the list is ordered by votes descending
-        //    Assert.IsTrue(orderedCandidatesVotes.SequenceEqual(orderedCandidatesVotes.OrderByDescending(v => v)));
+        //check if the list is ordered by votes descending
+        Assert.IsTrue(orderedCandidatesVotes.SequenceEqual(orderedCandidatesVotes.OrderByDescending(v => v)));
     }
 
     [TestMethod]
@@ -101,18 +91,12 @@ public class FPTPResultsHelperTests
 
         List<Candidate> candidates =
         [
-            new Candidate { Id = "1", PartyId = "1"},
-            new Candidate { Id = "2", PartyId = "1" },
-            new Candidate { Id = "3", PartyId = "2" },
-            new Candidate { Id = "4", PartyId = "2" },
-            new Candidate { Id = "5", PartyId = "3" }
+            new Candidate { Id = "1", PartyId = "1", VotesReceived = 10},
+            new Candidate { Id = "2", PartyId = "1", VotesReceived = 20 },
+            new Candidate { Id = "3", PartyId = "2", VotesReceived = 30 },
+            new Candidate { Id = "4", PartyId = "2", VotesReceived = 40 },
+            new Candidate { Id = "5", PartyId = "3", VotesReceived = 50 }
         ];
-
-        candidates[0].VotesReceived.Returns(10);
-        candidates[1].VotesReceived.Returns(20);
-        candidates[2].VotesReceived.Returns(30);
-        candidates[3].VotesReceived.Returns(40);
-        candidates[4].VotesReceived.Returns(50);
 
         // Act
         Dictionary<Party, int> partyTotalVotes = FPTPResultsHelper.CalculateTotalVotesPerParty(electionParties, candidates);
@@ -142,20 +126,14 @@ public class FPTPResultsHelperTests
         List<Candidate> candidates =
         [
             //part 2 wins
-            new Candidate { Id = "1", PartyId = "1", ConstituencyId = "1" }, // 10 votes
-            new Candidate { Id = "2", PartyId = "2", ConstituencyId = "1" }, // 20 votes
+            new Candidate { Id = "1", PartyId = "1", ConstituencyId = "1", VotesReceived = 10 }, 
+            new Candidate { Id = "2", PartyId = "2", ConstituencyId = "1", VotesReceived = 20 },
 
             // part 2 wins
-            new Candidate { Id = "3", PartyId = "1", ConstituencyId = "2" }, // 10 votes
-            new Candidate { Id = "4", PartyId = "2", ConstituencyId = "2" }, // 10 votes
-            new Candidate { Id = "5", PartyId = "2", ConstituencyId = "2" }  // 5 votes
+            new Candidate { Id = "3", PartyId = "1", ConstituencyId = "2", VotesReceived = 10 }, 
+            new Candidate { Id = "4", PartyId = "2", ConstituencyId = "2", VotesReceived = 10 }, 
+            new Candidate { Id = "5", PartyId = "2", ConstituencyId = "2", VotesReceived = 5 }  
         ];
-
-        candidates[0].VotesReceived.Returns(10);
-        candidates[1].VotesReceived.Returns(20);
-        candidates[2].VotesReceived.Returns(10);
-        candidates[3].VotesReceived.Returns(10);
-        candidates[4].VotesReceived.Returns(5);
 
         // Act
         Dictionary<Party, List<Constituency>> partyConstituencyWins = FPTPResultsHelper.CalculatePartyConstituencyWinsForElection(parties, candidates, constituencies);

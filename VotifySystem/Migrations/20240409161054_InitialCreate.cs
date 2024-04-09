@@ -19,8 +19,9 @@ namespace VotifySystem.Migrations
                     ConstituencyId = table.Column<string>(type: "TEXT", nullable: false),
                     PartyId = table.Column<string>(type: "TEXT", nullable: false),
                     ElectionId = table.Column<string>(type: "TEXT", nullable: false),
-                    VotesReceived = table.Column<int>(type: "INTEGER", nullable: false),
                     ElectionPosition = table.Column<int>(type: "INTEGER", nullable: false),
+                    ElectionVoteMechanism = table.Column<int>(type: "INTEGER", nullable: false),
+                    VotesReceived = table.Column<int>(type: "INTEGER", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -53,6 +54,7 @@ namespace VotifySystem.Migrations
                     EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ElectionAdministratorId = table.Column<string>(type: "TEXT", nullable: false),
                     Country = table.Column<int>(type: "INTEGER", nullable: false),
+                    VoteMechanism = table.Column<int>(type: "INTEGER", nullable: false),
                     election_type = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false)
                 },
                 constraints: table =>
@@ -103,6 +105,21 @@ namespace VotifySystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PreferentialVotePreference",
+                columns: table => new
+                {
+                    PreferenceId = table.Column<string>(type: "TEXT", nullable: false),
+                    ElectionId = table.Column<string>(type: "TEXT", nullable: false),
+                    CandidateId = table.Column<string>(type: "TEXT", nullable: false),
+                    VoteId = table.Column<string>(type: "TEXT", nullable: false),
+                    Rank = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PreferentialVotePreference", x => x.PreferenceId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -125,7 +142,8 @@ namespace VotifySystem.Migrations
                     VoteId = table.Column<string>(type: "TEXT", nullable: false),
                     ElectionId = table.Column<string>(type: "TEXT", nullable: false),
                     ElectionVoteMechanism = table.Column<int>(type: "INTEGER", nullable: false),
-                    vote_type = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false)
+                    vote_type = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
+                    CandidateId = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -193,6 +211,9 @@ namespace VotifySystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Party");
+
+            migrationBuilder.DropTable(
+                name: "PreferentialVotePreference");
 
             migrationBuilder.DropTable(
                 name: "Vote");

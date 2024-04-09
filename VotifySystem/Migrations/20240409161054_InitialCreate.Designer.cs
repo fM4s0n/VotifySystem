@@ -11,7 +11,7 @@ using VotifyDataAccess.Database;
 namespace VotifySystem.Migrations
 {
     [DbContext(typeof(VotifyDatabaseContext))]
-    [Migration("20240407202749_InitialCreate")]
+    [Migration("20240409161054_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -34,6 +34,9 @@ namespace VotifySystem.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ElectionPosition")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ElectionVoteMechanism")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
@@ -99,6 +102,9 @@ namespace VotifySystem.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("VoteMechanism")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("election_type")
                         .IsRequired()
                         .HasMaxLength(13)
@@ -131,6 +137,31 @@ namespace VotifySystem.Migrations
                     b.HasKey("ElectionId", "VoterId");
 
                     b.ToTable("ElectionVoter", (string)null);
+                });
+
+            modelBuilder.Entity("VotifySystem.Common.Models.Elections.PreferentialVotePreference", b =>
+                {
+                    b.Property<string>("PreferenceId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CandidateId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ElectionId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("VoteId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("PreferenceId");
+
+                    b.ToTable("PreferentialVotePreference", (string)null);
                 });
 
             modelBuilder.Entity("VotifySystem.Common.Models.Elections.Vote", b =>
@@ -248,6 +279,10 @@ namespace VotifySystem.Migrations
             modelBuilder.Entity("VotifySystem.Common.Models.Elections.FPTPElectionVote", b =>
                 {
                     b.HasBaseType("VotifySystem.Common.Models.Elections.Vote");
+
+                    b.Property<string>("CandidateId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("FPTP");
                 });
