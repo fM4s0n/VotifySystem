@@ -24,5 +24,4 @@ internal class PreferentialVoteService : IPreferentialVoteService
     {
         return _dbService!.GetDatabaseContext().PreferentialVotePreferences.Where(p => p.VoteId == voteId).ToList() ?? null;
     }
-
 }

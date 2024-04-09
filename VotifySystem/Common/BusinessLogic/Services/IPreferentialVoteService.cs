@@ -14,13 +14,6 @@ public interface IPreferentialVoteService
     void InsertVote(PreferentialElectionVote vote);
 
     /// <summary>
-    /// Gets a vote by its voteId.
-    /// </summary>
-    /// <param name="voteId">voteId</param>
-    /// <returns>Vote instance if found, null if not</returns>
-    PreferentialElectionVote? GetVoteByVoteId(string voteId);
-
-    /// <summary>
     /// Gets all preferences associated with a vote.
     /// </summary>
     /// <param name="voteId"></param>

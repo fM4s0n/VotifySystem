@@ -15,20 +15,7 @@ public class Candidate : Person
     public string ElectionId { get; set; } = string.Empty;
     public int ElectionPosition { get; set; } = 0;
     public ElectionVoteMechanism ElectionVoteMechanism { get; set; } = ElectionVoteMechanism.FPTP;
-
-    public int GetVotesReceived()
-    {
-        int votes = 0;
-        if (ElectionVoteMechanism == ElectionVoteMechanism.FPTP)
-        {
-            IFPTPElectionVoteService? voteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
-            votes = voteService!.GetFPTPVotesCountByCandidateId(Id);
-        }
-
-        // TODO: Add other voting mechanisms here
-
-        return votes;
-    }
+    public int VotesReceived { get; set; } = 0;
 
     /// <summary>
     /// Default Constructor for EF Core

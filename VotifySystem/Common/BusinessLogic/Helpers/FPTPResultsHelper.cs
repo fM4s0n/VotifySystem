@@ -18,7 +18,7 @@ public static class FPTPResultsHelper
     /// <param name="candidates">List of candidate ordered by votes with Position property set</param>
     public static List<Candidate> OrderCandidatesByVotes(List<Candidate> candidates)
     { 
-        candidates = candidates.OrderByDescending(c => c.GetVotesReceived()).ToList();
+        candidates = candidates.OrderByDescending(c => c.VotesReceived).ToList();
 
         for (int i = 0; i < candidates.Count; i++)
             candidates[i].ElectionPosition = i + 1;
@@ -86,7 +86,7 @@ public static class FPTPResultsHelper
     {
         foreach (Candidate ca in candidates)
         {
-            List<Candidate> ties = candidates.Where(gi => gi.GetVotesReceived == ca.GetVotesReceived).ToList();
+            List<Candidate> ties = candidates.Where(gi => gi.VotesReceived == ca.VotesReceived).ToList();
 
             if (ties.Count > 0)
             {
@@ -115,7 +115,7 @@ public static class FPTPResultsHelper
         {
             List<Candidate> partyCandidates = candidates.Where(c => c.PartyId == party.PartyId).ToList();
 
-            int totalVotes = partyCandidates.Sum(c => c.GetVotesReceived());
+            int totalVotes = partyCandidates.Sum(c => c.VotesReceived);
             partyTotalVotes.Add(party, totalVotes);
         }
 
@@ -153,10 +153,10 @@ public static class FPTPResultsHelper
             conCandidates = CheckAndFixTies(conCandidates);
 
             // check if there's a tie for the win
-            if (conCandidates.Count > 1 && conCandidates[0].GetVotesReceived == conCandidates[1].GetVotesReceived)
+            if (conCandidates.Count > 1 && conCandidates[0].VotesReceived == conCandidates[1].VotesReceived)
             {
                 // get all tied candidates for the win
-                List<Candidate> tiedCandidates = conCandidates.Where(c => c.GetVotesReceived == conCandidates[0].GetVotesReceived).ToList();
+                List<Candidate> tiedCandidates = conCandidates.Where(c => c.VotesReceived == conCandidates[0].VotesReceived).ToList();
 
                 // randomly select a winner from the tied candidates - simulates lottery done in real elections in UK
                 Random random = new();
