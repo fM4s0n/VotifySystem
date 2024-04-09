@@ -10,7 +10,7 @@ namespace VotifySystem.Common.Controls;
 public partial class ctrFPTPVote : UserControl
 {
     private readonly ICandidateService? _candidateService;
-    private readonly IFPTPVoteService? _fptpVoteService;
+    private readonly IFPTPElectionVoteService? _fptpVoteService;
     private readonly IPartyService? _partyService;
 
     private  Election? _election;
@@ -28,7 +28,7 @@ public partial class ctrFPTPVote : UserControl
         if (DesignMode) 
             return;
 
-        _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+        _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
     }

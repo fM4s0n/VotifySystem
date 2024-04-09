@@ -5,7 +5,7 @@ namespace VotifySystem.Common.BusinessLogic.Services;
 /// <summary>
 /// Service for FPTP votes
 /// </summary>
-public interface IFPTPVoteService
+public interface IFPTPElectionVoteService
 {
     /// <summary>
     /// Insert a new FPTP vote into the database

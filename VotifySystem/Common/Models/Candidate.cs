@@ -21,7 +21,7 @@ public class Candidate : Person
         int votes = 0;
         if (ElectionVoteMechanism == ElectionVoteMechanism.FPTP)
         {
-            IFPTPVoteService? voteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+            IFPTPElectionVoteService? voteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
             votes = voteService!.GetFPTPVotesCountByCandidateId(Id);
         }
 

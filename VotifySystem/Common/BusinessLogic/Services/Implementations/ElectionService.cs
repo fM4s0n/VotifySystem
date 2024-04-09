@@ -21,12 +21,6 @@ internal class ElectionService() : IElectionService
     }
 
     //<inheritdoc/>
-    public Election? GetElectionByElectionId(string id)
-    {
-        return _dbService!.GetDatabaseContext().Elections.FirstOrDefault(e => e.ElectionId == id) ?? null;
-    }
-
-    //<inheritdoc/>
     public List<Election>? GetElectionsByCountry(Country country)
     {
         return _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == country).ToList() ?? null;

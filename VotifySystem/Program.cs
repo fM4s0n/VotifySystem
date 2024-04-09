@@ -40,7 +40,7 @@ internal static class Program
                 services.AddSingleton<IUserService, UserService>();
                 services.AddSingleton<IElectionService, ElectionService>();
                 services.AddSingleton<ICandidateService, CandidateService>();
-                services.AddSingleton<IFPTPVoteService, FPTPVoteService>();
+                services.AddSingleton<IFPTPElectionVoteService, FPTPElectionVoteService>();
                 services.AddSingleton<IPreferentialVoteService, PreferentialVoteService>();
                 services.AddSingleton<IConstituencyService, ConstituencyService>();
                 services.AddSingleton<IPartyService, PartyService>();

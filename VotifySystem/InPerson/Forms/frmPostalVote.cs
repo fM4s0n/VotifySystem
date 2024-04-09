@@ -13,7 +13,7 @@ public partial class frmPostalVote : Form
     private readonly IUserService? _userService;
     private readonly IElectionService? _electionService;
     private readonly ICandidateService? _candidateService;
-    private readonly IFPTPVoteService? _fptpVoteService;
+    private readonly IFPTPElectionVoteService? _fptpVoteService;
 
     private List<Election>? _elections = [];
     private List<Candidate>? _candidates = [];
@@ -28,7 +28,7 @@ public partial class frmPostalVote : Form
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
-        _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+        _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
 
         Init();
     }

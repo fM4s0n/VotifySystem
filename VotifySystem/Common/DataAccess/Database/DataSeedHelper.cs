@@ -13,7 +13,7 @@ public class DataSeedHelper()
 {
     private readonly IUserService? _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-    private readonly IFPTPVoteService? _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPVoteService)) as IFPTPVoteService;
+    private readonly IFPTPElectionVoteService? _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
     
     /// <summary>
     /// seeds data if the objects are not already in the database

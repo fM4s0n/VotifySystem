@@ -33,13 +33,6 @@ public interface IElectionService
     List<Election>? GetAllElections();
 
     /// <summary>
-    /// Gets an election by its election id
-    /// </summary>
-    /// <param name="id">The Election id</param>
-    /// <returns>Election object if found, null if not</returns>
-    Election? GetElectionByElectionId(string id);
-
-    /// <summary>
     /// Gets all elections for a specific country
     /// </summary>
     /// <param name="country">Country enum</param>

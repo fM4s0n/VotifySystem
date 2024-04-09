@@ -2,7 +2,7 @@
 using VotifySystem.Common.Models.Elections;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
-public class FPTPVoteService : IFPTPVoteService
+public class FPTPElectionVoteService : IFPTPElectionVoteService
 {
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
