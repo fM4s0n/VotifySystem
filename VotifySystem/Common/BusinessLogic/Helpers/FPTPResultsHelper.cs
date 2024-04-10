@@ -32,6 +32,7 @@ public static class FPTPResultsHelper
     /// </summary>
     /// <param name="gridItems">list of candidate grid items</param>
     /// <returns>same list with fixed Position properties</returns>
+    /// THIS HAS BEEN LEFT IN FOR DEMONSTRATION PURPOSES  - NOT REFERENCED BY ANY OTHER CODE
     public static List<CandidateDataGridItem> CheckAndFixTies(List<CandidateDataGridItem> gridItems)
     {
         foreach (CandidateDataGridItem item in gridItems)
@@ -52,10 +53,10 @@ public static class FPTPResultsHelper
     }
 
     /// <summary>
-    /// Generic method to check for ties in a dictionary of key value pairs and fix them
+    /// Generic method to check for ties in list
     /// </summary>
-    /// <param name="keyValuePairs">key is position, value is votes / similar measurement</param>
-    /// <returns>Dictionary<int, int> of key value pairs to be fixed></returns>
+    /// <param name="items">list of GenericTieFixCheckItem</param>
+    /// <returns>list of GenericTieFixCheckItem with fixed positions taking into account any ties</returns>
     public static List<GenericTieFixCheckItem> GenericCheckAndFixTies(List<GenericTieFixCheckItem> items)
     {
         items = items.OrderByDescending(i => i.Value).ToList();
@@ -73,10 +74,11 @@ public static class FPTPResultsHelper
                     items[items.IndexOf(tie)].Position = tiedPosition;
             }
         }
+
         return items;
     }
 
-    [Obsolete("Now superseded by GenericCheckAndFixTies()")]
+    [Obsolete("Now superseeded by GenericCheckAndFixTies()")]
     /// <summary>
     /// Overload of the CheckAndFixTies method for Candidate objects
     /// </summary>
@@ -141,6 +143,8 @@ public static class FPTPResultsHelper
         // calculate winner of each constituency
         foreach (Constituency constituency in constituencies)
         {
+            List<GenericTieFixCheckItem> tieFixCheckItems = [];
+
             // Calculate results for each constituency
             List<Candidate> conCandidates = candidates.Where(c => c.ConstituencyId == constituency.ConstituencyId).ToList();
 
@@ -149,8 +153,15 @@ public static class FPTPResultsHelper
             // order candidates by votes received
             conCandidates = OrderCandidatesByVotes(conCandidates);
 
+            foreach (Candidate candidate in conCandidates)
+                tieFixCheckItems.Add(new(candidate.Id, candidate.ElectionPosition, candidate.VotesReceived));
+
             // check for ties and fix them
-            conCandidates = CheckAndFixTies(conCandidates);
+            tieFixCheckItems = GenericCheckAndFixTies(tieFixCheckItems);
+
+            // update the positions in the candidates
+            foreach (Candidate can in conCandidates)
+                can.ElectionPosition = tieFixCheckItems.First(t => t.Key == can.Id).Position;
 
             // check if there's a tie for the win
             if (conCandidates.Count > 1 && conCandidates[0].VotesReceived == conCandidates[1].VotesReceived)
@@ -171,6 +182,7 @@ public static class FPTPResultsHelper
                 // Determine the winner based on votes received
                 winnerParty = parties.First(p => p.PartyId == conCandidates.First().PartyId);
             }
+
             partyConstituencyResults[winnerParty].Add(constituency);
         }
 

@@ -44,10 +44,15 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
         lblConstituencyName.Text = _constituency!.ConstituencyName;
     }
 
+    /// <summary>
+    /// Inits the data sourve for the data grid
+    /// </summary>
     private void InitDataSource()
     {
         List<CandidateDataGridItem> gridItems = [];
+        List<GenericTieFixCheckItem> tieFixCheckItems = [];
 
+        // get all candidates for this constituency
         _candidates = _candidateService!.GetCandidatesByElectionId(_constituency!.ElectionId)?
             .Where(ca => ca.ConstituencyId == _constituency.ConstituencyId).ToList() ?? null;
 
@@ -57,18 +62,31 @@ public partial class ctrResultsConstituencyPanelItem : UserControl
             return;
         }
            
+        // order the candidates by votes
         _candidates = FPTPResultsHelper.OrderCandidatesByVotes(_candidates);
 
+        // create the grid items and tie fix items
         foreach (Candidate candidate in _candidates)
         {
             int pos = _candidates.IndexOf(candidate) + 1;
             string partyName = _allParties!.First(p => p.PartyId == candidate.PartyId)?.Name ?? string.Empty;
 
-            CandidateDataGridItem item = new(pos, candidate.FullName, partyName, candidate.VotesReceived);
+            GenericTieFixCheckItem tfi = new(candidate.Id, pos, candidate.VotesReceived);
+            tieFixCheckItems.Add(tfi);
+
+            CandidateDataGridItem item = new(candidate.Id, pos, candidate.FullName, partyName, candidate.VotesReceived);
             gridItems.Add(item);
         }
 
-        gridItems = FPTPResultsHelper.CheckAndFixTies(gridItems);
+        // fix any ties
+        tieFixCheckItems = FPTPResultsHelper.GenericCheckAndFixTies(tieFixCheckItems);
+        
+        // update the positions in the grid items
+        foreach (GenericTieFixCheckItem tfi in tieFixCheckItems)
+        {
+            CandidateDataGridItem item = gridItems.First(gi => gi.CandidateId == tfi.Key);
+            item.Position = tfi.Position;
+        }
 
         _gridData!.AddRange(gridItems);
     }
