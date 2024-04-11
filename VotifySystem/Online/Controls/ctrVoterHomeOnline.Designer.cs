@@ -30,12 +30,13 @@ partial class ctrVoterHomeOnline
     {
         btnGenerateLoginCode = new Button();
         grpLoginCode = new GroupBox();
+        btnCopyCode = new Button();
         lblExpiryWarning = new Label();
         lblLoginCode = new Label();
         grpVoteOnline = new GroupBox();
         btnRegister = new Button();
         btnVoteOnline = new Button();
-        btnCopyCode = new Button();
+        btnLogout = new Button();
         grpLoginCode.SuspendLayout();
         grpVoteOnline.SuspendLayout();
         SuspendLayout();
@@ -62,6 +63,17 @@ partial class ctrVoterHomeOnline
         grpLoginCode.TabIndex = 1;
         grpLoginCode.TabStop = false;
         grpLoginCode.Text = "Generate In Person Login Code";
+        // 
+        // btnCopyCode
+        // 
+        btnCopyCode.Location = new Point(235, 98);
+        btnCopyCode.Name = "btnCopyCode";
+        btnCopyCode.Size = new Size(121, 23);
+        btnCopyCode.TabIndex = 3;
+        btnCopyCode.Text = "Copy to clipboard";
+        btnCopyCode.UseVisualStyleBackColor = true;
+        btnCopyCode.Visible = false;
+        btnCopyCode.Click += btnCopyCode_Click;
         // 
         // lblExpiryWarning
         // 
@@ -116,20 +128,21 @@ partial class ctrVoterHomeOnline
         btnVoteOnline.UseVisualStyleBackColor = true;
         btnVoteOnline.Click += btnVoteOnline_Click;
         // 
-        // btnCopyCode
+        // btnLogout
         // 
-        btnCopyCode.Location = new Point(235, 98);
-        btnCopyCode.Name = "btnCopyCode";
-        btnCopyCode.Size = new Size(121, 23);
-        btnCopyCode.TabIndex = 3;
-        btnCopyCode.Text = "Copy to clipboard";
-        btnCopyCode.UseVisualStyleBackColor = true;
-        btnCopyCode.Click += btnCopyCode_Click;
+        btnLogout.Location = new Point(356, 341);
+        btnLogout.Name = "btnLogout";
+        btnLogout.Size = new Size(96, 34);
+        btnLogout.TabIndex = 3;
+        btnLogout.Text = "Logout";
+        btnLogout.UseVisualStyleBackColor = true;
+        btnLogout.Click += btnLogout_Click;
         // 
         // ctrVoterHomeOnline
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(btnLogout);
         Controls.Add(grpLoginCode);
         Controls.Add(grpVoteOnline);
         Name = "ctrVoterHomeOnline";
@@ -150,4 +163,5 @@ partial class ctrVoterHomeOnline
     private Button btnVoteOnline;
     private Button btnRegister;
     private Button btnCopyCode;
+    private Button btnLogout;
 }

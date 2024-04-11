@@ -1,5 +1,4 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
-using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Forms;
 using VotifySystem.InPerson.Forms;
 
@@ -10,12 +9,16 @@ namespace VotifySystem.Controls;
 /// </summary>
 public partial class ctrVoterHome : UserControl
 {
+    private readonly IUserService? _userService;
+
     public ctrVoterHome()
     {
         InitializeComponent();
 
         if (DesignMode)
             return;
+
+        _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
     }
 
     /// <summary>
@@ -28,10 +31,10 @@ public partial class ctrVoterHome : UserControl
             frmRegisterToVote frm = new();
 
             //TODO: work out why this doesn't work - ObjectDisposedException on this line on internally called Close() TEMP solution is to wrap in try catch
-            frm.Show(); 
+            frm.Show();
         }
-        catch 
-        { 
+        catch
+        {
             return;
         }
     }
@@ -47,9 +50,14 @@ public partial class ctrVoterHome : UserControl
             frmVote frmVote = new();
             frmVote.ShowDialog();
         }
-        catch 
-        { 
+        catch
+        {
             return;
         }
+    }
+
+    private void btnLogout_Click(object sender, EventArgs e)
+    {
+        _userService!.LogOutUser();
     }
 }

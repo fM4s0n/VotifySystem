@@ -30,6 +30,7 @@ partial class ctrVoterHome
     {
         btnRegisterToVote = new Button();
         btnVoteInPerson = new Button();
+        btnLogout = new Button();
         SuspendLayout();
         // 
         // btnRegisterToVote
@@ -54,10 +55,21 @@ partial class ctrVoterHome
         btnVoteInPerson.UseVisualStyleBackColor = true;
         btnVoteInPerson.Click += btnVoteInPerson_Click;
         // 
+        // btnLogout
+        // 
+        btnLogout.Location = new Point(360, 316);
+        btnLogout.Name = "btnLogout";
+        btnLogout.Size = new Size(120, 38);
+        btnLogout.TabIndex = 2;
+        btnLogout.Text = "Logout";
+        btnLogout.UseVisualStyleBackColor = true;
+        btnLogout.Click += btnLogout_Click;
+        // 
         // ctrVoterHome
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(btnLogout);
         Controls.Add(btnVoteInPerson);
         Controls.Add(btnRegisterToVote);
         Margin = new Padding(3, 2, 3, 2);
@@ -70,4 +82,5 @@ partial class ctrVoterHome
 
     private Button btnRegisterToVote;
     private Button btnVoteInPerson;
+    private Button btnLogout;
 }

@@ -33,7 +33,7 @@ public partial class ctrVoterHomeOnline : UserControl
         lblLoginCode.Text = code.Code;
 
         lblExpiryWarning.Visible = true;
-        lblLoginCode.Visible = true;
+        lblLoginCode.Visible = btnCopyCode.Visible = true;
 
         _userService!.InsertLoginCode(code);
     }
@@ -60,5 +60,10 @@ public partial class ctrVoterHomeOnline : UserControl
     /// <summary>
     /// Copies the login code to the clipboard
     /// </summary>
-    private void btnCopyCode_Click(object sender, EventArgs e) => Clipboard.SetText(lblLoginCode.Text);    
+    private void btnCopyCode_Click(object sender, EventArgs e) => Clipboard.SetText(lblLoginCode.Text);
+
+    private void btnLogout_Click(object sender, EventArgs e)
+    {
+        _userService!.LogOutUser();
+    }
 }
