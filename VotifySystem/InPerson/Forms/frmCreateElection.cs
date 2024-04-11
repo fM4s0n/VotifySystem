@@ -77,8 +77,6 @@ public partial class frmCreateElection : Form
     {
         lblFormTitle.Text = "Create New Election";
         InitDatePickers();
-
-        EnableDisableFullForm(true);
     }
 
     /// <summary>
@@ -432,10 +430,6 @@ public partial class frmCreateElection : Form
         _candidates.Add(candidateToAdd);
 
         AddCandidateToListView(candidateToAdd);
-
-        // TODO: Add error message if candidate already exists
-
-        // TODO: add column to lvConstituencies to show the number of candidates in each constituency
     }
 
     /// <summary>
@@ -649,9 +643,15 @@ public partial class frmCreateElection : Form
     /// </summary>
     private void btnInitialiseElection_Click(object sender, EventArgs e)
     {
+        if (ValidateElectionTitle()== false)
+        {
+            MessageBox.Show("Please enter an election name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         if (ValidateComboBoxes() == false)
         {
-            // TODO: Add error message
+            MessageBox.Show("Please complete all feilds", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 

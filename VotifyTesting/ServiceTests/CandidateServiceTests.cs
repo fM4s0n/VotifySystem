@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using System.Linq.Expressions;
+using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.BusinessLogic.Services.Implementations;
 using VotifySystem.Common.DataAccess.Database;
@@ -10,15 +11,16 @@ namespace VotifyTesting.ServiceTests;
 [TestClass]
 public class CandidateServiceTests
 {
-    CandidateService? _candidateService;
-    IDbService? _dbService;
-    IFPTPElectionVoteService? _fptpElectionVoteService;
+    private CandidateService? _candidateService;
+    private IDbService? _dbService;
+    private IFPTPElectionVoteService? _fptpElectionVoteService;
 
     [TestInitialize]
     public void SetUp()
     {
         // substitute the IDbService
-        _dbService = Substitute.For<IDbService>();
+        VotifyDatabaseContext context = Substitute.For<VotifyDatabaseContext>();
+        _dbService = new DbService(context);
         _fptpElectionVoteService = Substitute.For<IFPTPElectionVoteService>();
 
         _candidateService = new CandidateService(_dbService, _fptpElectionVoteService);
@@ -47,7 +49,7 @@ public class CandidateServiceTests
         _candidateService!.UpdateCandidate(candidate);
 
         // Assert
-        _dbService!.Received().UpdateEntity(candidate);
+        Assert.AreEqual(candidate, _dbService!.GetDatabaseContext().Candidates.First(c => c.Id == "1"));
     }
 
     [TestMethod]
@@ -68,7 +70,8 @@ public class CandidateServiceTests
     {
         // Arrange
         List<Candidate> candidates = [new Candidate() { Id = "1" }, new Candidate() { Id = "2"}];
-        _dbService!.GetDatabaseContext().Candidates.ToList().Returns(candidates);
+        _candidateService!.InsertCandidate(candidates[0]);
+        _candidateService.InsertCandidate(candidates[1]);
 
         // Act
         List<Candidate>? result = _candidateService!.GetAllCandidates();
@@ -81,7 +84,7 @@ public class CandidateServiceTests
     public void TestGetCandidatesByElectionId()
     {
         // Arrange
-        List<Candidate> candidates = new List<Candidate> { new Candidate { Id = "1", ElectionId = "1" }, new Candidate { Id = "2", ElectionId = "1" } };
+        List<Candidate> candidates = [new Candidate { Id = "1", ElectionId = "1" }, new Candidate { Id = "2", ElectionId = "1" }];
         _dbService!.GetDatabaseContext().Candidates.Where(Arg.Any<Expression<Func<Candidate, bool>>>()).ToList().Returns(candidates);
 
         // Act
@@ -89,5 +92,12 @@ public class CandidateServiceTests
 
         // Assert
         Assert.AreEqual(candidates, result);
+    }
+
+    [TestCleanup]
+    public void TearDown()
+    {
+        _dbService = null;
+        _candidateService = null;
     }
 }

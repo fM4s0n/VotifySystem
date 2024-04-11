@@ -3,7 +3,7 @@ using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models.Elections;
 using VotifySystem.Forms;
 using VotifySystem.InPerson.Forms;
-using static VotifySystem.Forms.frmCreateElection; //TODO: make enums class
+using static VotifySystem.Forms.frmCreateElection;
 
 namespace VotifySystem.InPerson.Controls;
 
@@ -33,10 +33,7 @@ public partial class ctrManageElectionPanelItem : UserControl
         _listIndex = index;
         _election = election;
 
-        if (_election != null)
-            InitUI();
-        else
-            throw new ArgumentNullException(nameof(election)); // TODO: wrap call in try catch
+        InitUI();
     }
 
     private void InitUI()
