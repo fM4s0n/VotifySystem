@@ -23,9 +23,10 @@ public partial class ctrPreferentialVote : UserControl
 
     private PreferentialVoteElection? _election;
     private List<Candidate>? _candidates;
-    private Dictionary<int, string>? _candidateIdsAndIndexes;
+    private ElectionVoter? _electionVoter;
+    private readonly Dictionary<int, string> _candidateIdsAndIndexes = [];
 
-    private PreferentialElectionVote _vote;
+    private PreferentialElectionVote? _vote;
 
     public ctrPreferentialVote()
     {
@@ -36,13 +37,24 @@ public partial class ctrPreferentialVote : UserControl
 
         _candidateService = Program.ServiceProvider!.GetService(typeof(ICandidateService)) as ICandidateService;
         _partyService = Program.ServiceProvider!.GetService(typeof(IPartyService)) as IPartyService;
+        _voteService = Program.ServiceProvider!.GetService(typeof(IPreferentialVoteService)) as IPreferentialVoteService;
+
+        // listen for visibility change to ensure the control is fully initialised before showing
+        VisibleChanged += (sender, e) =>
+        {
+            if (Visible && _election == null || _electionVoter == null)                
+                throw new Exception("Election and ElectionVoter must be set before showing the control");     
+
+            if (Visible == false)            
+                Reset();
+        };
     }
 
     private void Init()
     {
         _vote = VoteFactory.CreateVote(_election!.ElectionId, ElectionVoteMechanism.Preferential) as PreferentialElectionVote;
 
-        _candidates = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId);
+        _candidates = _candidateService!.GetCandidatesByElectionId(_election!.ElectionId)!.Where(c => c.ConstituencyId == _electionVoter!.ConstituencyId).ToList() ?? null;
 
         if (_candidates == null || _candidates.Count == 0)
         {
@@ -89,9 +101,10 @@ public partial class ctrPreferentialVote : UserControl
     /// Sets the election for the control
     /// </summary>
     /// <param name="election">Election of type PreferentialVoteElection</param>
-    public void SetElection(PreferentialVoteElection election)
+    public void SetElection(PreferentialVoteElection election, ElectionVoter electionVoter)
     {
         _election = election;
+        _electionVoter = electionVoter;
         Init();
     }
 
@@ -140,7 +153,33 @@ public partial class ctrPreferentialVote : UserControl
         _vote!.CastVote(preferences);
         _voteService!.InsertVote(_vote);
 
+        if (ConfirmVoteWithUser(preferences) == false)
+            return;
+
         OnVoteCompleted();
+    }
+
+    /// <summary>
+    /// Builds a message box to confirm the vote with the user
+    /// </summary>
+    /// <param name="prefs">Prefernces the user has input</param>
+    /// <returns>true if user selects yes, false if not</returns>
+    private bool ConfirmVoteWithUser(List<PreferentialVotePreference> prefs)
+    {
+        string message = "Are you sure you want to submit your vote? Your preferences are:";
+
+        foreach (PreferentialVotePreference p in prefs)
+        {
+            string candidateName = _candidates!.FirstOrDefault(c => c.Id == p.CandidateId)!.FullName;
+            message += $"\nRank: {p.Rank} - Candidate: {candidateName}";
+        }
+
+        DialogResult result = MessageBox.Show(message, "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+        if (result == DialogResult.Yes)
+            return true;
+
+        return false;
     }
 
     /// <summary>

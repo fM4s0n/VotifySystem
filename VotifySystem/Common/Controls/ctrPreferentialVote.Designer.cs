@@ -31,14 +31,15 @@ partial class ctrPreferentialVote
         flpCandidateOptions = new FlowLayoutPanel();
         btnSubmit = new Button();
         btnCancel = new Button();
+        lblVoterAdvice = new Label();
         SuspendLayout();
         // 
         // flpCandidateOptions
         // 
         flpCandidateOptions.AutoScroll = true;
-        flpCandidateOptions.Location = new Point(3, 3);
+        flpCandidateOptions.Location = new Point(3, 19);
         flpCandidateOptions.Name = "flpCandidateOptions";
-        flpCandidateOptions.Size = new Size(419, 365);
+        flpCandidateOptions.Size = new Size(419, 349);
         flpCandidateOptions.TabIndex = 0;
         // 
         // btnSubmit
@@ -61,16 +62,27 @@ partial class ctrPreferentialVote
         btnCancel.UseVisualStyleBackColor = true;
         btnCancel.Click += btnCancel_Click;
         // 
+        // lblVoterAdvice
+        // 
+        lblVoterAdvice.AutoSize = true;
+        lblVoterAdvice.Location = new Point(3, 1);
+        lblVoterAdvice.Name = "lblVoterAdvice";
+        lblVoterAdvice.Size = new Size(291, 15);
+        lblVoterAdvice.TabIndex = 0;
+        lblVoterAdvice.Text = "Rank candidates: 1 for top choice, 0 for no preference.";
+        // 
         // ctrPreferentialVote
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(lblVoterAdvice);
         Controls.Add(btnCancel);
         Controls.Add(btnSubmit);
         Controls.Add(flpCandidateOptions);
         Name = "ctrPreferentialVote";
         Size = new Size(425, 400);
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -78,4 +90,5 @@ partial class ctrPreferentialVote
     private FlowLayoutPanel flpCandidateOptions;
     private Button btnSubmit;
     private Button btnCancel;
+    private Label lblVoterAdvice;
 }
