@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Models.UIClasses;
+﻿namespace VotifySystem.Common.Models.UI;
 
 /// <summary>
 /// Class to hold data for the candidate data grid

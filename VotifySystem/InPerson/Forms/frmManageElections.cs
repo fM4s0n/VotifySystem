@@ -1,6 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models.Elections;
-using VotifySystem.Common.Models.UI;
 using VotifySystem.InPerson.Controls;
 
 namespace VotifySystem.InPerson.Forms;
@@ -71,6 +70,10 @@ public partial class frmManageElections : Form
         }
     }
 
+    /// <summary>
+    /// Handle the selected index change event of the display order combobox
+    /// Sets the sort strategy based on the selected item
+    /// </summary>
     private void cmbDisplayOrder_SelectedIndexChanged(object sender, EventArgs e)
     {
         // Determine the selected strategy
@@ -78,6 +81,7 @@ public partial class frmManageElections : Form
         {
             "Alphabetical Order" => new SortByAlphabeticalOrderStrategy(),
             "Chronological Order" => new SortByStartDateStrategy(),
+            "By Status" => new SortByStatusStrategy(),
             _ => throw new NotImplementedException()
         };
 
@@ -87,6 +91,13 @@ public partial class frmManageElections : Form
     }
 }
 
+public class SortByStatusStrategy : IManageElectionSortStrategy
+{
+    public void Sort(List<Election> elections)
+    {
+        elections.Sort((e1, e2) => e1.GetElectionStatus().CompareTo(e2.GetElectionStatus()));
+    }
+}
 
 /// <summary>
 /// Strategy to sort elections by alphabetical order

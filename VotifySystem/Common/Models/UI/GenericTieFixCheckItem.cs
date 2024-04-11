@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Models.UIClasses;
+﻿namespace VotifySystem.Common.Models.UI;
 
 /// <summary>
 /// Class to allow for checking and fixing ties 

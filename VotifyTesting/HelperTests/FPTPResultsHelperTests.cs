@@ -1,7 +1,7 @@
 ﻿using VotifySystem.Common.BusinessLogic.Helpers;
 using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
-using VotifySystem.Common.Models.UIClasses;
+using VotifySystem.Common.Models.UI;
 using NSubstitute;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 
