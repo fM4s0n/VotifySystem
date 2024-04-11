@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.Models.Elections;
 
-namespace VotifySystem.Common.Models.Elections;
+namespace VotifySystem.Common.Models.Votes;
 
 /// <summary>
 /// Preferential vote class for an election.
@@ -12,15 +13,13 @@ public class PreferentialElectionVote : Vote
     [NotMapped]
     private List<PreferentialVotePreference> _preferences = [];
 
-    private readonly IPreferentialVoteService? _preferentialVoteService = Program.ServiceProvider!.GetService(typeof(IPreferentialVoteService)) as IPreferentialVoteService;
-
     // constructor for ef core
     public PreferentialElectionVote() { }
 
-    public PreferentialElectionVote(string electionId) 
+    public PreferentialElectionVote(string electionId)
     {
         VoteId = Guid.NewGuid().ToString();
-        ElectionId = electionId; 
+        ElectionId = electionId;
         ElectionVoteMechanism = ElectionVoteMechanism.Preferential;
     }
 
@@ -59,8 +58,8 @@ public class PreferentialElectionVote : Vote
         return _preferences.FirstOrDefault(p => p.CandidateId == candidateId) ?? null;
     }
 
-    public void LoadPreferences()
+    public void SetPreferences(List<PreferentialVotePreference> prefs)
     {
-        _preferences = _preferentialVoteService!.GetPreferencesByVoteId(VoteId) ?? [];
+        _preferences = prefs;
     }
 }

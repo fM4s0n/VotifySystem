@@ -3,12 +3,14 @@ using VotifySystem.Common.Models;
 namespace VotifyTesting.ClassTests;
 
 [TestClass]
-public class UserTests
+public class PersonTests
 {
     [TestMethod]
     public void TestFullName()
     {
         //Arrange
+        string expected = "John Doe";
+
         Voter voter = new()
         {
             //Act
@@ -17,7 +19,6 @@ public class UserTests
         };
 
         //Assert
-        string expected = "John Doe";
         Assert.AreEqual(expected, voter.FullName);
     }
 }

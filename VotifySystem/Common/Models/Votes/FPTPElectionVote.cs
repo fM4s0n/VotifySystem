@@ -1,4 +1,6 @@
-﻿namespace VotifySystem.Common.Models.Elections;
+﻿using VotifySystem.Common.Models.Elections;
+
+namespace VotifySystem.Common.Models.Votes;
 
 /// <summary>
 /// FPTP vote class for an election.
@@ -15,7 +17,7 @@ public class FPTPElectionVote : Vote
         VoteId = Guid.NewGuid().ToString();
         ElectionId = electionId;
         ElectionVoteMechanism = ElectionVoteMechanism.FPTP;
-    }    
+    }
 
     /// <summary>
     /// Cast the vote for a candidate.
@@ -26,5 +28,5 @@ public class FPTPElectionVote : Vote
     {
         CandidateId = candidateId;
         return this;
-    }   
+    }
 }

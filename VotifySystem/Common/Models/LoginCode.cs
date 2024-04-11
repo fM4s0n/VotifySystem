@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace VotifySystem.Common.Models;
+﻿namespace VotifySystem.Common.Models;
 
 /// <summary>
 /// Class for unique login code.

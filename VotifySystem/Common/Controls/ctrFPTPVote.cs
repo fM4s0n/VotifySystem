@@ -1,6 +1,7 @@
 ﻿using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.BusinessLogic.Services;
+using VotifySystem.Common.Models.Votes;
 
 namespace VotifySystem.Common.Controls;
 

@@ -2,6 +2,7 @@
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
+using VotifySystem.Common.Models.Votes;
 using static VotifySystem.Common.BusinessLogic.Helpers.VoterHelper;
 
 namespace VotifySystem.Common.DataAccess.Database;

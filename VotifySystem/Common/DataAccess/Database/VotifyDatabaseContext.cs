@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
+using VotifySystem.Common.Models.Votes;
 
 namespace VotifyDataAccess.Database;
 

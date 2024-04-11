@@ -1,4 +1,4 @@
-﻿namespace VotifySystem.Common.Models.Elections;
+﻿namespace VotifySystem.Common.Models.Votes;
 
 /// <summary>
 /// Preference class for a preferential vote.

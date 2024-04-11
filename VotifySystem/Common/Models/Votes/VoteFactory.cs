@@ -1,10 +1,12 @@
-﻿namespace VotifySystem.Common.Models.Elections;
+﻿using VotifySystem.Common.Models.Elections;
+
+namespace VotifySystem.Common.Models.Votes;
 
 /// <summary>
 /// Vote factory class to create vote depending on the election vote mechanism.
 /// </summary>
 public class VoteFactory
-{    
+{
     public static Vote CreateVote(string electionId, ElectionVoteMechanism voteMechanism)
     {
         switch (voteMechanism)

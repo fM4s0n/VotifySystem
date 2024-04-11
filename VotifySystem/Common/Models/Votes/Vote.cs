@@ -1,4 +1,6 @@
-﻿namespace VotifySystem.Common.Models.Elections;
+﻿using VotifySystem.Common.Models.Elections;
+
+namespace VotifySystem.Common.Models.Votes;
 
 /// <summary>
 /// Abstract class for a vote in an election.
@@ -20,5 +22,5 @@ public abstract class Vote
     /// </summary>
     public ElectionVoteMechanism ElectionVoteMechanism { get; set; }
 
-    public Vote() { } 
+    public Vote() { }
 }

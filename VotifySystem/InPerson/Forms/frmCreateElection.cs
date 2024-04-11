@@ -480,8 +480,10 @@ public partial class frmCreateElection : Form
         string constituencyName = _constituencies.First(c => c.ConstituencyId == candidate.ConstituencyId).ConstituencyName;
 
         ListViewItem item = new(candidate.FullName);
+
         item.SubItems.Add(partyName); // index 0
         item.SubItems[0].Tag = candidate.PartyId;
+
         item.SubItems.Add(constituencyName); // index 1
         item.SubItems[1].Tag = candidate.ConstituencyId;
 
@@ -655,12 +657,15 @@ public partial class frmCreateElection : Form
             return;
         }
 
-        _newElection = ElectionFactory.CreateElection(_currentVoteMechanism, (Country)cmbCountry.SelectedItem!);
+        // Create the election
+        var builder = ElectionFactory.CreateBuilder(_currentVoteMechanism)
+            .SetCountry((Country)cmbCountry.SelectedItem!)
+            .SetElectionId()
+            .SetDescription(txtElectionName.Text)
+            .SetDates(dtpElectionStart.Value, dtpElectionEnd.Value)
+            .SetElectionAdministratorId(_userService!.GetCurrentUser()!.Id);
 
-        _newElection!.StartDate = dtpElectionStart.Value;
-        _newElection.EndDate = dtpElectionEnd.Value;
-        _newElection.Description = txtElectionName.Text;
-        _newElection.ElectionAdministratorId = _userService!.GetCurrentUser()!.Id;
+         _newElection = builder.Build();
 
         InitCandidateComboBoxes();
 
