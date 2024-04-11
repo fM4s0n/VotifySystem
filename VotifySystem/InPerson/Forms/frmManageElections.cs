@@ -91,6 +91,9 @@ public partial class frmManageElections : Form
     }
 }
 
+/// <summary>
+/// Strategy to sort elections by election status
+/// </summary>
 public class SortByStatusStrategy : IManageElectionSortStrategy
 {
     public void Sort(List<Election> elections)
