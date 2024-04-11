@@ -55,7 +55,7 @@ namespace VotifySystem.Migrations
                     ElectionAdministratorId = table.Column<string>(type: "TEXT", nullable: false),
                     Country = table.Column<int>(type: "INTEGER", nullable: false),
                     VoteMechanism = table.Column<int>(type: "INTEGER", nullable: false),
-                    election_type = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false)
+                    election_type = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false)
                 },
                 constraints: table =>
                 {
