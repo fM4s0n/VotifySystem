@@ -49,7 +49,7 @@ public class DataSeedHelper()
     /// </summary>
     private void SeedElections()
     {
-        foreach (Election election in new List<Election> { CreateExampleElection(), CreateExampleCompletedElection() })
+        foreach (Election election in new List<Election> { CreateExampleElection(), CreateExampleCompletedElection(), CreateInProgressPreferentialElectionNoVotes() })
         {
             if (_dbService!.GetDatabaseContext().Elections.Any(e => e.Description == election.Description) == false)
                 _dbService.InsertEntity(election);
@@ -120,7 +120,7 @@ public class DataSeedHelper()
         string description = "Example Completed Election";
         DateTime start = new(2024, 3, 1, 9, 0, 0);
         DateTime end = new(2024, 4, 1, 21, 0, 0);
-        string? userId = _userService!.GetAllAdministrators()?.FirstOrDefault(u => u.Username == "DefaultAdmin").Id;
+        string? userId = _userService!.GetAllAdministrators()?.FirstOrDefault(u => u.Username == "DefaultAdmin")!.Id;
 
         Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId!);
 
@@ -164,6 +164,44 @@ public class DataSeedHelper()
         _dbService.InsertRange(new List<Candidate> { redCandidateYork, blueCandidateYork, redCandidateNewcastle, blueCandidateNewcastle });
 
         return (FirstPastThePostElection)election;
+    }
+
+    /// <summary>
+    /// Seeds a preferential election with no given to candidates
+    /// </summary>
+    /// <returns>instance of a preferential elction which is in progress but has no votes associated/></returns>
+    private PreferentialVoteElection CreateInProgressPreferentialElectionNoVotes()
+    {
+        string description = "Example Preferential Election";
+        DateTime start = new(2024, 4, 1, 7, 0, 0);
+        DateTime end = new(2024, 10, 1, 21, 0, 0);
+        string userId = _dbService!.GetDatabaseContext().Users.First(u => u.Username == "DefaultAdmin").Id;
+
+        var builder = ElectionFactory.CreateBuilder(ElectionVoteMechanism.Preferential);
+        builder.SetDescription(description);
+        builder.SetDates(start, end);
+        builder.SetElectionAdministratorId(userId);
+        builder.SetCountry(Country.UK);
+        builder.SetElectionId();
+
+        PreferentialVoteElection election = (PreferentialVoteElection)builder.Build();
+
+        // Create Constituencies
+        Constituency leeds = new("Leeds", election.ElectionId, Country.UK);
+        Constituency manchester = new("Manchester", election.ElectionId, Country.UK);
+
+        _dbService.InsertRange(new List<Constituency> { leeds, manchester });
+
+        // Create Candidates
+        Candidate redCandidateLeeds = new("Red Candidate", "Leeds", leeds.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
+        Candidate blueCandidateLeeds = new("Blue Candidate", "Leeds", leeds.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
+
+        Candidate redCandidateManchester = new("Red Candidate", "Manchester", manchester.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Red").PartyId, election.ElectionId);
+        Candidate blueCandidateManchester = new("Blue Candidate", "Manchester", manchester.ConstituencyId, _dbService.GetDatabaseContext().Parties.First(p => p.Name == "Blue").PartyId, election.ElectionId);
+
+        _dbService.InsertRange(new List<Candidate> { redCandidateLeeds, blueCandidateLeeds, redCandidateManchester, blueCandidateManchester });
+
+        return election;
     }
 
     /// <summary>

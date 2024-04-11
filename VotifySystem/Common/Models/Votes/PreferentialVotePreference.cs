@@ -16,7 +16,6 @@ public class PreferentialVotePreference
         VoteId = voteId;
         Rank = rank;
         CandidateId = candidateId;
-
     }
 
     public string PreferenceId { get; set; } = Guid.NewGuid().ToString();

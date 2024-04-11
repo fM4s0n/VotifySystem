@@ -41,7 +41,8 @@ public class VotifyDatabaseContext : DbContext
         modelBuilder.Entity<Election>().ToTable("Election")
             .HasDiscriminator<string>("election_type")
             .HasValue<FirstPastThePostElection>("FPTP_Election")
-            .HasValue<SingleTransferrableVoteElection>("STV_Election");
+            .HasValue<SingleTransferrableVoteElection>("STV_Election")
+            .HasValue<PreferentialVoteElection>("Preferential_Election");
         modelBuilder.Entity<LoginCode>().ToTable("LoginCode");
         modelBuilder.Entity<Vote>().ToTable("Vote")
             .HasDiscriminator<string>("vote_type")

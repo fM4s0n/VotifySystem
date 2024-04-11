@@ -14,13 +14,16 @@ public partial class ctrFPTPVote : UserControl
     private readonly IFPTPElectionVoteService? _fptpVoteService;
     private readonly IPartyService? _partyService;
 
+    public delegate void VoteCompletedEventHandler(object sender, EventArgs e);
+    public event VoteCompletedEventHandler? VoteCompleted;
+
+    public delegate void VoteCancelledEventHandler(object sender, EventArgs e);
+    public event VoteCancelledEventHandler? VoteCancelled;
+
     private  Election? _election;
     private List<Candidate> _candidates = [];
     private List<Party> _parties = [];
     List<ComboBoxCandidate> _comboBoxCandidates = [];
-
-    public delegate void VoteCompletedEventHandler(object sender, EventArgs e);
-    public event VoteCompletedEventHandler? VoteCompleted;
 
     public ctrFPTPVote()
     {
@@ -110,6 +113,12 @@ public partial class ctrFPTPVote : UserControl
     {
         Reset();
         VoteCompleted?.Invoke(this, new EventArgs());
+    }
+
+    private void OnVoteCancelled()
+    {
+        Reset();
+        VoteCancelled?.Invoke(this, new EventArgs());
     }
 
     /// <summary>

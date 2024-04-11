@@ -65,14 +65,14 @@ public partial class frmRegisterToVote : Form
 
         _electionVoters = _electionVoterService!.GetElectionVotersByVoterId(_voter.Id);
 
-        if (_electionVoters == null)
-            return;
-
         // Remove elections that the voter has already registered for
-        foreach (ElectionVoter ev in _electionVoters)
+        if (_electionVoters != null && _electionVoters.Count > 0)
         {
-            Election election = _elections.First(e => e.ElectionId == ev.ElectionId);
-            _elections.Remove(election);
+            foreach (ElectionVoter ev in _electionVoters)
+            {
+                Election election = _elections.First(e => e.ElectionId == ev.ElectionId);
+                _elections.Remove(election);
+            }
         }
 
         if (_elections.Count == 0)
@@ -83,8 +83,6 @@ public partial class frmRegisterToVote : Form
                 return;
             }
         }
-
-        _constituencies = _constituencyService!.GetConstituenciesByCountry(_voter.Country);
 
         ResetCmbElections();
     }
@@ -108,7 +106,8 @@ public partial class frmRegisterToVote : Form
     /// </summary>
     private void ResetCmbConstituencies()
     {
-        ResetConstituencyDataSource();
+        if (ResetConstituencyDataSource()==false)
+            return;
 
         cmbConstituencies.DataSource = null;
         cmbConstituencies.DisplayMember = "ConstituencyName";
@@ -120,12 +119,18 @@ public partial class frmRegisterToVote : Form
     /// <summary>
     /// Resets the constituency data source based on the selected election
     /// </summary>
-    private void ResetConstituencyDataSource()
+    private bool ResetConstituencyDataSource()
     {
-        _constituencies = _constituencyService!.GetConstituenciesByCountry(_voter!.Country);
+        if (cmbElections.SelectedIndex == -1)
+            return false;
+
+        string electionId = cmbElections.SelectedValue!.ToString()!;
+        _constituencies = _constituencyService!.GetConstituenciesByElectionId(electionId);
 
         if (_constituencies != null && cmbElections.SelectedIndex != -1)
             _constituencies = _constituencies.Where(c => c.ElectionId == cmbElections.SelectedValue!.ToString()!).ToList();
+
+        return true;
     }
 
     /// <summary>

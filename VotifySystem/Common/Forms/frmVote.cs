@@ -68,14 +68,25 @@ public partial class frmVote : Form
         _validElections = _validElections!.Where(e => validElectionIds.Contains(e.ElectionId)).ToList();
         CheckElectionCount();
 
-        _validElections = _validElections
-            .Where(e => e.GetElectionStatus() == ElectionStatus.InProgress).ToList();
+        _validElections = _validElections.Where(e => e.GetElectionStatus() == ElectionStatus.InProgress).ToList();
         CheckElectionCount();
 
         InitCmbSelectElection();
 
-        // listen to the vote completed event
-        ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
+        // listen to the vote completed/cancelled events
+        // TODO: refactor to be a form close event
+        // pass through bool if vote was completed or cancelled
+        if (ctrFPTPVote != null)
+        {
+            ctrFPTPVote.VoteCompleted += ctrFPTPVote_VoteCompleted;
+            ctrFPTPVote.VoteCancelled += ctrFPTPVote_VoteCancelled;
+        }
+
+        if (ctrPreferentialVote != null)
+        {
+            ctrPreferentialVote.VoteCompleted += ctrPreferentialVote_VoteCompleted;
+            ctrPreferentialVote.VoteCancelled += ctrPreferentialVote_VoteCancelled;
+        }
     }
 
     private void CheckElectionCount()
@@ -109,12 +120,39 @@ public partial class frmVote : Form
     private void ctrFPTPVote_VoteCompleted(object sender, EventArgs e)
     {
         ctrFPTPVote.Visible = false;
+        UpdateElectionVoter();
+        Close();
+    }
 
-        // update the election voter to show that the user has voted
+    private void ctrFPTPVote_VoteCancelled(object sender, EventArgs e)
+    {
+        ctrFPTPVote.Visible = false;
+        Close();
+    }
+
+    /// <summary>
+    /// Handles the vote completed event for the preferential vote control
+    /// </summary>
+    private void ctrPreferentialVote_VoteCompleted(object sender, EventArgs e)
+    {
+        ctrPreferentialVote.Visible = false;
+        UpdateElectionVoter();
+        Close();
+    }
+
+    private void ctrPreferentialVote_VoteCancelled(object sender, EventArgs e)
+    {
+        ctrPreferentialVote.Visible = false;
+        Close();
+    }
+
+    /// <summary>
+    /// Updates the election voter to show that the user has voted
+    /// </summary>
+    private void UpdateElectionVoter()
+    {
         _electionVoter!.HasVoted = true;
         _electionVoterService!.UpdateElectionVoter(_electionVoter);
-
-        Close();
     }
 
     /// <summary>
@@ -169,6 +207,9 @@ public partial class frmVote : Form
                 case SingleTransferrableVoteElection _:
                     SetMode(ElectionVoteMechanism.STV);
                     break;
+                case PreferentialVoteElection _:
+                    SetMode(ElectionVoteMechanism.Preferential);
+                    break;
                 default:
                     break;
             }
@@ -183,13 +224,21 @@ public partial class frmVote : Form
     {
         if (cmbSelectElection.SelectedIndex != -1 && cmbSelectElection.SelectedValue is string)
         {
+            pnlVoteControl.Controls.Clear();
+
             switch (electionVoteMechanism)
             {
                 case ElectionVoteMechanism.FPTP:
+                    pnlVoteControl.Controls.Add(ctrFPTPVote);
                     ctrFPTPVote.SetElection(_validElections!.First(e => e.ElectionId == cmbSelectElection.SelectedValue.ToString()));
                     ctrFPTPVote.Visible = true;
                     break;
                 case ElectionVoteMechanism.STV:
+                    throw new NotImplementedException();
+                case ElectionVoteMechanism.Preferential:
+                    pnlVoteControl.Controls.Add(ctrPreferentialVote);
+                    ctrPreferentialVote.SetElection(_validElections!.First(e => e.ElectionId == cmbSelectElection.SelectedValue.ToString()) as PreferentialVoteElection);
+                    ctrPreferentialVote.Visible = true;
                     break;
                 default:
                     break;

@@ -29,17 +29,9 @@ public class PreferentialElectionVote : Vote
     /// </summary>
     /// <param name="candidateIds"></param>
     /// <returns>PreferentialElectionVote object with all candidates ranked</returns>
-    public PreferentialElectionVote CastVote(List<string> candidateIds)
+    public PreferentialElectionVote CastVote(List<PreferentialVotePreference> preferences)
     {
-        int nextRank = _preferences.Count + 1;
-
-        foreach (string candidate in candidateIds)
-        {
-            PreferentialVotePreference? preference = new(ElectionId, VoteId, nextRank, candidate);
-            _preferences.Add(preference);
-            nextRank++;
-        }
-
+        _preferences = preferences;
         return this;
     }
 

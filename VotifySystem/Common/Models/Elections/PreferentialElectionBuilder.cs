@@ -7,39 +7,52 @@ namespace VotifySystem.Common.Models.Elections;
 /// </summary>
 public class PreferentialElectionBuilder : IElectionBuilder
 {
+    private readonly Election _election;
+
+    public PreferentialElectionBuilder()
+    {
+        _election = new PreferentialVoteElection();
+    }
+
     //<inheritdoc/>
     public Election Build()
     {
-        throw new NotImplementedException();
+        return _election;
     }
 
     //<inheritdoc/>
     public IElectionBuilder SetCountry(Country country)
     {
-        throw new NotImplementedException();
+        _election.Country = country;
+        return this;
     }
 
     //<inheritdoc/>
     public IElectionBuilder SetDates(DateTime startDate, DateTime endDate)
     {
-        throw new NotImplementedException();
+        _election.StartDate = startDate;
+        _election.EndDate = endDate;
+        return this;
     }
 
     //<inheritdoc/>
     public IElectionBuilder SetDescription(string description)
     {
-        throw new NotImplementedException();
+        _election.Description = description;
+        return this;
     }
 
     //<inheritdoc/>
     public IElectionBuilder SetElectionAdministratorId(string userId)
     {
-        throw new NotImplementedException();
+        _election.ElectionAdministratorId = userId;
+        return this;
     }
 
     //<inheritdoc/>
     public IElectionBuilder SetElectionId()
     {
-        throw new NotImplementedException();
+        _election.ElectionId = Guid.NewGuid().ToString();
+        return this;
     }
 }

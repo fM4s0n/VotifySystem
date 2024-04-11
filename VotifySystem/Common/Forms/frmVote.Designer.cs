@@ -33,6 +33,7 @@ partial class frmVote
         btnGo = new Button();
         cmbSelectElection = new ComboBox();
         pnlVoteControl = new Panel();
+        ctrPreferentialVote = new Controls.ctrPreferentialVote();
         ctrFPTPVote = new Controls.ctrFPTPVote();
         grpSelectElection.SuspendLayout();
         pnlVoteControl.SuspendLayout();
@@ -42,7 +43,7 @@ partial class frmVote
         // 
         lblElectionName.AutoSize = true;
         lblElectionName.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-        lblElectionName.Location = new Point(105, 9);
+        lblElectionName.Location = new Point(12, 9);
         lblElectionName.Name = "lblElectionName";
         lblElectionName.Size = new Size(212, 37);
         lblElectionName.TabIndex = 0;
@@ -80,7 +81,6 @@ partial class frmVote
         // 
         // pnlVoteControl
         // 
-        pnlVoteControl.Controls.Add(ctrFPTPVote);
         pnlVoteControl.Location = new Point(12, 167);
         pnlVoteControl.Name = "pnlVoteControl";
         pnlVoteControl.Size = new Size(439, 438);
@@ -119,4 +119,5 @@ partial class frmVote
     private ComboBox cmbSelectElection;
     private Panel pnlVoteControl;
     private Controls.ctrFPTPVote ctrFPTPVote;
+    private Controls.ctrPreferentialVote ctrPreferentialVote;
 }
