@@ -93,6 +93,8 @@ public partial class frmMain : Form
         switch (_userLevelMode)
         {
             case UserLevel.Administrator:
+                lblHello.Text = $"Hello, {_userService!.GetCurrentUser()!.FullName}";
+                lblHello.Visible = true;
                 ctrMainDefault.Visible = false;
                 ctrLoginBase.Visible = false;
                 ctrAdminHome.Visible = true;
@@ -100,7 +102,8 @@ public partial class frmMain : Form
                 break;
 
             case UserLevel.Voter:
-                ctrMainDefault.Visible = false;
+                lblHello.Text = $"Hello, {_userService!.GetCurrentUser()!.FullName}";
+                lblHello.Visible = true; ctrMainDefault.Visible = false;
                 ctrLoginBase.Visible = false;
                 if (_loginMode == LoginMode.InPerson)
                 {
@@ -115,6 +118,7 @@ public partial class frmMain : Form
                 break;
 
             case UserLevel.None:
+                lblHello.Visible = false;
                 ctrMainDefault.Visible = true;
                 ctrVoterHome.Visible = false;
                 ctrVoterHomeOnline.Visible = false;

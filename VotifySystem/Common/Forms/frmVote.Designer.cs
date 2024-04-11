@@ -83,7 +83,7 @@ partial class frmVote
         // 
         pnlVoteControl.Location = new Point(12, 167);
         pnlVoteControl.Name = "pnlVoteControl";
-        pnlVoteControl.Size = new Size(439, 438);
+        pnlVoteControl.Size = new Size(439, 457);
         pnlVoteControl.TabIndex = 2;
         // 
         // ctrFPTPVote

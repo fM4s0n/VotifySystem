@@ -33,6 +33,7 @@
             ctrAdminHome = new Controls.ctrAdminHome();
             ctrVoterHome = new Controls.ctrVoterHome();
             ctrVoterHomeOnline = new Online.Controls.ctrVoterHomeOnline();
+            lblHello = new Label();
             SuspendLayout();
             // 
             // ctrMainDefault
@@ -69,7 +70,7 @@
             ctrVoterHome.TabIndex = 3;
             ctrVoterHome.Visible = false;
             // 
-            // ctrVoterHomeOnline1
+            // ctrVoterHomeOnline
             // 
             ctrVoterHomeOnline.Location = new Point(105, 81);
             ctrVoterHomeOnline.Name = "ctrVoterHomeOnline1";
@@ -77,12 +78,24 @@
             ctrVoterHomeOnline.TabIndex = 4;
             ctrVoterHomeOnline.Visible = false;
             // 
+            // lbHello
+            // 
+            lblHello.AutoSize = true;
+            lblHello.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblHello.Location = new Point(6, 2);
+            lblHello.Name = "lbHello";
+            lblHello.Size = new Size(52, 21);
+            lblHello.TabIndex = 4;
+            lblHello.Text = "label1";
+            lblHello.Visible = false;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(967, 560);
             Controls.Add(ctrVoterHomeOnline);
+            Controls.Add(lblHello);
             Controls.Add(ctrVoterHome);
             Controls.Add(ctrAdminHome);
             Controls.Add(ctrLoginBase);
@@ -91,6 +104,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Votify";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -100,5 +114,6 @@
         private Controls.ctrAdminHome ctrAdminHome;
         private Controls.ctrVoterHome ctrVoterHome;
         private Online.Controls.ctrVoterHomeOnline ctrVoterHomeOnline;
+        private Label lblHello;
     }
 }

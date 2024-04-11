@@ -237,7 +237,7 @@ public partial class frmVote : Form
                     throw new NotImplementedException();
                 case ElectionVoteMechanism.Preferential:
                     pnlVoteControl.Controls.Add(ctrPreferentialVote);
-                    ctrPreferentialVote.SetElection(_validElections!.First(e => e.ElectionId == cmbSelectElection.SelectedValue.ToString()) as PreferentialVoteElection);
+                    ctrPreferentialVote.SetElection(_validElections!.First(e => e.ElectionId == cmbSelectElection.SelectedValue.ToString()) as PreferentialVoteElection, _electionVoter!);
                     ctrPreferentialVote.Visible = true;
                     break;
                 default:
