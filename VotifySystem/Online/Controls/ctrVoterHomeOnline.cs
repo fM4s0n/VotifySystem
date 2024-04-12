@@ -1,6 +1,5 @@
 ﻿using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models;
-using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.Common.Forms;
 using VotifySystem.InPerson.Forms;
 
@@ -62,8 +61,5 @@ public partial class ctrVoterHomeOnline : UserControl
     /// </summary>
     private void btnCopyCode_Click(object sender, EventArgs e) => Clipboard.SetText(lblLoginCode.Text);
 
-    private void btnLogout_Click(object sender, EventArgs e)
-    {
-        _userService!.LogOutUser();
-    }
+    private void btnLogout_Click(object sender, EventArgs e) => _userService!.LogOutUser();    
 }

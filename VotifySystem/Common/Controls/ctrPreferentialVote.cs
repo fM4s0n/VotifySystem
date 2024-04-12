@@ -136,7 +136,7 @@ public partial class ctrPreferentialVote : UserControl
 
         foreach (Control c in flpCandidateOptions.Controls)
         {
-            if (c is Label label)
+            if (c is Label)
             {
                 // get candidateId dictionary value
                 string candidateId = _candidateIdsAndIndexes![flpCandidateOptions.Controls.IndexOf(c)];

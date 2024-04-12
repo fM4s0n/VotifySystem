@@ -31,6 +31,7 @@ partial class ctrFPTPVote
         btnSubmitVote = new Button();
         cmbSelectCandidate = new ComboBox();
         lblSelectCandidate = new Label();
+        btnCancel = new Button();
         SuspendLayout();
         // 
         // btnSubmitVote
@@ -60,10 +61,21 @@ partial class ctrFPTPVote
         lblSelectCandidate.TabIndex = 3;
         lblSelectCandidate.Text = "Select One Candidate:";
         // 
+        // btnCancel
+        // 
+        btnCancel.Location = new Point(18, 65);
+        btnCancel.Name = "btnCancel";
+        btnCancel.Size = new Size(75, 23);
+        btnCancel.TabIndex = 4;
+        btnCancel.Text = "Cancel";
+        btnCancel.UseVisualStyleBackColor = true;
+        btnCancel.Click += btnCancel_Click;
+        // 
         // ctrFPTPVote
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
+        Controls.Add(btnCancel);
         Controls.Add(lblSelectCandidate);
         Controls.Add(cmbSelectCandidate);
         Controls.Add(btnSubmitVote);
@@ -77,4 +89,5 @@ partial class ctrFPTPVote
     private Button btnSubmitVote;
     private ComboBox cmbSelectCandidate;
     private Label lblSelectCandidate;
+    private Button btnCancel;
 }

@@ -21,8 +21,6 @@ public partial class frmManageElections : Form
         if (DesignMode)
             return;
 
-        IServiceProvider serviceProvider = Program.ServiceProvider!;
-
         _electionService = Program.ServiceProvider!.GetService(typeof(IElectionService)) as IElectionService;
 
         Init();

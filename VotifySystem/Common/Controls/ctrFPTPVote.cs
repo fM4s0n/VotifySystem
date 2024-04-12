@@ -20,7 +20,7 @@ public partial class ctrFPTPVote : UserControl
     public delegate void VoteCancelledEventHandler(object sender, EventArgs e);
     public event VoteCancelledEventHandler? VoteCancelled;
 
-    private  Election? _election;
+    private Election? _election;
     private List<Candidate> _candidates = [];
     private List<Party> _parties = [];
     List<ComboBoxCandidate> _comboBoxCandidates = [];
@@ -29,7 +29,7 @@ public partial class ctrFPTPVote : UserControl
     {
         InitializeComponent();
 
-        if (DesignMode) 
+        if (DesignMode)
             return;
 
         _fptpVoteService = Program.ServiceProvider!.GetService(typeof(IFPTPElectionVoteService)) as IFPTPElectionVoteService;
@@ -107,7 +107,7 @@ public partial class ctrFPTPVote : UserControl
     }
 
     /// <summary>
-    /// Event to fire when the vote is completed
+    /// Fire event when the vote is completed
     /// </summary>
     private void OnVoteCompleted()
     {
@@ -115,11 +115,16 @@ public partial class ctrFPTPVote : UserControl
         VoteCompleted?.Invoke(this, new EventArgs());
     }
 
+    /// <summary>
+    /// Fire event when the vote is cancelled
+    /// </summary>
     private void OnVoteCancelled()
     {
         Reset();
         VoteCancelled?.Invoke(this, new EventArgs());
     }
+
+    private void btnCancel_Click(object sender, EventArgs e) => OnVoteCancelled();    
 
     /// <summary>
     /// Reset the control and clear all data
