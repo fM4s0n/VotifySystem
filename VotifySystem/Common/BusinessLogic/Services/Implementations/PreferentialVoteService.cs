@@ -14,6 +14,18 @@ internal class PreferentialVoteService : IPreferentialVoteService
     }
 
     //<inheritdoc/>
+    public void InsertPreference(PreferentialVotePreference preference)
+    {
+        _dbService!.InsertEntity(preference);
+    }
+
+    //<inheritdoc/>
+    public void InsertPreferences(List<PreferentialVotePreference> preferences)
+    {
+        _dbService!.InsertRange(preferences);
+    }
+
+    //<inheritdoc/>
     public List<PreferentialVotePreference>? GetPreferencesByElectionId(string electionId)
     {
         return _dbService!.GetDatabaseContext().PreferentialVotePreferences.Where(p => p.ElectionId == electionId).ToList() ?? null;

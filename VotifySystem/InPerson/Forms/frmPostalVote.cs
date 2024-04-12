@@ -149,7 +149,7 @@ public partial class frmPostalVote : Form
             return;
         }
 
-        Candidate? candidate = _candidates!.FirstOrDefault(c => c.Id == cmbCandidate.SelectedValue.ToString()) ?? null;
+        Candidate? candidate = _candidates!.FirstOrDefault(c => c.Id == cmbCandidate.SelectedValue!.ToString()) ?? null;
 
         if (candidate == null)
         {

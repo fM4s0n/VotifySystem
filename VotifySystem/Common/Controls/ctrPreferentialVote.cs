@@ -151,6 +151,7 @@ public partial class ctrPreferentialVote : UserControl
 
         // cast vote and insert into db
         _vote!.CastVote(preferences);
+        _voteService!.InsertPreference(preferences);
         _voteService!.InsertVote(_vote);
 
         if (ConfirmVoteWithUser(preferences) == false)
