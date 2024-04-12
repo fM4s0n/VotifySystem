@@ -12,7 +12,15 @@ public class ElectionTests
         // Arrange
         DateTime start = DateTime.Now.AddDays(1);
         DateTime end = start.AddDays(2);
-        var election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, "Test", start, end, "1");
+
+        var builder = ElectionFactory.CreateBuilder(ElectionVoteMechanism.FPTP);
+        builder.SetElectionId()
+            .SetCountry(Country.UK)
+            .SetDates(start, end)
+            .SetDescription("Test")
+            .SetElectionAdministratorId("1");
+
+        var election = builder.Build();
 
         // Act
         var result = election.GetElectionStatus();
@@ -27,7 +35,15 @@ public class ElectionTests
         // Arrange
         DateTime start = DateTime.Now.AddDays(-1);
         DateTime end = start.AddDays(2);
-        var election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, "Test", start, end, "1");
+
+        var builder = ElectionFactory.CreateBuilder(ElectionVoteMechanism.FPTP);
+        builder.SetElectionId()
+            .SetCountry(Country.UK)
+            .SetDates(start, end)
+            .SetDescription("Test")
+            .SetElectionAdministratorId("1");
+
+        var election = builder.Build();
 
         // Act
         var result = election.GetElectionStatus();
@@ -42,7 +58,15 @@ public class ElectionTests
         // Arrange
         DateTime start = DateTime.Now.AddDays(-3);
         DateTime end = start.AddDays(1);
-        var election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, "Test", start, end, "1");
+
+        var builder = ElectionFactory.CreateBuilder(ElectionVoteMechanism.FPTP);
+        builder.SetElectionId()
+            .SetCountry(Country.UK)
+            .SetDates(start, end)
+            .SetDescription("Test")
+            .SetElectionAdministratorId("1");
+
+        var election = builder.Build();
 
         // Act
         var result = election.GetElectionStatus();

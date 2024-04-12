@@ -67,7 +67,14 @@ public class DataSeedHelper()
         DateTime end = new(2024, 10, 1, 21, 0, 0);
         string userId = _dbService!.GetDatabaseContext().Users.First(u => u.Username == "DefaultAdmin").Id;
 
-        Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK , description, start, end, userId);
+        var builder = ElectionFactory.CreateBuilder(ElectionVoteMechanism.FPTP);
+        builder.SetDescription(description)
+            .SetCountry(Country.UK)
+            .SetDates(start, end)
+            .SetElectionAdministratorId(userId)
+            .SetElectionId();
+
+        Election election = builder.Build();
 
         // Create Constituencies
         Constituency leeds = new("Leeds", election.ElectionId, Country.UK);
@@ -122,7 +129,15 @@ public class DataSeedHelper()
         DateTime end = new(2024, 4, 1, 21, 0, 0);
         string? userId = _userService!.GetAllAdministrators()?.FirstOrDefault(u => u.Username == "DefaultAdmin")!.Id;
 
-        Election election = ElectionFactory.CreateElection(ElectionVoteMechanism.FPTP, Country.UK, description, start, end, userId!);
+        var builder = ElectionFactory.CreateBuilder(ElectionVoteMechanism.FPTP);
+        builder.SetDescription(description)
+            .SetElectionId()
+            .SetDescription(description)
+            .SetDates(start, end)
+            .SetElectionAdministratorId(userId!)
+            .SetCountry(Country.UK);
+
+        Election election = builder.Build();
 
         // Create Constituencies
         Constituency york = new("York", election.ElectionId, Country.UK);

@@ -11,7 +11,7 @@ public class PreferentialElectionBuilder : IElectionBuilder
 
     public PreferentialElectionBuilder()
     {
-        _election = new PreferentialVoteElection();
+        _election = new PreferentialVoteElection { VoteMechanism = ElectionVoteMechanism.Preferential };
     }
 
     //<inheritdoc/>

@@ -14,7 +14,7 @@ public class FPTPElectionBuilder : IElectionBuilder
     /// </summary>
     public FPTPElectionBuilder()
     {
-        _election = new FirstPastThePostElection();       
+        _election = new FirstPastThePostElection() { VoteMechanism = ElectionVoteMechanism.FPTP };
     }
 
     //<inheritdoc/>
