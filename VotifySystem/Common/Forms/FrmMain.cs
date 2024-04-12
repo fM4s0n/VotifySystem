@@ -13,7 +13,7 @@ namespace VotifySystem;
 public partial class frmMain : Form
 {
     private readonly IUserService? _userService;
-    private readonly IDbService? _dbService;
+    private readonly SeedDataDbServiceDecorator? _dbService;
 
     private static frmMain? _instance;
     public static frmMain GetInstance() { return _instance!; }
@@ -29,7 +29,10 @@ public partial class frmMain : Form
             return;
 
         _userService = Program.ServiceProvider!.GetService(typeof(IUserService)) as IUserService;
-        _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+
+        // Decorate the db service with the SeedDataDbServiceDecorator
+        IDbService dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+        _dbService = new SeedDataDbServiceDecorator(dbService!);
 
         Init();
     }

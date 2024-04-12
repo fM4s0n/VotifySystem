@@ -15,15 +15,15 @@ public class DbService(VotifyDatabaseContext dbContext) : IDbService
     //<inheritdoc/>
     public void InsertEntity<T>(T entity) where T : class
     {
-        try 
-        {             
+        try
+        {
             _dbContext.Set<T>().Add(entity);
             _dbContext.SaveChanges();
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }   
+        }
     }
 
     //<inheritdoc/>
@@ -65,21 +65,6 @@ public class DbService(VotifyDatabaseContext dbContext) : IDbService
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-    }
-
-    //<inheritdoc/>
-    public void SeedData()
-    {
-        try
-        {
-            DataSeedHelper dataSeeder = new();
-            dataSeeder.SeedDataIfNeeded();
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Error seeding data - {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
         }
     }
 }
