@@ -2,7 +2,6 @@
 using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
 using VotifySystem.Common.Models.UI;
-using VotifySystem.Common.DataAccess.Database;
 using VotifySystem.InPerson.Controls;
 using VotifySystem.Common.BusinessLogic.Services;
 

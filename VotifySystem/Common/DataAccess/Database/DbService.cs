@@ -10,6 +10,9 @@ public class DbService(VotifyDatabaseContext dbContext) : IDbService
     private readonly VotifyDatabaseContext _dbContext = dbContext;
 
     //<inheritdoc/>
+    public VotifyDatabaseContext GetDatabaseContext() => _dbContext;
+
+    //<inheritdoc/>
     public void InsertEntity<T>(T entity) where T : class
     {
         try 
@@ -64,9 +67,6 @@ public class DbService(VotifyDatabaseContext dbContext) : IDbService
             MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
-
-    //<inheritdoc/>
-    public VotifyDatabaseContext GetDatabaseContext() => _dbContext;
 
     //<inheritdoc/>
     public void SeedData()

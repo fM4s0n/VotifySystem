@@ -17,7 +17,6 @@ public class UserService() : IUserService
     /// Constructor which handles being passed db service for testing only
     /// </summary>
     /// <param name="dbService">Mocked db service for testing</param>
-    /// <param name="isForApp">true by default, false used for unit tests</param>
     public UserService(IDbService? dbService = null) : this()
     {
         _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
