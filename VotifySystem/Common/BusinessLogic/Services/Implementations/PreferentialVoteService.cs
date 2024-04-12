@@ -3,7 +3,7 @@ using VotifySystem.Common.Models.Votes;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
-internal class PreferentialVoteService : IPreferentialVoteService
+public class PreferentialVoteService : IPreferentialVoteService
 {
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;  
 
