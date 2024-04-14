@@ -2,7 +2,6 @@
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.Models;
 using VotifySystem.Common.Models.Elections;
-using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.Forms;
 
@@ -430,6 +429,14 @@ public partial class frmCreateElection : Form
         _candidates.Add(candidateToAdd);
 
         AddCandidateToListView(candidateToAdd);
+
+        ClearCandidateTextBoxes();
+    }
+
+    private void ClearCandidateTextBoxes()
+    {
+        txtCandidateFirstName.Clear();
+        txtCandidateLastName.Clear();
     }
 
     /// <summary>
@@ -580,7 +587,12 @@ public partial class frmCreateElection : Form
             cb.SelectedIndex = -1;
 
         InitDatePickers();
+        ClearAllListViews();
+        ClearCandidateTextBoxes();
+    }
 
+    private void ClearAllListViews()
+    {
         lvCandidates.Items.Clear();
         lvConstituencies.Items.Clear();
     }
