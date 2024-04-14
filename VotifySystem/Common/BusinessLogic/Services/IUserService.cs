@@ -6,6 +6,9 @@ using VotifySystem.Controls;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 
+/// <summary>
+/// User service interface
+/// </summary>
 public interface IUserService
 {
     event UserService.LogoutEventHandler LogOutEvent;

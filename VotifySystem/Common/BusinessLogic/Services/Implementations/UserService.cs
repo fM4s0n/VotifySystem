@@ -101,13 +101,15 @@ public class UserService() : IUserService
     //<inheritdoc/>
     public User? GetUserByUsername(string username)
     {
-        return _dbService!.GetDatabaseContext().Users.FirstOrDefault(u => u.Username == username) ?? null;
+        return _dbService!.GetDatabaseContext().Users.
+            FirstOrDefault(u => u.Username == username) ?? null;
     }
 
     //<inheritdoc/>
     public User? GetUserById(string id)
     {
-        return _dbService!.GetDatabaseContext().Users.FirstOrDefault(u => u.Id == id) ?? null;
+        return _dbService!.GetDatabaseContext().Users.
+            FirstOrDefault(u => u.Id == id) ?? null;
     }
 
     //<inheritdoc/>
@@ -119,13 +121,15 @@ public class UserService() : IUserService
     //<inheritdoc/>
     public List<User>? GetAllVoters()
     {
-        return _dbService!.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Voter).ToList();
+        return _dbService!.GetDatabaseContext().Users.
+            Where(u => u.UserLevel == UserLevel.Voter).ToList();
     }
 
     //<inheritdoc/>
     public List<User>? GetAllAdministrators()
     {
-        return _dbService!.GetDatabaseContext().Users.Where(u => u.UserLevel == UserLevel.Administrator).ToList();
+        return _dbService!.GetDatabaseContext().Users.
+            Where(u => u.UserLevel == UserLevel.Administrator).ToList();
     }
 
     //<inheritdoc/>
@@ -146,7 +150,8 @@ public class UserService() : IUserService
     //<inheritdoc/>
     public LoginCode? GetLoginCodeByCode(string code)
     {
-        return _dbService!.GetDatabaseContext().LoginCodes.FirstOrDefault(lc => lc.Code == code) ?? null;
+        return _dbService!.GetDatabaseContext().LoginCodes.
+            FirstOrDefault(lc => lc.Code == code) ?? null;
     }
 
     //<inheritdoc/>

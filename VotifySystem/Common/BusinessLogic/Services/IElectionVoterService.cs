@@ -2,6 +2,9 @@
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 
+/// <summary>
+/// Interface for ElectionVoterService
+/// </summary>
 public interface IElectionVoterService
 {
     /// <summary>

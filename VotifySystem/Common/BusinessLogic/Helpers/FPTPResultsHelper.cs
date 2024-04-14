@@ -84,6 +84,7 @@ public static class FPTPResultsHelper
     /// </summary>
     /// <param name="candidates"></param>
     /// <returns></returns>
+    /// THIS HAS BEEN LEFT IN FOR DEMONSTRATION PURPOSES  - NOT REFERENCED BY ANY OTHER CODE
     public static List<Candidate> CheckAndFixTies(List<Candidate> candidates)
     {
         foreach (Candidate ca in candidates)

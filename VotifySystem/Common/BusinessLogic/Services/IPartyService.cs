@@ -3,7 +3,10 @@ using VotifySystem.Common.Models;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 
-internal interface IPartyService
+/// <summary>
+/// Party service interface
+/// </summary>
+public interface IPartyService
 {
     /// <summary>
     /// Add party

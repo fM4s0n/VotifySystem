@@ -35,12 +35,15 @@ public class PartyService : IPartyService
     //<inheritdoc/>
     public List<Party>? GetPartiesByCountry(Country country)
     {
-        return _dbService!.GetDatabaseContext().Parties.Where(p => p.Country == country).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().Parties
+            .Where(p => p.Country == country)
+            .ToList() ?? null;
     }
 
     //<inheritdoc/>
     public Party? GetPartyById(string partyId)
     {
-        return _dbService!.GetDatabaseContext().Parties.FirstOrDefault(p => p.PartyId == partyId) ?? null;
+        return _dbService!.GetDatabaseContext().Parties
+            .FirstOrDefault(p => p.PartyId == partyId) ?? null;
     }
 }

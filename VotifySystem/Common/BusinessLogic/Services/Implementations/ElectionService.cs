@@ -4,7 +4,10 @@ using VotifySystem.Common.DataAccess.Database;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
-internal class ElectionService() : IElectionService
+/// <summary>
+/// Implementation of the ElectionService interface.
+/// </summary>
+public class ElectionService() : IElectionService
 {
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
@@ -23,7 +26,9 @@ internal class ElectionService() : IElectionService
     //<inheritdoc/>
     public List<Election>? GetElectionsByCountry(Country country)
     {
-        return _dbService!.GetDatabaseContext().Elections.Where(e => e.Country == country).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().Elections
+            .Where(e => e.Country == country)
+            .ToList() ?? null;
     }
 
     //<inheritdoc/>

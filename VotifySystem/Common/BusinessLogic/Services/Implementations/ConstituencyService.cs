@@ -4,7 +4,10 @@ using VotifySystem.Common.Models;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
-internal class ConstituencyService : IConstituencyService
+/// <summary>
+/// Implementation of the constituency service
+/// </summary>
+public class ConstituencyService : IConstituencyService
 {
     private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
@@ -35,12 +38,16 @@ internal class ConstituencyService : IConstituencyService
     //<inheritdoc/>
     public List<Constituency>? GetConstituenciesByCountry(Country country)
     {
-        return _dbService!.GetDatabaseContext().Constituencies.Where(c => c.Country == country).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().Constituencies
+            .Where(c => c.Country == country)
+            .ToList() ?? null;
     }
 
     //<inheritdoc/>
     public List<Constituency>? GetConstituenciesByElectionId(string electionId)
     {
-        return _dbService!.GetDatabaseContext().Constituencies.Where(c => c.ElectionId == electionId).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().Constituencies
+            .Where(c => c.ElectionId == electionId).
+            ToList() ?? null;
     }
 }

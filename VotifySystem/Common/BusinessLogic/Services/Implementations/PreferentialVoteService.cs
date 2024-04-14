@@ -28,12 +28,16 @@ public class PreferentialVoteService : IPreferentialVoteService
     //<inheritdoc/>
     public List<PreferentialVotePreference>? GetPreferencesByElectionId(string electionId)
     {
-        return _dbService!.GetDatabaseContext().PreferentialVotePreferences.Where(p => p.ElectionId == electionId).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().PreferentialVotePreferences
+            .Where(p => p.ElectionId == electionId)
+            .ToList() ?? null;
     }
 
     //<inheritdoc/>
     public List<PreferentialVotePreference>? GetPreferencesByVoteId(string voteId)
     {
-        return _dbService!.GetDatabaseContext().PreferentialVotePreferences.Where(p => p.VoteId == voteId).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().PreferentialVotePreferences
+            .Where(p => p.VoteId == voteId)
+            .ToList() ?? null;
     }
 }

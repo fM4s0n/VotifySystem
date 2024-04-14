@@ -28,18 +28,24 @@ public class ElectionVoterService : IElectionVoterService
     //<inheritdoc/>
     public ElectionVoter? GetElectionVoter(string electionId, string voterId)
     {
-       return _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.ElectionId == electionId && ev.VoterId == voterId).FirstOrDefault() ?? null;
+       return _dbService!.GetDatabaseContext().ElectionVoters
+            .Where(ev => ev.ElectionId == electionId && ev.VoterId == voterId)
+            .FirstOrDefault() ?? null;
     }
 
     //<inheritdoc/>
     public List<ElectionVoter>? GetElectionVotersByElectionId(string electionId)
     {
-        return _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.ElectionId == electionId).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().ElectionVoters
+            .Where(ev => ev.ElectionId == electionId)
+            .ToList() ?? null;
     }
 
     //<inheritdoc/>
     public List<ElectionVoter>? GetElectionVotersByVoterId(string voterId)
     {
-        return _dbService!.GetDatabaseContext().ElectionVoters.Where(ev => ev.VoterId == voterId).ToList() ?? null;
+        return _dbService!.GetDatabaseContext().ElectionVoters
+            .Where(ev => ev.VoterId == voterId)
+            .ToList() ?? null;
     }
 }

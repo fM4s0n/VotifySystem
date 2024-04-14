@@ -36,7 +36,9 @@ public class CandidateService(IDbService? dbService = null, IFPTPElectionVoteSer
     //<inheritdoc/>
     public List<Candidate>? GetCandidatesByElectionId(string electionId)
     {
-        var candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.ElectionId == electionId).ToList() ?? null;
+        var candidates = _dbService!.GetDatabaseContext().Candidates
+            .Where(c => c.ElectionId == electionId)
+            .ToList() ?? null;
 
         return candidates != null ? UpdateVotesReceived(candidates) : null;
     }
@@ -44,7 +46,9 @@ public class CandidateService(IDbService? dbService = null, IFPTPElectionVoteSer
     //<inheritdoc/>
     public List<Candidate>? GetCandidatesByPartyId(string partyId)
     {
-        var candidates = _dbService!.GetDatabaseContext().Candidates.Where(c => c.PartyId == partyId).ToList() ?? null;
+        var candidates = _dbService!.GetDatabaseContext().Candidates
+            .Where(c => c.PartyId == partyId)
+            .ToList() ?? null;
          
         return candidates != null ? UpdateVotesReceived(candidates) : null;
     }

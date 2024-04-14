@@ -27,5 +27,10 @@ public interface IFPTPElectionVoteService
     /// <returns>List of votes for a candidate, null if none found</returns>
     List<FPTPElectionVote>? GetFPTPVotesByCandidateId(string candidateId);
 
+    /// <summary>
+    /// Gets the number of votes for a candidate
+    /// </summary>
+    /// <param name="candidateId">Id of the candidate</param>
+    /// <returns>int of the number of total votes received by the candidate</returns>
     int GetFPTPVotesCountByCandidateId(string candidateId);
 }

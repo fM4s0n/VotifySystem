@@ -15,6 +15,9 @@ public static class LocalisationHelper
         return _cultureCodes[country];
     }
 
+    /// <summary>
+    /// Dictionary of country and culture codes for use with CultureInfo
+    /// </summary>
     private static readonly Dictionary<Country, string> _cultureCodes = new()
     {
         { Country.UK, "en-GB" },
@@ -37,6 +40,9 @@ public static class LocalisationHelper
     }
 }
 
+/// <summary>
+/// Countries currently supported by the system
+/// </summary>
 public enum Country
 {
     UK,

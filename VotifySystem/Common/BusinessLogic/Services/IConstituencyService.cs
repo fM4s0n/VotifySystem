@@ -6,7 +6,7 @@ namespace VotifySystem.Common.BusinessLogic.Services;
 /// <summary>
 /// Constituency Service
 /// </summary>
-internal interface IConstituencyService
+public interface IConstituencyService
 {
     /// <summary>
     /// Inserts a new constituency into the database.

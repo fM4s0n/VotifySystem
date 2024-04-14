@@ -142,11 +142,11 @@ public partial class ctrFPTPVote : UserControl
     /// Class to hold the data for the ComboBox
     /// makes it easier to display the data and get the selected value
     /// </summary>
-    internal class ComboBoxCandidate()
+    public class ComboBoxCandidate()
     {
-        internal string FullName { get; set; } = string.Empty;
-        internal string PartyName { get; set; } = string.Empty;
-        internal string CandidateId { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string PartyName { get; set; } = string.Empty;
+        public string CandidateId { get; set; } = string.Empty;
         //internal string DisplayText { get { return $"{FullName} - {PartyName}"; } }
         public override string ToString()
         {
