@@ -32,20 +32,6 @@ public partial class ctrLogin : UserControl
         _loginMode = loginMode;
 
         SetMode();
-
-        // Listen for enter key press on login code textbox
-        txtLoginCode.KeyDown += (sender, e) =>
-        {
-            if (e.KeyCode == Keys.Enter)            
-                btnSubmitLoginCode_Click(sender!, e);            
-        };
-
-        // Listen for enter key press on password textbox
-        txtPassword.KeyDown += (sender, e) =>
-        {
-            if (e !=null && e.KeyCode == Keys.Enter)            
-                btnLogin_Click(sender!, e);            
-        };
     }
 
     /// <summary>
