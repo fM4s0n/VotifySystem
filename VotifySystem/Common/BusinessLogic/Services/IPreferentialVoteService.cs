@@ -1,4 +1,5 @@
-﻿using VotifySystem.Common.Models.Votes;
+﻿
+using VotifySystem.Common.Models.Votes;
 
 namespace VotifySystem.Common.BusinessLogic.Services;
 

@@ -7,6 +7,7 @@ namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 /// <summary>
 /// Implementation of the ElectionService interface.
 /// </summary>
+/// <param name="dbService">optional db service passed in to allow testing</param>
 public class ElectionService(IDbService? dbService = null): IElectionService
 {
     private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;

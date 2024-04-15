@@ -214,6 +214,7 @@ internal partial class frmCreateAccount : Form
     /// </summary>
     private void AlternateLanguageLabels()
     {
+        // set bold if selected language, regular if not
         lblEn.Font = _userService!.GetAppCultureCode() == "en-GB" ? new Font(lblEn.Font, FontStyle.Bold) : new Font(lblEn.Font, FontStyle.Regular);
         lblFr.Font = _userService!.GetAppCultureCode() == "fr-FR" ? new Font(lblFr.Font, FontStyle.Bold) : new Font(lblFr.Font, FontStyle.Regular);
 

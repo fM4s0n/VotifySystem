@@ -9,18 +9,9 @@ namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 /// <summary>
 /// Singleton User Service
 /// </summary>
-public class UserService() : IUserService
+public class UserService(IDbService? dbService = null) : IUserService
 {
-    private readonly IDbService? _dbService;
-
-    /// <summary>
-    /// Constructor which handles being passed db service for testing only
-    /// </summary>
-    /// <param name="dbService">Mocked db service for testing</param>
-    public UserService(IDbService? dbService = null) : this()
-    {
-        _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
-    }
+    private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
     private User? _currentUser = null;
     private LoginMode _loginMode = LoginMode.InPerson;

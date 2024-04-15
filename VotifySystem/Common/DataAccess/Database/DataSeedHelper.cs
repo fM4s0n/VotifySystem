@@ -21,15 +21,31 @@ public class DataSeedHelper()
     /// </summary>
     public void SeedDataIfNeeded()
     {
-        if (_dbService!.GetDatabaseContext().Users.Any(a => a.Username == "DefaultAdmin") == false)
-            _dbService.InsertEntity(CreateDefaultAdministrator());
+        SeedDefaultAdmin();
 
-        if (_dbService.GetDatabaseContext().Users.Any(v => v.Username == "DefaultVoter") == false)
-            _dbService.InsertEntity(CreateDefaultVoter());
+        SeedDefaultVoter();
 
         SeedParties();
 
         SeedElections();
+    }
+
+    /// <summary>
+    /// Seed the default voter account
+    /// </summary>
+    private void SeedDefaultVoter()
+    {
+        if (_dbService!.GetDatabaseContext().Users.Any(a => a.Username == "DefaultVoter") == false)
+            _dbService.InsertEntity(CreateDefaultVoter());
+    }
+
+    /// <summary>
+    /// Seed the default admin account
+    /// </summary>
+    private void SeedDefaultAdmin()
+    {
+        if (_dbService!.GetDatabaseContext().Users.Any(a => a.Username == "DefaultAdmin") == false)
+            _dbService.InsertEntity(CreateDefaultAdministrator());
     }
 
     /// <summary>

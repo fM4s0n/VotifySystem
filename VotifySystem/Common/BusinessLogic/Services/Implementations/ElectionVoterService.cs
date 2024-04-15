@@ -3,6 +3,10 @@ using VotifySystem.Common.Models.Elections;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
+/// <summary>
+/// Service for the ElectionVoter model
+/// </summary>
+/// <param name="dbService">optional db service passed in to allow testing</param>
 public class ElectionVoterService(IDbService? dbService = null) : IElectionVoterService
 {
     private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;

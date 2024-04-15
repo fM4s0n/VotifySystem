@@ -4,6 +4,10 @@ using VotifySystem.Common.Models;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
+/// <summary>
+/// Service foe the Party class
+/// </summary>
+/// <param name="dbService"></param>
 public class PartyService(IDbService? dbService = null) : IPartyService
 {
     private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
