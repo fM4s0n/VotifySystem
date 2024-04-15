@@ -1,5 +1,5 @@
-﻿using NSubstitute;
-using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using NSubstitute;
 using VotifyDataAccess.Database;
 using VotifySystem.Common.BusinessLogic.Services;
 using VotifySystem.Common.BusinessLogic.Services.Implementations;
@@ -12,18 +12,23 @@ namespace VotifyTesting.ServiceTests;
 public class CandidateServiceTests
 {
     private CandidateService? _candidateService;
-    private IDbService? _dbService;
+    private DbService? _dbService;
     private IFPTPElectionVoteService? _fptpElectionVoteService;
 
     [TestInitialize]
     public void SetUp()
-    {
-        // substitute the IDbService
-        VotifyDatabaseContext context = Substitute.For<VotifyDatabaseContext>();
+    { 
+        DbContextOptionsBuilder<VotifyDatabaseContext> builder = new();
+
+        builder.EnableDetailedErrors();
+        builder.EnableSensitiveDataLogging();
+        builder.UseInMemoryDatabase(Guid.NewGuid().ToString());
+
+        VotifyDatabaseContext context = new(builder.Options);
         _dbService = new DbService(context);
         _fptpElectionVoteService = Substitute.For<IFPTPElectionVoteService>();
 
-        _candidateService = new CandidateService(_dbService, _fptpElectionVoteService);
+        _candidateService = new CandidateService(_dbService, _fptpElectionVoteService);      
     }
 
     [TestMethod]
@@ -36,7 +41,8 @@ public class CandidateServiceTests
         _candidateService!.InsertCandidate(candidate);
 
         // Assert
-        _dbService!.Received(1).InsertEntity(candidate);        
+        Assert.AreEqual(candidate, _dbService!.GetDatabaseContext().Candidates.First(c => c.Id == "1"));
+           
     }
 
     [TestMethod]
@@ -44,6 +50,10 @@ public class CandidateServiceTests
     {
         // Arrange
         Candidate candidate = new() { Id = "1" };
+        _candidateService!.InsertCandidate(candidate);
+
+        candidate.FirstName = "John";
+        candidate.LastName = "Doe";
 
         // Act
         _candidateService!.UpdateCandidate(candidate);
@@ -57,19 +67,20 @@ public class CandidateServiceTests
     {
         // Arrange
         Candidate candidate = new() { Id = "1" };
+        _candidateService!.InsertCandidate(candidate);
 
         // Act
         _candidateService!.DeleteCandidate(candidate);
 
         // Assert
-        _dbService!.Received().DeleteEntity(candidate);
+        Assert.IsFalse(_dbService!.GetDatabaseContext().Candidates.Any(c => c.Id == "1"));        
     }
 
     [TestMethod]
     public void TestGetAllCandidates()
     {
         // Arrange
-        List<Candidate> candidates = [new Candidate() { Id = "1" }, new Candidate() { Id = "2"}];
+        List<Candidate>? candidates = [new Candidate() { Id = "1" }, new Candidate() { Id = "2"}];
         _candidateService!.InsertCandidate(candidates[0]);
         _candidateService.InsertCandidate(candidates[1]);
 
@@ -77,7 +88,7 @@ public class CandidateServiceTests
         List<Candidate>? result = _candidateService!.GetAllCandidates();
 
         // Assert
-        Assert.AreEqual(candidates, result);
+        CollectionAssert.AreEqual(candidates, result);
     }
 
     [TestMethod]
@@ -85,13 +96,14 @@ public class CandidateServiceTests
     {
         // Arrange
         List<Candidate> candidates = [new Candidate { Id = "1", ElectionId = "1" }, new Candidate { Id = "2", ElectionId = "1" }];
-        _dbService!.GetDatabaseContext().Candidates.Where(Arg.Any<Expression<Func<Candidate, bool>>>()).ToList().Returns(candidates);
+        _candidateService!.InsertCandidate(candidates[0]);
+        _candidateService.InsertCandidate(candidates[1]);
 
         // Act
         List<Candidate>? result = _candidateService!.GetCandidatesByElectionId("1");
 
         // Assert
-        Assert.AreEqual(candidates, result);
+        CollectionAssert.AreEqual(candidates, result);
     }
 
     [TestCleanup]
@@ -99,5 +111,6 @@ public class CandidateServiceTests
     {
         _dbService = null;
         _candidateService = null;
+        _fptpElectionVoteService = null;
     }
 }

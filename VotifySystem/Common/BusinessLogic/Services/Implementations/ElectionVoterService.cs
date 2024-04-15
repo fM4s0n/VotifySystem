@@ -3,9 +3,9 @@ using VotifySystem.Common.Models.Elections;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
-public class ElectionVoterService : IElectionVoterService
+public class ElectionVoterService(IDbService? dbService = null) : IElectionVoterService
 {
-    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
     //<inheritdoc/>
     public void InsertElectionVoter(ElectionVoter electionVoter)

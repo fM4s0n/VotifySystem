@@ -4,9 +4,9 @@ using VotifySystem.Common.Models;
 
 namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 
-public class PartyService : IPartyService
+public class PartyService(IDbService? dbService = null) : IPartyService
 {
-    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
     //<inheritdoc/>
     public void InsertParty(Party party)

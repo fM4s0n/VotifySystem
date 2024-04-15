@@ -7,9 +7,9 @@ namespace VotifySystem.Common.BusinessLogic.Services.Implementations;
 /// <summary>
 /// Implementation of the ElectionService interface.
 /// </summary>
-public class ElectionService() : IElectionService
+public class ElectionService(IDbService? dbService = null): IElectionService
 {
-    private readonly IDbService? _dbService = Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
+    private readonly IDbService? _dbService = dbService ?? Program.ServiceProvider!.GetService(typeof(IDbService)) as IDbService;
 
     //<inheritdoc/>
     public void DeleteElection(Election election)
