@@ -92,6 +92,7 @@ partial class frmViewElectionResults
         Controls.Add(lblViewresults);
         Name = "frmViewElectionResults";
         Text = "Votify | View Results";
+        StartPosition = FormStartPosition.CenterScreen;
         ResumeLayout(false);
         PerformLayout();
     }
