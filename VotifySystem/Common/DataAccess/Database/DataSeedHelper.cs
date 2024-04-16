@@ -107,26 +107,39 @@ public class DataSeedHelper()
 
         for (int i = 0; i < 10; i++)
         {
-            if (VoteFactory.CreateVote(blueCandidateLeeds.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueLeedsVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueLeedsVote)
+            {
+                blueLeedsVote.CastVote(blueCandidateLeeds.Id);
                 _fptpVoteService!.InsertVote(blueLeedsVote);
+            }
+                
         }
 
         for (int i = 0; i < 20; i++)
         {
-            if (VoteFactory.CreateVote(redCandidateLeeds.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redLeedsVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote redLeedsVote)
+            {
+                redLeedsVote.CastVote(redCandidateLeeds.Id);
                 _fptpVoteService!.InsertVote(redLeedsVote);
+            }                   
         }
 
         for (int i = 0; i < 30; i++)
         {
-            if (VoteFactory.CreateVote(blueCandidateManchester.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueManchesterVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueManchesterVote)
+            {
+                blueManchesterVote.CastVote(blueCandidateManchester.Id);
                 _fptpVoteService!.InsertVote(blueManchesterVote);
+            }
         }
 
         for (int i = 0; i < 40; i++)
         {
-            if (VoteFactory.CreateVote(redCandidateManchester.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redManchesterVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote redManchesterVote)
+            {
+                redManchesterVote.CastVote(redCandidateManchester.Id);
                 _fptpVoteService!.InsertVote(redManchesterVote);
+            }
         }
 
         _dbService.InsertRange(new List<Candidate> { redCandidateLeeds, blueCandidateLeeds });
@@ -170,26 +183,38 @@ public class DataSeedHelper()
 
         for (int i = 0; i < 10; i++)
         {
-            if (VoteFactory.CreateVote(redCandidateYork.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redYorkVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote redYorkVote)
+            {
+                redYorkVote.CastVote(redCandidateYork.Id);
                 _fptpVoteService!.InsertVote(redYorkVote);
+            }
         }
 
         for (int i = 0; i < 20; i++)
         {
-            if (VoteFactory.CreateVote(blueCandidateYork.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueYorkVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueYorkVote)
+            {
+                blueYorkVote.CastVote(blueCandidateYork.Id);
                 _fptpVoteService!.InsertVote(blueYorkVote);
+            }
         }
 
         for (int i = 0; i < 30; i++)
         {
-            if (VoteFactory.CreateVote(redCandidateNewcastle.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote redNewcastleVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote redNewcastleVote)
+            {
+                redNewcastleVote.CastVote(redCandidateNewcastle.Id);
                 _fptpVoteService!.InsertVote(redNewcastleVote);
+            }
         }
 
         for (int i = 0; i < 30; i++)
         {
-            if (VoteFactory.CreateVote(blueCandidateNewcastle.Id, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueNewcastleVote)
+            if (VoteFactory.CreateVote(election.ElectionId, ElectionVoteMechanism.FPTP) is FPTPElectionVote blueNewcastleVote)
+            {
+                blueNewcastleVote.CastVote(blueCandidateNewcastle.Id);
                 _fptpVoteService!.InsertVote(blueNewcastleVote);
+            }
         }
 
         _dbService.InsertRange(new List<Candidate> { redCandidateYork, blueCandidateYork, redCandidateNewcastle, blueCandidateNewcastle });
